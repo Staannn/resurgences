@@ -485,16 +485,16 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 
 <!-- SECTEURS -->
 <div id="sectbar">
-  <button class="sect-btn active" onclick="setSecteur('sau',this)">Pasteur SAU</button>
-  <button class="sect-btn" onclick="setSecteur('uhcd',this)">Pasteur UHCD</button>
+  <button class="sect-btn active" data-vue="sau">Pasteur SAU</button>
+  <button class="sect-btn" data-vue="uhcd">Pasteur UHCD</button>
 </div>
 
 <!-- ONGLETS -->
 <div id="tabbar">
-  <div class="tab active" data-vue="accueil" onclick="setTab('accueil',this)">Accueil</div>
-  <div class="tab" data-vue="saupa" onclick="setTab('saupa',this)">SAUPA</div>
-  <div class="tab" data-vue="cc" onclick="setTab('cc',this)">Circuit court</div>
-  <div class="tab" data-vue="sauv" onclick="setTab('sauv',this)">SAUV</div>
+  <div class="tab active" data-vue="accueil">Accueil</div>
+  <div class="tab" data-vue="saupa">SAUPA</div>
+  <div class="tab" data-vue="cc">Circuit court</div>
+  <div class="tab" data-vue="sauv">SAUV</div>
 </div>
 
 <!-- PAGE -->
@@ -1703,6 +1703,10 @@ function switchVue(vue){
   }
 }
 
+// Expose early for resilience even if later init code throws.
+window.setTab=setTab;
+window.setSecteur=setSecteur;
+
 // ══ MODAL ENTRÉE ══
 async function openEntree(){
   document.getElementById("f-dossier").value="...";
@@ -2438,6 +2442,12 @@ function tick(){
 
 // Init
 renderSpecialites();
+document.querySelectorAll("#tabbar .tab").forEach(t=>{
+  t.addEventListener("click",()=>setTab(t.dataset.vue,t));
+});
+document.querySelectorAll("#sectbar .sect-btn").forEach(b=>{
+  b.addEventListener("click",()=>setSecteur(b.dataset.vue,b));
+});
 tick();
 setInterval(tick,1000);
 setInterval(()=>{if(currentVue==="statusboard") renderStatusBoard();},30000);
