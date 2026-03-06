@@ -40,10 +40,11 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 .tab.active{background:#fff;font-weight:bold;color:#000;border-top:2px solid #1a50a0;height:23px;}
 
 /* ══ PAGE ══ */
-#page{background:#fff;padding:6px 10px 50px;min-height:calc(100vh - 88px);}
+#page{background:#fff;padding:6px 10px 50px;min-height:calc(100vh - 88px);display:flex;gap:8px;align-items:flex-start;}
+#page-inner{flex:1;overflow-y:auto;}
 
 /* ══ VUE ACCUEIL ══ */
-#vue-accueil{display:flex;gap:8px;align-items:flex-start;}
+#vue-accueil{display:block;}
 #accueil-main{flex:1;}
 
 #accueil-list{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;}
@@ -141,7 +142,7 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 .pt-num{font-size:9px;margin-left:auto;opacity:.75;}
 
 /* ══ SIDEBAR ══ */
-#sidebar{width:120px;flex-shrink:0;display:flex;flex-direction:column;gap:3px;}
+#sidebar{width:130px;flex-shrink:0;display:flex;flex-direction:column;gap:3px;}
 .s-head{border:1px solid #aac0d4;padding:4px 6px;background:#fff;}
 .s-total{font-size:12px;font-weight:bold;color:#cc0000;margin-bottom:2px;}
 .s-line{font-size:11px;color:#cc0000;line-height:1.65;}
@@ -149,14 +150,17 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 .s-grid table{width:100%;border-collapse:collapse;}
 .s-grid th{font-size:10px;background:#d0dce8;padding:2px 4px;text-align:center;border:1px solid #b0c4d4;color:#223;}
 .sgc{font-size:14px;font-weight:bold;text-align:center;padding:4px 2px;border:1px solid #ccc;}
-.cr{background:#d83030;color:#fff;} .cg{background:#30a030;color:#fff;}
-.cy{background:#c8a820;color:#fff;} .cb{background:#2060b8;color:#fff;}
-.clb{background:#5888c8;color:#fff;} .clg{background:#48a848;color:#fff;}
-.cor{background:#c86020;color:#fff;} .clv{background:#70b870;color:#111;}
+.cr{background:#cc0000;color:#fff;} .cg{background:#cc0000;color:#fff;}
+.cy{background:#e07820;color:#fff;} .cb{background:#e07820;color:#fff;}
+.clb{background:#8020c0;color:#fff;} .clg{background:#8020c0;color:#fff;}
+.cor{background:#20a020;color:#fff;} .clv{background:#20a020;color:#fff;}
+.cbl{background:#5888c8;color:#fff;} .cbd{background:#1a4090;color:#fff;}
 .s-tot{border:1px solid #aac0d4;padding:4px;background:#fff;}
 .s-tot table{width:100%;border-collapse:collapse;}
 .s-tot td{font-size:11px;padding:2px 4px;border:1px solid #ccc;}
 .tl{background:#f0f0f0;color:#333;} .tv{font-weight:bold;text-align:center;background:#fff;}
+#s-vus,#s-vus2{background:#2060c0;color:#fff;}
+#s-nv,#s-nv2{background:#cc0000;color:#fff;}
 
 /* ══ MODALS ══ */
 .modal-overlay{
@@ -202,6 +206,22 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 .tri-box{margin:2px 0 8px 138px;display:flex;align-items:center;gap:8px;min-height:18px;}
 .tri-badge{font-size:10px;font-weight:bold;color:#fff;padding:2px 7px;border-radius:10px;display:none;}
 .tri-help{font-size:10px;color:#334;}
+.pec-badge{display:none;border-radius:2px;font-size:10px;padding:2px 6px;color:#fff;font-weight:bold;}
+.pec-ide{background:#2070c0;}
+.pec-med{background:#8020c0;}
+
+.const-table{width:100%;border-collapse:collapse;font-size:10px;margin-top:4px;}
+.const-table th{background:#5590c8;color:#fff;padding:2px 4px;border:1px solid #2a5a90;text-align:left;}
+.const-table td{padding:2px 4px;border:1px solid #c8d8e8;}
+.const-row-limite td{background:#fff8e8;}
+.const-row-critique td{background:#fff0f0;}
+.const-badge{display:inline-block;border-radius:2px;padding:1px 5px;font-size:10px;color:#fff;font-weight:bold;}
+.cb-normal{background:#20a020;}
+.cb-limite{background:#e07820;}
+.cb-critique{background:#cc0000;}
+.pt-const-toggle{margin-top:4px;}
+.pt-const-wrap{display:none;margin-top:4px;background:#fff;border:1px solid rgba(0,0,0,0.2);padding:3px;}
+.pt-const-wrap.open{display:block;}
 
 #board.cc-layout{justify-content:center;gap:12px;background:#fff;}
 .cc-col{width:280px;flex:0 0 280px;}
@@ -353,38 +373,13 @@ body.fiche-open{overflow:hidden;}
 <!-- PAGE -->
 <div id="page">
 
+  <div id="page-inner">
+
   <!-- VUE ACCUEIL -->
   <div id="vue-accueil">
     <div id="accueil-main">
       <button id="btn-entree" onclick="openEntree()">+ Entrée administrative</button>
       <div id="accueil-list"></div>
-    </div>
-    <div id="sidebar">
-      <div class="s-head">
-        <div class="s-total" id="s-tot">0 dossiers</div>
-        <div class="s-line" id="s-att">0 Attente</div>
-        <div class="s-line" id="s-sau">0 SAU</div>
-        <div class="s-line" id="s-sat">0 Unités Sat</div>
-        <div class="s-line" id="s-sauv">0 SAUV</div>
-        <div class="s-line" id="s-nc">0 Non clôturés</div>
-      </div>
-      <div class="s-grid">
-        <table>
-          <thead><tr><th>Attente</th><th>Service</th></tr></thead>
-          <tbody>
-            <tr><td class="sgc cr" id="g1a">0</td><td class="sgc cg" id="g1s">0</td></tr>
-            <tr><td class="sgc cy" id="g2a">0</td><td class="sgc cb" id="g2s">0</td></tr>
-            <tr><td class="sgc clb" id="g3a">0</td><td class="sgc clg" id="g3s">0</td></tr>
-            <tr><td class="sgc cor" id="g4a">0</td><td class="sgc clv" id="g4s">0</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="s-tot">
-        <table>
-          <tr><td class="tl">Total vus</td><td class="tv" id="s-vus">0</td><td class="tv" id="s-vus2">0</td></tr>
-          <tr><td class="tl">Non vus</td><td class="tv" id="s-nv">0</td><td class="tv" id="s-nv2">0</td></tr>
-        </table>
-      </div>
     </div>
   </div>
 
@@ -394,13 +389,39 @@ body.fiche-open{overflow:hidden;}
       <span id="secteur-nom">—</span>
       <span id="secteur-sub"></span>
     </div>
-    <div style="display:flex;gap:6px;align-items:flex-start;">
-      <div id="board"></div>
-      <div id="sidebar2" class="s-head" style="width:120px;flex-shrink:0;">
-        <div class="s-total" id="s2-tot">0 dossiers</div>
-        <div class="s-line" id="s2-att">0 En attente</div>
-        <div class="s-line" id="s2-ok">0 Pris en charge</div>
-      </div>
+    <div id="board"></div>
+  </div>
+
+  </div>
+
+  <!-- Sidebar TOUJOURS visible à droite -->
+  <div id="sidebar">
+    <div class="s-head">
+      <div class="s-total" id="s-tot">0 dossiers</div>
+      <div class="s-line" id="s-att">0 Attente</div>
+      <div class="s-line" id="s-sau">0 SAU</div>
+      <div class="s-line" id="s-sat">0 Unités Sat</div>
+      <div class="s-line" id="s-sauv">0 SAUV</div>
+      <div class="s-line" id="s-nc">0 Non clôturés</div>
+    </div>
+    <div class="s-grid">
+      <table>
+        <thead><tr><th>Attente</th><th>Service</th></tr></thead>
+        <tbody>
+          <tr><td class="sgc cr" id="g1a">0</td><td class="sgc cg" id="g1s">0</td></tr>
+          <tr><td class="sgc cy" id="g2a">0</td><td class="sgc cb" id="g2s">0</td></tr>
+          <tr><td class="sgc clb" id="g3a">0</td><td class="sgc clg" id="g3s">0</td></tr>
+          <tr><td class="sgc cor" id="g4a">0</td><td class="sgc clv" id="g4s">0</td></tr>
+          <tr><td class="sgc cbl">0</td><td class="sgc cbl">0</td></tr>
+          <tr><td class="sgc cbd">0</td><td class="sgc cbd">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="s-tot">
+      <table>
+        <tr><td class="tl">Total vus</td><td class="tv" id="s-vus">0</td><td class="tv" id="s-vus2">0</td></tr>
+        <tr><td class="tl">Non vus</td><td class="tv" id="s-nv">0</td><td class="tv" id="s-nv2">0</td></tr>
+      </table>
     </div>
   </div>
 
@@ -460,6 +481,8 @@ body.fiche-open{overflow:hidden;}
         <label>Tri FRENCH</label>
         <div class="tri-box">
           <span class="tri-badge" id="f-tri-badge">Tri -</span>
+          <span class="pec-badge pec-ide" id="f-pec-ide">PEC IDE</span>
+          <span class="pec-badge pec-med" id="f-pec-med">PEC MED</span>
           <span class="tri-help" id="f-tri-help"></span>
         </div>
       </div>
@@ -626,6 +649,8 @@ body.fiche-open{overflow:hidden;}
             </div>
           </div>
         </div>
+        <div class="fiche-title" style="margin-top:8px;">Tableau des constantes</div>
+        <div id="fi-const-table"></div>
       </section>
 
       <section class="fiche-panel" data-panel="medical">
@@ -893,6 +918,15 @@ const TRI_META = {
   "5": {help:"Prise en charge < 4h", color:"#60a060"},
 };
 
+const TRI_PEC = {
+  "1": {ide:"Immédiate", med:"Immédiate"},
+  "2": {ide:"Immédiate", med:"< 20 min"},
+  "3A": {ide:"< 10 min", med:"< 30 min"},
+  "3B": {ide:"< 30 min", med:"< 60 min"},
+  "4": {ide:"< 1h", med:"< 2h"},
+  "5": {ide:"< 2h", med:"< 4h"}
+};
+
 const FRENCH_SPECIALITES = [
   {code:"cardio", icon:"🫀", label:"Cardio-circulatoire", motifs:["Arrêt cardiorespiratoire","Hypotension artérielle","Membre douloureux froid ou pâle / ischémie","Douleur thoracique / SCA","Malaise","Tachycardie / tachyarythmie","Bradycardie / bradyarythmie","Dyspnée / insuffisance cardiaque","Dysfonction stimulateur / défibrillateur","Œdème membres inférieurs / IC","Palpitations","Hypertension artérielle","Membre douloureux chaud / phlébite"]},
   {code:"resp", icon:"🫁", label:"Respiratoire", motifs:["Dyspnée / insuffisance respiratoire","Asthme ou aggravation BPCO","Hémoptysie","Douleur thoracique / embolie / pneumo","Corps étranger voies aériennes","Toux / bronchite"]},
@@ -987,6 +1021,164 @@ function escapeHtml(txt){
   return String(txt||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;").replace(/'/g,"&#39;");
 }
 
+const openedConstantes={};
+
+function getPecByTri(tri){
+  return TRI_PEC[tri]||TRI_PEC["5"];
+}
+
+function ageYearsNumber(ddn){
+  if(!ddn) return 0;
+  const d=new Date(ddn), n=new Date();
+  let a=n.getFullYear()-d.getFullYear();
+  if(n.getMonth()<d.getMonth()||(n.getMonth()===d.getMonth()&&n.getDate()<d.getDate())) a--;
+  return Math.max(0,a);
+}
+
+function ageMonthsNumber(ddn){
+  if(!ddn) return 0;
+  const d=new Date(ddn), n=new Date();
+  return Math.max(0,(n.getFullYear()-d.getFullYear())*12+(n.getMonth()-d.getMonth()));
+}
+
+function getNormesByAge(ddn){
+  const ageY=ageYearsNumber(ddn);
+  const ageM=ageMonthsNumber(ddn);
+  if(ageM<12){
+    return {
+      label:"Nourrisson (<1 an)",
+      fc:{min:100,max:160}, fr:{min:30,max:60}, tas:{min:70,max:90}, spo2:{min:95}, temp:{min:36.5,max:37.5}
+    };
+  }
+  if(ageY<=5){
+    return {
+      label:"Enfant 1-5 ans",
+      fc:{min:80,max:140}, fr:{min:24,max:40}, tas:{min:80,max:110}, spo2:{min:95}, temp:{min:36.5,max:37.5}
+    };
+  }
+  if(ageY<=12){
+    return {
+      label:"Enfant 6-12 ans",
+      fc:{min:70,max:120}, fr:{min:18,max:30}, tas:{min:90,max:120}, spo2:{min:96}, temp:{min:36.5,max:37.5}
+    };
+  }
+  if(ageY<=17){
+    return {
+      label:"Adolescent 13-17 ans",
+      fc:{min:60,max:100}, fr:{min:12,max:20}, tas:{min:100,max:130}, spo2:{min:97}, temp:{min:36.5,max:37.5}
+    };
+  }
+  if(ageY<=64){
+    return {
+      label:"Adulte 18-64 ans",
+      fc:{min:60,max:100}, fr:{min:12,max:20}, tas:{min:100,max:140}, tad:{min:60,max:90}, spo2:{min:97}, temp:{min:36.5,max:37.5}
+    };
+  }
+  return {
+    label:"Personne agee >= 65 ans",
+    fc:{min:60,max:100}, fr:{min:12,max:20}, tas:{min:100,max:150}, tad:{min:60,max:90}, spo2:{min:95}, temp:{min:36.0,max:37.5}
+  };
+}
+
+function toNum(v){
+  const n=Number(String(v||"").replace(",","."));
+  return Number.isFinite(n)?n:null;
+}
+
+function parseTA(ta){
+  const s=String(ta||"").trim();
+  const m=s.match(/^(\d{2,3})\s*[\/\-]\s*(\d{2,3})$/);
+  if(!m) return {tas:null,tad:null};
+  return {tas:toNum(m[1]),tad:toNum(m[2])};
+}
+
+function evalValue(value, norm){
+  if(value===null||value===undefined||value===""||!norm) return {level:"none",text:"—"};
+  const v=Number(value);
+  if(!Number.isFinite(v)) return {level:"none",text:"—"};
+  if(norm.min!==undefined && norm.max!==undefined){
+    if(v>=norm.min && v<=norm.max) return {level:"normal",text:"Normal"};
+    const lowLim=norm.min*0.9;
+    const highLim=norm.max*1.1;
+    if(v<norm.min && v>=lowLim) return {level:"limite",text:"Limite"};
+    if(v>norm.max && v<=highLim) return {level:"limite",text:"Limite"};
+    if(v<norm.min) return {level:"critique",text:"↓ Bas"};
+    return {level:"critique",text:"↑ Eleve"};
+  }
+  if(norm.min!==undefined){
+    if(v>=norm.min) return {level:"normal",text:"Normal"};
+    if(v>=norm.min*0.9) return {level:"limite",text:"Limite"};
+    return {level:"critique",text:"↓ Bas"};
+  }
+  return {level:"none",text:"—"};
+}
+
+function analyseConstantes(p){
+  const n=getNormesByAge(p.ddn);
+  const ta=parseTA(p.constantes?.ta);
+  const rows=[
+    {key:"tas",label:"TA systolique",value:ta.tas,unit:"mmHg",norm:n.tas,normTxt:n.tas?`${n.tas.min}-${n.tas.max}`:"—"},
+    {key:"tad",label:"TA diastolique",value:ta.tad,unit:"mmHg",norm:n.tad,normTxt:n.tad?`${n.tad.min}-${n.tad.max}`:"—"},
+    {key:"fc",label:"FC",value:toNum(p.constantes?.fc),unit:"/min",norm:n.fc,normTxt:`${n.fc.min}-${n.fc.max}`},
+    {key:"spo2",label:"SpO2",value:toNum(p.constantes?.spo2),unit:"%",norm:n.spo2,normTxt:`>= ${n.spo2.min}`},
+    {key:"fr",label:"FR",value:toNum(p.constantes?.fr),unit:"/min",norm:n.fr,normTxt:`${n.fr.min}-${n.fr.max}`},
+    {key:"temp",label:"T°",value:toNum(p.constantes?.temp),unit:"°C",norm:n.temp,normTxt:`${n.temp.min}-${n.temp.max}`}
+  ].map(r=>{
+    const st=evalValue(r.value,r.norm);
+    return {...r,status:st};
+  });
+  const critiques=rows.filter(r=>r.status.level==="critique");
+  const limites=rows.filter(r=>r.status.level==="limite");
+  const level=critiques.length?"critique":(limites.length?"limite":"normal");
+  return {rows,level,critiques,limites};
+}
+
+function statusBadgeHtml(level,text){
+  if(level==="normal") return `<span class="const-badge cb-normal">✅ ${text}</span>`;
+  if(level==="limite") return `<span class="const-badge cb-limite">⚠️ ${text}</span>`;
+  if(level==="critique") return `<span class="const-badge cb-critique">🔴 ${text}</span>`;
+  return "—";
+}
+
+function constantesTableHtml(p){
+  const a=analyseConstantes(p);
+  return `<table class="const-table"><thead><tr><th>Constante</th><th>Valeur</th><th>Unite</th><th>Normale</th><th>Statut</th></tr></thead><tbody>`+
+    a.rows.map(r=>{
+      const rowCls=r.status.level==="limite"?"const-row-limite":(r.status.level==="critique"?"const-row-critique":"");
+      return `<tr class="${rowCls}"><td>${r.label}</td><td>${r.value===null?"—":r.value}</td><td>${r.unit}</td><td>${r.normTxt}</td><td>${statusBadgeHtml(r.status.level,r.status.text)}</td></tr>`;
+    }).join("")+
+    `</tbody></table>`;
+}
+
+function constantesIconData(p){
+  const a=analyseConstantes(p);
+  if(a.level==="critique"){
+    return {
+      icon:"🔴",
+      tip:"Constantes critiques : "+a.critiques.map(x=>`${x.label} (${x.status.text})`).join(" | ")
+    };
+  }
+  if(a.level==="limite"){
+    return {
+      icon:"🟠",
+      tip:"Constantes limites : "+a.limites.map(x=>x.label).join(" | ")
+    };
+  }
+  return {icon:"✅",tip:"Constantes dans les normes"};
+}
+
+function iAOTooltipHtml(p){
+  const pecIDE=p.pecIDE||getPecByTri(p.triIAO||"5").ide;
+  const pecMED=p.pecMED||getPecByTri(p.triIAO||"5").med;
+  return `${escapeHtml((p.speIcon||"🩺")+" "+(p.motifIAO||"Motif non renseigne"))} — Tri ${escapeHtml(p.triIAO||"5")}<br>`+
+    `PEC IDE : ${escapeHtml(pecIDE)} | PEC MED : ${escapeHtml(pecMED)}`;
+}
+
+function toggleConstantes(id){
+  openedConstantes[id]=!openedConstantes[id];
+  renderAccueil();
+}
+
 function renderSpecialites(){
   const host=document.getElementById("f-spe-grid");
   host.innerHTML=FRENCH_SPECIALITES.map(s=>
@@ -1017,16 +1209,27 @@ function selectSpecialite(code){
 function updateTriBadge(tri, help){
   const b=document.getElementById("f-tri-badge");
   const h=document.getElementById("f-tri-help");
+  const i=document.getElementById("f-pec-ide");
+  const m=document.getElementById("f-pec-med");
   if(!tri){
     b.style.display="none";
     b.textContent="Tri -";
     b.style.background="#777";
+    i.style.display="none";
+    m.style.display="none";
+    i.textContent="PEC IDE";
+    m.textContent="PEC MED";
     h.textContent="";
     return;
   }
+  const pec=getPecByTri(tri);
   b.style.display="inline-block";
   b.textContent="Tri "+tri;
   b.style.background=(TRI_META[tri]||TRI_META["5"]).color;
+  i.style.display="inline-block";
+  m.style.display="inline-block";
+  i.textContent="PEC IDE: "+pec.ide;
+  m.textContent="PEC MED: "+pec.med;
   h.textContent=help||"";
 }
 
@@ -1059,9 +1262,10 @@ function renderAccueil(){
         <div class="pt-dot ${patientDotClass(p)}"></div>
         <div class="pt-nom">${p.nom}<br>${p.prenom}</div>
         <div class="pt-icos">
+          <div class="pic tip">${constantesIconData(p).icon}<span class="pic-tip">${escapeHtml(constantesIconData(p).tip)}</span></div>
           <div class="pic">🔍</div>
           <div class="pic">${p.sexe==="H"?"♂":"♀"}</div>
-          <div class="pic tip">${p.speIcon||"🩺"}<span class="pic-tip">${escapeHtml((p.speIcon||"🩺")+" "+(p.motifIAO||"Motif non renseigné")+" — Tri "+(p.triIAO||"5")+" — "+(p.triLabel||TRI_META["5"].help))}</span></div>
+          <div class="pic tip">${p.speIcon||"🩺"}<span class="pic-tip">${iAOTooltipHtml(p)}</span></div>
         </div>
       </div>
       <div class="pt-bot">
@@ -1076,6 +1280,10 @@ function renderAccueil(){
           ? `<button class="btn-action btn-muter" onclick="event.stopPropagation();openMuter(${p.id})">Muter →</button>`
           : '<span style="color:#fff;font-size:10px;align-self:center;padding:0 4px;">Muté</span>'}
       </div>
+      <div class="pt-const-toggle">
+        <button class="btn-action" onclick="event.stopPropagation();toggleConstantes(${p.id})">📊 Constantes</button>
+      </div>
+      <div class="pt-const-wrap ${openedConstantes[p.id]?"open":""}" onclick="event.stopPropagation();">${constantesTableHtml(p)}</div>
     </div>
   `).join("");
   updateCounters();
@@ -1111,7 +1319,7 @@ function renderSecteur(secteurId){
         `<div class="pt-top">`+
           `<div class="pt-dot ${patientDotClass(p)}"></div>`+
           `<div class="pt-nom">${p.nom}<br>${p.prenom}</div>`+
-            `<div class="pt-icos"><div class="pic">🔍</div><div class="pic">${p.sexe==="H"?"♂":"♀"}</div><div class="pic tip">${p.speIcon||"🩺"}<span class="pic-tip">${escapeHtml((p.speIcon||"🩺")+" "+(p.motifIAO||"Motif non renseigné")+" — Tri "+(p.triIAO||"5")+" — "+(p.triLabel||TRI_META["5"].help))}</span></div></div>`+
+            `<div class="pt-icos"><div class="pic tip">${constantesIconData(p).icon}<span class="pic-tip">${escapeHtml(constantesIconData(p).tip)}</span></div><div class="pic">🔍</div><div class="pic">${p.sexe==="H"?"♂":"♀"}</div><div class="pic tip">${p.speIcon||"🩺"}<span class="pic-tip">${iAOTooltipHtml(p)}</span></div></div>`+
         `</div>`+
         `<div class="pt-bot">`+
           `<span class="pt-chron" data-a="${p.arrive}">${elapsed(p.arrive)}</span>`+
@@ -1154,10 +1362,7 @@ function renderSecteur(secteurId){
     });
   }
 
-  // Sidebar secteur
-  document.getElementById("s2-tot").textContent=pts.length+" dossiers";
-  document.getElementById("s2-att").textContent=pts.filter(p=>["1","2","3A","3B"].includes(p.triIAO)).length+" En attente";
-  document.getElementById("s2-ok").textContent=pts.filter(p=>["4","5"].includes(p.triIAO||"5")).length+" Pris en charge";
+  updateCounters();
 }
 
 // ══ TABS / SECTEURS ══
@@ -1248,6 +1453,7 @@ async function validerEntree(){
   const motifIAO=document.getElementById("f-motif-iao").value;
   const triIAO=TRI_BY_MOTIF[motifIAO]||"";
   const triLabel=triIAO ? TRI_META[triIAO].help : "";
+  const pec=getPecByTri(triIAO||"5");
   const douleur=document.getElementById("f-douleur").value;
   const eva=document.getElementById("f-eva").value;
   const ta=document.getElementById("f-ta").value.trim();
@@ -1279,6 +1485,8 @@ async function validerEntree(){
       motifIAO,
       triIAO,
       triLabel,
+      pecIDE: pec.ide,
+      pecMED: pec.med,
       douleur,
       eva: douleur!=="Aucune" ? eva : "",
       constantes: {ta, fc, spo2, fr, temp},
@@ -1779,6 +1987,7 @@ function voirFiche(id){
       document.getElementById("fi-douleur").textContent=pt.douleur||"Aucune";
       document.getElementById("fi-eva").textContent=pt.eva===""?"—":String(pt.eva);
       document.getElementById("fi-const").textContent=`TA ${pt.constantes?.ta||"—"} / FC ${pt.constantes?.fc||"—"} / SpO2 ${pt.constantes?.spo2||"—"} / FR ${pt.constantes?.fr||"—"} / T° ${pt.constantes?.temp||"—"}`;
+      document.getElementById("fi-const-table").innerHTML=constantesTableHtml(pt);
       document.getElementById("fi-allergie").textContent=pt.allergie||"—";
       document.getElementById("fi-comment").textContent=pt.commentaire||"—";
 
@@ -1949,7 +2158,8 @@ Object.assign(window, {
   voirFiche,
   updateTriFromMotif,
   toggleEva,
-  selectSpecialite
+  selectSpecialite,
+  toggleConstantes
 });
 </script>
 </body>
