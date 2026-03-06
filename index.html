@@ -1441,26 +1441,29 @@ function voirFiche(id){
 
     window.__bl5Render=()=>{
       const pt=getP(); if(!pt) return;
+      const asArray=(v)=>Array.isArray(v)?v:[];
+      const asObject=(v)=>v && typeof v==="object" && !Array.isArray(v) ? v : {};
       pt.medical=pt.medical||{};
-      pt.medical.atcdPersonnels=pt.medical.atcdPersonnels||[];
+      pt.medical=asObject(pt.medical);
+      pt.medical.atcdPersonnels=asArray(pt.medical.atcdPersonnels);
       pt.medical.familiaux=pt.medical.familiaux||"";
-      pt.medical.facteurs=pt.medical.facteurs||{};
+      pt.medical.facteurs=asObject(pt.medical.facteurs);
       pt.medical.allergies=pt.medical.allergies||pt.allergie||"";
-      pt.medical.traitementsHab=pt.medical.traitementsHab||[];
-      pt.medical.examen=pt.medical.examen||{};
-      pt.prescriptions=pt.prescriptions||[];
-      pt.biologie=pt.biologie||[];
-      pt.imagerie=pt.imagerie||[];
-      pt.evolution=pt.evolution||[];
-      pt.atcds=pt.atcds||[];
-      pt.traitements=pt.traitements||[];
-      pt.actes=pt.actes||[];
-      pt.paramedical=pt.paramedical||[];
-      pt.diagnostic=pt.diagnostic||{};
-      pt.orientation=pt.orientation||{};
-      pt.examenClinique=pt.examenClinique||{};
-      pt.constantes=pt.constantes||{};
-      pt.faits=pt.faits||{};
+      pt.medical.traitementsHab=asArray(pt.medical.traitementsHab);
+      pt.medical.examen=asObject(pt.medical.examen);
+      pt.prescriptions=asArray(pt.prescriptions);
+      pt.biologie=asArray(pt.biologie);
+      pt.imagerie=asArray(pt.imagerie);
+      pt.evolution=asArray(pt.evolution);
+      pt.atcds=asArray(pt.atcds);
+      pt.traitements=asArray(pt.traitements);
+      pt.actes=asArray(pt.actes);
+      pt.paramedical=asArray(pt.paramedical);
+      pt.diagnostic=asObject(pt.diagnostic);
+      pt.orientation=asObject(pt.orientation);
+      pt.examenClinique=asObject(pt.examenClinique);
+      pt.constantes=asObject(pt.constantes);
+      pt.faits=asObject(pt.faits);
 
       const triColor=(TRI_META[pt.triIAO]||{color:"#888"}).color;
       const sec=pt.secteur?(SECTEUR_LABELS[pt.secteur]+" / "+(pt.box||"")):"Accueil IAO";
