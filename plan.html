@@ -46,6 +46,16 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 #vue-accueil{display:flex;gap:8px;align-items:flex-start;}
 #accueil-main{flex:1;}
 
+#accueil-list{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;}
+.accueil-empty{
+  width:100%;text-align:center;padding:20px;color:#888;font-style:italic;
+  border:1px dashed #c8d8e8;background:#f8fbff;
+}
+.pt-block.accueil{
+  width:260px;min-height:132px;border-top:1px solid rgba(0,0,0,0.18);border-radius:2px;
+}
+.pt-actions{display:flex;gap:4px;margin-top:4px;}
+
 /* Bouton entrée admin */
 #btn-entree{
   background:linear-gradient(#4a90d0,#2a70b0);color:#fff;
@@ -99,7 +109,9 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
   cursor:pointer;min-height:44px;display:flex;flex-direction:column;gap:2px;}
 .pt-block:hover{filter:brightness(0.93);}
 .bg-rouge{background:#d83030;color:#fff;}
+.bg-rouge2{background:#e05020;color:#fff;}
 .bg-vert{background:#38b838;color:#fff;}
+.bg-vert2{background:#60b060;color:#fff;}
 .bg-orange{background:#e08020;color:#fff;}
 .bg-bleu{background:#3070d0;color:#fff;}
 
@@ -115,6 +127,13 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 .pt-icos{display:flex;gap:1px;margin-left:2px;flex-wrap:wrap;justify-content:flex-end;}
 .pic{width:15px;height:15px;background:rgba(255,255,255,0.82);border:1px solid rgba(0,0,0,0.25);
   border-radius:1px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#222;flex-shrink:0;}
+.pic.tip{position:relative;overflow:visible;}
+.pic-tip{
+  display:none;position:absolute;left:50%;top:100%;transform:translateX(-50%);
+  background:#1a3a60;color:#fff;padding:4px 8px;border-radius:3px;font-size:10px;
+  white-space:nowrap;z-index:999;margin-top:4px;
+}
+.pic.tip:hover .pic-tip{display:block;}
 .pt-bot{display:flex;align-items:center;gap:3px;margin-top:1px;}
 .pt-chron{font-size:10px;font-weight:bold;white-space:nowrap;}
 .pt-tag{font-size:9px;padding:0 3px;border-radius:2px;background:rgba(0,0,0,0.22);white-space:nowrap;}
@@ -161,14 +180,114 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
   flex:1;height:22px;border:1px solid #90b0cc;padding:0 5px;font-size:11px;
   background:#f8fbff;border-radius:2px;
 }
+.form-row textarea{
+  flex:1;border:1px solid #90b0cc;padding:4px 5px;font-size:11px;
+  background:#f8fbff;border-radius:2px;resize:vertical;
+}
 .form-row input:focus,.form-row select:focus{outline:none;border-color:#3a7acc;background:#fff;}
+.form-row textarea:focus{outline:none;border-color:#3a7acc;background:#fff;}
 .form-row .readonly{background:#e8eef4;color:#446;}
+.const-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;margin:6px 0 8px 0;padding-left:138px;}
+.const-item{display:flex;align-items:center;gap:6px;}
+.const-item label{width:auto;font-size:11px;color:#334;white-space:nowrap;}
+.const-item input{flex:1;height:22px;border:1px solid #90b0cc;padding:0 5px;font-size:11px;background:#f8fbff;border-radius:2px;}
+
+.spe-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px 5px;margin:4px 0 8px 138px;}
+.spe-btn{
+  border:1px solid #90b0cc;background:linear-gradient(#f8fbff,#d8e6f2);color:#1a3a60;border-radius:2px;
+  font-size:10px;line-height:1.2;padding:4px 3px;cursor:pointer;min-height:34px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+}
+.spe-btn.active{background:#2060a0;color:#fff;border-color:#154080;}
+.tri-box{margin:2px 0 8px 138px;display:flex;align-items:center;gap:8px;min-height:18px;}
+.tri-badge{font-size:10px;font-weight:bold;color:#fff;padding:2px 7px;border-radius:10px;display:none;}
+.tri-help{font-size:10px;color:#334;}
+
+#board.cc-layout{justify-content:center;gap:12px;background:#fff;}
+.cc-col{width:280px;flex:0 0 280px;}
 
 .btn-submit{background:linear-gradient(#4a90d0,#2a70b0);color:#fff;
   border:1px solid #1a5090;padding:4px 16px;font-size:11px;font-weight:bold;cursor:pointer;border-radius:2px;}
 .btn-submit:hover{background:linear-gradient(#5aa0e0,#3a80c0);}
 .btn-cancel{background:linear-gradient(#e8eef4,#c8d8e8);color:#334;
   border:1px solid #90a8c0;padding:4px 16px;font-size:11px;cursor:pointer;border-radius:2px;}
+
+/* ══ MODAL FICHE PATIENT ══ */
+#modal-fiche{z-index:600;overflow:hidden;}
+#modal-fiche .fiche-wrap{
+  width:95vw;height:92vh;background:#fff;border:2px solid #3a6eaa;border-radius:3px;
+  box-shadow:0 6px 26px rgba(0,0,0,0.35);display:flex;flex-direction:column;overflow:hidden;
+}
+.fiche-header{
+  position:sticky;top:0;background:#fff;border-bottom:1px solid #ccc;padding:6px 12px;
+  font-size:11px;z-index:3;display:grid;grid-template-columns:auto auto auto auto auto auto auto auto auto;
+  gap:6px 12px;align-items:center;
+}
+.fiche-close{border:none;background:none;color:#224;cursor:pointer;font-size:15px;line-height:1;padding:0 4px;}
+.fiche-hcell{white-space:nowrap;color:#123;}
+.fiche-hname{font-weight:bold;font-size:12px;color:#000;}
+.fiche-badge{
+  display:inline-block;padding:1px 6px;border-radius:2px;font-size:10px;font-weight:bold;color:#fff;
+}
+.fiche-badge-light{color:#123;background:#d8e8f8;border:1px solid #90b0cc;}
+.fiche-tabs{display:flex;align-items:flex-end;background:#b8cce0;border-bottom:2px solid #7090b0;padding:0 6px;height:26px;gap:2px;}
+.fiche-tab{
+  height:22px;padding:0 8px;border:1px solid #80a0c0;border-bottom:none;background:#c8d8e8;
+  color:#224;font-size:11px;cursor:pointer;border-radius:2px 2px 0 0;display:flex;align-items:center;
+}
+.fiche-tab.active{background:#fff;font-weight:bold;color:#000;border-top:2px solid #1a50a0;height:23px;}
+.fiche-body{flex:1;overflow:auto;background:#fff;padding:8px 10px 12px;}
+.fiche-panel{display:none;}
+.fiche-panel.active{display:block;}
+
+.fiche-title{
+  background:#e8f0f8;color:#1a3a60;border-left:3px solid #2060a0;padding:4px 8px;
+  font-weight:bold;font-size:11px;margin-bottom:6px;
+}
+.fiche-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;}
+.fiche-fields{display:grid;grid-template-columns:150px 1fr;gap:4px 8px;}
+.fiche-label{color:#334;font-size:11px;margin-bottom:2px;align-self:center;}
+.fiche-readonly{
+  width:100%;background:#f0f4f8;border:1px solid #c0d0e0;padding:3px 6px;font-size:11px;min-height:22px;
+}
+
+.fiche-body input,.fiche-body select,.fiche-body textarea{
+  border:1px solid #90b0cc;border-radius:2px;font-size:11px;padding:3px 6px;width:100%;
+}
+.fiche-row{display:grid;grid-template-columns:150px 1fr;gap:8px;align-items:center;margin-bottom:6px;}
+.fiche-inline{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.fiche-acc{border:1px solid #c0d0e0;margin-bottom:6px;}
+.fiche-acc-h{
+  background:#e8f0f8;color:#1a3a60;border-left:3px solid #2060a0;padding:4px 8px;font-weight:bold;
+  cursor:pointer;display:flex;align-items:center;justify-content:space-between;
+}
+.fiche-acc-b{padding:8px;display:none;background:#fff;}
+.fiche-acc.open .fiche-acc-b{display:block;}
+
+.fiche-table{width:100%;border-collapse:collapse;font-size:11px;}
+.fiche-table th{background:#5590c8;color:#fff;padding:4px 6px;text-align:left;border:1px solid #2a5a90;}
+.fiche-table td{padding:3px 6px;border:1px solid #c8d8e8;vertical-align:top;}
+.fiche-table tr:nth-child(even) td{background:#eef4fc;}
+.fiche-mini{font-size:10px;color:#334;}
+.st-attente{background:#e08020;color:#fff;}
+.st-admin{background:#38b838;color:#fff;}
+.st-annule{background:#d83030;color:#fff;}
+.tube{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;border:1px solid #678;vertical-align:middle;}
+
+.fiche-journal-item{padding:6px 4px;border-bottom:1px solid #d8e4f0;}
+.fiche-journal-head{font-size:10px;color:#1a3a60;font-weight:bold;margin-bottom:2px;}
+
+.fiche-danger{background:linear-gradient(#f04a4a,#c82828);border-color:#900;color:#fff;}
+.fiche-section-end{margin-top:8px;display:flex;justify-content:flex-end;gap:6px;}
+
+body.fiche-open{overflow:hidden;}
+
+@media (max-width: 1100px){
+  .fiche-grid2{grid-template-columns:1fr;}
+  .fiche-header{grid-template-columns:1fr 1fr;}
+  .fiche-row{grid-template-columns:1fr;}
+  .fiche-fields{grid-template-columns:1fr;}
+}
 
 /* ══ BOTTOM BAR ══ */
 #bbar{position:fixed;bottom:0;left:0;right:0;height:40px;
@@ -219,15 +338,15 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 
 <!-- SECTEURS -->
 <div id="sectbar">
-  <button class="sect-btn active" onclick="setSecteur('sau',this)">Pasteur SAU</button>
+  <button class="sect-btn active" style="margin-left:auto;" onclick="setSecteur('sau',this)">Pasteur SAU</button>
   <button class="sect-btn" onclick="setSecteur('uhcd',this)">Pasteur UHCD</button>
 </div>
 
 <!-- ONGLETS -->
 <div id="tabbar">
   <div class="tab active" data-vue="accueil" onclick="setTab('accueil',this)">Accueil</div>
-  <div class="tab" data-vue="cc" onclick="setTab('cc',this)">Circuit court</div>
   <div class="tab" data-vue="saupa" onclick="setTab('saupa',this)">SAUPA</div>
+  <div class="tab" data-vue="cc" onclick="setTab('cc',this)">Circuit court</div>
   <div class="tab" data-vue="sauv" onclick="setTab('sauv',this)">SAUV</div>
 </div>
 
@@ -238,27 +357,7 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
   <div id="vue-accueil">
     <div id="accueil-main">
       <button id="btn-entree" onclick="openEntree()">+ Entrée administrative</button>
-      <table id="tbl-accueil">
-        <thead>
-          <tr>
-            <th>N° dossier</th>
-            <th>Nom Prénom</th>
-            <th>DDN / Âge</th>
-            <th>Sexe</th>
-            <th>Motif d'entrée</th>
-            <th>CCMU</th>
-            <th>Circuit</th>
-            <th>Médecin</th>
-            <th>Mode arrivée</th>
-            <th>Arrivé depuis</th>
-            <th>Statut</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="tbody-accueil">
-          <tr><td colspan="12" style="text-align:center;padding:20px;color:#888;font-style:italic;">Aucun patient enregistré — cliquez sur "+ Entrée administrative"</td></tr>
-        </tbody>
-      </table>
+      <div id="accueil-list"></div>
     </div>
     <div id="sidebar">
       <div class="s-head">
@@ -311,7 +410,7 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 <div class="modal-overlay" id="modal-entree">
   <div class="modal">
     <div class="modal-head">
-      Entrée administrative — nouveau patient
+      Accueil IAO — Enregistrement patient
       <button class="close-btn" onclick="closeModal('modal-entree')">✕</button>
     </div>
     <div class="modal-body">
@@ -344,30 +443,61 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
         <input type="text" id="f-motif" placeholder="Ex: Douleur thoracique, trauma crânien..."/>
       </div>
       <div class="form-row">
-        <label>CCMU *</label>
-        <select id="f-ccmu">
-          <option value="">— Choisir —</option>
-          <option value="1">CCMU 1 — État stable, pas d'acte</option>
-          <option value="2">CCMU 2 — État stable, actes diagnostiques</option>
-          <option value="3">CCMU 3 — État pouvant s'aggraver</option>
-          <option value="4">CCMU 4 — Pronostic vital engagé</option>
-          <option value="5">CCMU 5 — Pronostic vital immédiat</option>
-          <option value="P">CCMU P — Psychiatrique</option>
-          <option value="D">CCMU D — Décédé</option>
+        <label>Hypothèse diagnostique IAO *</label>
+        <input type="text" id="f-hypo" placeholder="Ex: syndrome coronarien aigu"/>
+      </div>
+      <div class="form-row">
+        <label>Spécialité FRENCH *</label>
+        <div class="spe-grid" id="f-spe-grid"></div>
+      </div>
+      <div class="form-row">
+        <label>Motif de recours *</label>
+        <select id="f-motif-iao" onchange="updateTriFromMotif()" disabled>
+          <option value="">— Choisir une spécialité d'abord —</option>
         </select>
       </div>
       <div class="form-row">
-        <label>Circuit *</label>
-        <select id="f-circuit">
-          <option value="">— Choisir —</option>
-          <option value="Court">Circuit court</option>
-          <option value="Long">Circuit long</option>
-          <option value="UHCD">UHCD</option>
-        </select>
+        <label>Tri FRENCH</label>
+        <div class="tri-box">
+          <span class="tri-badge" id="f-tri-badge">Tri -</span>
+          <span class="tri-help" id="f-tri-help"></span>
+        </div>
       </div>
       <div class="form-row">
-        <label>Médecin</label>
-        <input type="text" id="f-medecin" placeholder="Dr..."/>
+        <label>Localisation douleur</label>
+        <select id="f-douleur" onchange="toggleEva()">
+          <option value="Aucune">Aucune</option>
+          <option value="Tête">Tête</option>
+          <option value="Cou">Cou</option>
+          <option value="Thorax">Thorax</option>
+          <option value="Abdomen">Abdomen</option>
+          <option value="Pelvis">Pelvis</option>
+          <option value="Membre sup. droit">Membre sup. droit</option>
+          <option value="Membre sup. gauche">Membre sup. gauche</option>
+          <option value="Membre inf. droit">Membre inf. droit</option>
+          <option value="Membre inf. gauche">Membre inf. gauche</option>
+          <option value="Dos">Dos</option>
+          <option value="Général">Général</option>
+        </select>
+      </div>
+      <div class="form-row" id="row-eva" style="display:none;">
+        <label>EVA douleur 0-10</label>
+        <input type="number" id="f-eva" min="0" max="10" step="1"/>
+      </div>
+      <div class="const-grid">
+        <div class="const-item"><label>TA</label><input type="text" id="f-ta" placeholder="120/80"/></div>
+        <div class="const-item"><label>FC (bpm)</label><input type="number" id="f-fc" min="0"/></div>
+        <div class="const-item"><label>SpO2 (%)</label><input type="number" id="f-spo2" min="0" max="100"/></div>
+        <div class="const-item"><label>FR (mvt/min)</label><input type="number" id="f-fr" min="0"/></div>
+        <div class="const-item"><label>T° (°C)</label><input type="number" id="f-temp" step="0.1"/></div>
+      </div>
+      <div class="form-row">
+        <label>Allergie connue</label>
+        <input type="text" id="f-allergie" placeholder="Aucune / préciser"/>
+      </div>
+      <div class="form-row">
+        <label>Commentaire IAO</label>
+        <textarea id="f-comment" rows="3" placeholder="Observations infirmier(ère) d'accueil..."></textarea>
       </div>
       <div class="form-row">
         <label>Mode d'arrivée</label>
@@ -424,6 +554,265 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
   </div>
 </div>
 
+<!-- MODAL FICHE PATIENT -->
+<div class="modal-overlay" id="modal-fiche">
+  <div class="fiche-wrap">
+    <div class="fiche-header">
+      <button id="fiche-close" class="fiche-close" title="Fermer">✕</button>
+      <div class="fiche-hcell fiche-hname" id="fh-nom">NOM Prénom</div>
+      <div class="fiche-hcell" id="fh-ddn">DDN : —</div>
+      <div class="fiche-hcell" id="fh-dossier">Dossier : —</div>
+      <div class="fiche-hcell" id="fh-sexe">Sexe : —</div>
+      <div class="fiche-hcell" id="fh-arrive">Arrivée : —</div>
+      <div class="fiche-hcell" id="fh-secteur">Secteur : <span class="fiche-badge fiche-badge-light">Accueil IAO</span></div>
+      <div class="fiche-hcell" id="fh-tri">Tri FRENCH : —</div>
+      <div class="fiche-inline">
+        <button id="fh-btn-ccmu" class="btn-submit" type="button">Vu par medecin → poser CCMU</button>
+        <div id="fh-ccmu-inline" style="display:none;" class="fiche-inline">
+          <select id="fh-ccmu-select" style="width:95px;">
+            <option value="">CCMU</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="P">P</option>
+            <option value="D">D</option>
+          </select>
+          <button id="fh-ccmu-valider" class="btn-action" type="button">Valider</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="fiche-tabs" id="fiche-tabs">
+      <button class="fiche-tab active" data-tab="idiao" type="button">Identite / IAO</button>
+      <button class="fiche-tab" data-tab="medical" type="button">Medical</button>
+      <button class="fiche-tab" data-tab="presc" type="button">Prescriptions</button>
+      <button class="fiche-tab" data-tab="bio" type="button">Biologie</button>
+      <button class="fiche-tab" data-tab="img" type="button">Imagerie</button>
+      <button class="fiche-tab" data-tab="evo" type="button">Evolution</button>
+      <button class="fiche-tab" data-tab="diag" type="button">Diagnostic & CCMU</button>
+      <button class="fiche-tab" data-tab="sortie" type="button">Orientation / Sortie</button>
+    </div>
+
+    <div class="fiche-body" id="fiche-body">
+      <section class="fiche-panel active" data-panel="idiao">
+        <div class="fiche-grid2">
+          <div>
+            <div class="fiche-title">IDENTITE</div>
+            <div class="fiche-fields">
+              <div class="fiche-label">N° dossier</div><div class="fiche-readonly" id="fi-dossier"></div>
+              <div class="fiche-label">Nom</div><div class="fiche-readonly" id="fi-nom"></div>
+              <div class="fiche-label">Prenom</div><div class="fiche-readonly" id="fi-prenom"></div>
+              <div class="fiche-label">Date de naissance</div><div class="fiche-readonly" id="fi-ddn"></div>
+              <div class="fiche-label">Age calcule</div><div class="fiche-readonly" id="fi-age"></div>
+              <div class="fiche-label">Sexe</div><div class="fiche-readonly" id="fi-sexe"></div>
+              <div class="fiche-label">Mode d'arrivee</div><div class="fiche-readonly" id="fi-mode"></div>
+              <div class="fiche-label">Heure d'arrivee</div><div class="fiche-readonly" id="fi-heure"></div>
+            </div>
+          </div>
+          <div>
+            <div class="fiche-title">DONNEES IAO</div>
+            <div class="fiche-fields">
+              <div class="fiche-label">Motif d'entree</div><div class="fiche-readonly" id="fi-motif"></div>
+              <div class="fiche-label">Hypothese diagnostique IAO</div><div class="fiche-readonly" id="fi-hypo"></div>
+              <div class="fiche-label">Specialite</div><div class="fiche-readonly" id="fi-spe"></div>
+              <div class="fiche-label">Tri FRENCH + delai</div><div class="fiche-readonly" id="fi-tri"></div>
+              <div class="fiche-label">Localisation douleur</div><div class="fiche-readonly" id="fi-douleur"></div>
+              <div class="fiche-label">EVA</div><div class="fiche-readonly" id="fi-eva"></div>
+              <div class="fiche-label">Constantes</div><div class="fiche-readonly" id="fi-const"></div>
+              <div class="fiche-label">Allergie connue</div><div class="fiche-readonly" id="fi-allergie"></div>
+              <div class="fiche-label">Commentaire IAO</div><div class="fiche-readonly" id="fi-comment"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="fiche-panel" data-panel="medical">
+        <div class="fiche-acc open" data-sec="personnels">
+          <div class="fiche-acc-h">▶ ANTECEDENTS PERSONNELS</div>
+          <div class="fiche-acc-b">
+            <textarea id="med-pers-txt" rows="3"></textarea>
+            <div class="fiche-inline" style="margin-top:6px;">
+              <label><input type="checkbox" id="med-hta"/> HTA</label>
+              <label><input type="checkbox" id="med-diabete"/> Diabete</label>
+              <label><input type="checkbox" id="med-cardio"/> Cardiopathie</label>
+              <label><input type="checkbox" id="med-bpco"/> BPCO</label>
+              <label><input type="checkbox" id="med-ir"/> Insuffisance renale</label>
+              <label><input type="checkbox" id="med-anti"/> Anticoagulants</label>
+              <label><input type="checkbox" id="med-immuno"/> Immunodepression</label>
+            </div>
+            <div class="fiche-section-end"><button class="btn-submit" data-save-med="personnels" type="button">💾 Enregistrer</button></div>
+          </div>
+        </div>
+        <div class="fiche-acc" data-sec="familiaux">
+          <div class="fiche-acc-h">▶ ANTECEDENTS FAMILIAUX</div>
+          <div class="fiche-acc-b">
+            <textarea id="med-fam-txt" rows="2"></textarea>
+            <div class="fiche-section-end"><button class="btn-submit" data-save-med="familiaux" type="button">💾 Enregistrer</button></div>
+          </div>
+        </div>
+        <div class="fiche-acc" data-sec="traitements">
+          <div class="fiche-acc-h">▶ TRAITEMENTS HABITUELS</div>
+          <div class="fiche-acc-b">
+            <textarea id="med-trait-txt" rows="3"></textarea>
+            <div id="med-meds-list" style="margin-top:6px;"></div>
+            <div class="fiche-inline" style="margin-top:6px;"><button id="med-add-line" class="btn-action" type="button">+ Ajouter medicament</button></div>
+            <div class="fiche-section-end"><button class="btn-submit" data-save-med="traitements" type="button">💾 Enregistrer</button></div>
+          </div>
+        </div>
+        <div class="fiche-acc" data-sec="allergies">
+          <div class="fiche-acc-h">▶ ALLERGIES</div>
+          <div class="fiche-acc-b">
+            <textarea id="med-allergies" rows="2"></textarea>
+            <div class="fiche-section-end"><button class="btn-submit" data-save-med="allergies" type="button">💾 Enregistrer</button></div>
+          </div>
+        </div>
+        <div class="fiche-acc" data-sec="examen">
+          <div class="fiche-acc-h">▶ EXAMEN CLINIQUE</div>
+          <div class="fiche-acc-b">
+            <div class="fiche-row"><label class="fiche-label">Etat general</label><input id="med-etat" type="text"/></div>
+            <div class="fiche-row"><label class="fiche-label">Conscience (GCS)</label><input id="med-gcs" type="text"/></div>
+            <div class="fiche-row"><label class="fiche-label">Hemodynamique</label><input id="med-hemo" type="text"/></div>
+            <div class="fiche-row"><label class="fiche-label">Examen physique</label><textarea id="med-examen" rows="4"></textarea></div>
+            <div class="fiche-title" style="margin-top:6px;">Constantes reevaluees</div>
+            <div class="fiche-inline">
+              <input id="med-ta" type="text" placeholder="TA" style="max-width:90px;"/>
+              <input id="med-fc" type="text" placeholder="FC" style="max-width:90px;"/>
+              <input id="med-spo2" type="text" placeholder="SpO2" style="max-width:90px;"/>
+              <input id="med-fr" type="text" placeholder="FR" style="max-width:90px;"/>
+              <input id="med-temp" type="text" placeholder="T°" style="max-width:90px;"/>
+              <input id="med-gly" type="text" placeholder="Glycemie" style="max-width:90px;"/>
+            </div>
+            <div class="fiche-section-end"><button class="btn-submit" data-save-med="examen" type="button">💾 Enregistrer</button></div>
+          </div>
+        </div>
+        <div class="fiche-acc" data-sec="complements">
+          <div class="fiche-acc-h">▶ EXAMENS COMPLEMENTAIRES DEMANDES</div>
+          <div class="fiche-acc-b">
+            <textarea id="med-complements" rows="3"></textarea>
+            <div class="fiche-section-end"><button class="btn-submit" data-save-med="complements" type="button">💾 Enregistrer</button></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="fiche-panel" data-panel="presc">
+        <div class="fiche-title">Ajouter une prescription</div>
+        <div class="fiche-inline" style="margin-bottom:8px;">
+          <input id="pr-med" type="text" placeholder="Medicament" style="min-width:180px;"/>
+          <select id="pr-voie" style="width:110px;">
+            <option>IV</option><option>IM</option><option>SC</option><option>PO</option><option>Inhalee</option><option>Locale</option>
+          </select>
+          <input id="pr-poso" type="text" placeholder="Posologie" style="min-width:120px;"/>
+          <select id="pr-freq" style="width:145px;">
+            <option>Unique</option><option>Toutes les Xh</option><option>Si besoin</option><option>En continu</option>
+          </select>
+          <input id="pr-duree" type="text" placeholder="Duree" style="width:90px;"/>
+          <button id="pr-add" class="btn-submit" type="button">+ Ajouter</button>
+        </div>
+        <table class="fiche-table">
+          <thead><tr><th>Heure</th><th>Medicament</th><th>Voie</th><th>Posologie</th><th>Frequence</th><th>Duree</th><th>Prescripteur</th><th>Statut</th><th>Action</th></tr></thead>
+          <tbody id="pr-tbody"></tbody>
+        </table>
+      </section>
+
+      <section class="fiche-panel" data-panel="bio">
+        <div class="fiche-title">Protocoles predefinis</div>
+        <div class="fiche-inline" id="bio-protocols" style="margin-bottom:8px;">
+          <button class="btn-action" data-proto="BBS" type="button">BBS</button>
+          <button class="btn-action" data-proto="NFS-CRP" type="button">NFS-CRP</button>
+          <button class="btn-action" data-proto="Bilan hepatique" type="button">Bilan hepatique</button>
+          <button class="btn-action" data-proto="Ionogramme" type="button">Ionogramme</button>
+          <button class="btn-action" data-proto="Hemostase" type="button">Hemostase</button>
+          <button class="btn-action" data-proto="Troponine" type="button">Troponine</button>
+          <button class="btn-action" data-proto="BNP" type="button">BNP</button>
+          <button class="btn-action" data-proto="Lactates" type="button">Lactates</button>
+          <button class="btn-action" data-proto="GDS" type="button">GDS</button>
+          <button class="btn-action" data-proto="Groupage / RAI" type="button">Groupage / RAI</button>
+          <button class="btn-action" data-proto="Alcoolemie" type="button">Alcoolemie</button>
+          <button class="btn-action" data-proto="Toxiques urinaires" type="button">Toxiques urinaires</button>
+          <button class="btn-action" data-proto="β-HCG" type="button">β-HCG</button>
+        </div>
+        <div class="fiche-title">Examens demandes</div>
+        <div id="bio-exams"></div>
+        <div class="fiche-section-end"><button id="bio-valider" class="btn-submit" type="button">Valider le bon de biologie</button></div>
+        <div class="fiche-title" style="margin-top:8px;">Resultats</div>
+        <table class="fiche-table">
+          <thead><tr><th>Examen</th><th>Resultat</th><th>Unite</th><th>Valeur normale</th><th>Interpretation</th></tr></thead>
+          <tbody id="bio-results"></tbody>
+        </table>
+      </section>
+
+      <section class="fiche-panel" data-panel="img">
+        <div class="fiche-title">Demande d'imagerie</div>
+        <div class="fiche-row"><label class="fiche-label">Type</label><select id="im-type"><option>Radiographie</option><option>Scanner</option><option>IRM</option><option>Échographie</option><option>ECG</option></select></div>
+        <div class="fiche-row"><label class="fiche-label">Region</label><input id="im-region" type="text"/></div>
+        <div class="fiche-row"><label class="fiche-label">Cote</label><select id="im-cote"><option>Gauche</option><option>Droit</option><option>Bilateral</option><option>Sans objet</option></select></div>
+        <div class="fiche-row"><label class="fiche-label">Urgence</label><select id="im-urgence"><option>Immediat</option><option>Urgente</option><option>Normale</option></select></div>
+        <div class="fiche-row"><label class="fiche-label">Signes cliniques</label><textarea id="im-signes" rows="2"></textarea></div>
+        <div class="fiche-row"><label class="fiche-label">Allergie iode</label><select id="im-iode"><option>Non</option><option>Oui</option></select></div>
+        <div class="fiche-section-end"><button id="im-send" class="btn-submit" type="button">Envoyer la demande</button></div>
+        <div class="fiche-title" style="margin-top:8px;">Demandes envoyees</div>
+        <table class="fiche-table">
+          <thead><tr><th>Type</th><th>Region</th><th>Demande le</th><th>Urgence</th><th>Statut</th><th>Compte rendu</th></tr></thead>
+          <tbody id="im-tbody"></tbody>
+        </table>
+      </section>
+
+      <section class="fiche-panel" data-panel="evo">
+        <div class="fiche-title">Nouvelle entree d'evolution</div>
+        <textarea id="evo-text" rows="3" placeholder="Reevaluation clinique, resultats, conduite a tenir..."></textarea>
+        <div class="fiche-section-end"><button id="evo-add" class="btn-submit" type="button">➕ Ajouter une entree</button></div>
+        <div class="fiche-title" style="margin-top:8px;">Journal</div>
+        <div id="evo-list"></div>
+      </section>
+
+      <section class="fiche-panel" data-panel="diag">
+        <div class="fiche-title">CCMU</div>
+        <div class="fiche-row">
+          <label class="fiche-label">Select CCMU</label>
+          <div class="fiche-inline">
+            <select id="diag-ccmu" style="width:95px;">
+              <option value="">—</option>
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="P">P</option><option value="D">D</option>
+            </select>
+            <span class="fiche-mini" id="diag-ccmu-desc"></span>
+          </div>
+        </div>
+        <div class="fiche-title">Diagnostic</div>
+        <div class="fiche-row"><label class="fiche-label">Diagnostic principal</label><input id="diag-main" type="text"/></div>
+        <div class="fiche-row"><label class="fiche-label">Diagnostics associes</label><textarea id="diag-assoc" rows="2"></textarea></div>
+        <div class="fiche-row"><label class="fiche-label">Conduite a tenir</label><textarea id="diag-plan" rows="3"></textarea></div>
+        <div class="fiche-section-end"><button id="diag-save" class="btn-submit" type="button">💾 Enregistrer le diagnostic</button></div>
+      </section>
+
+      <section class="fiche-panel" data-panel="sortie">
+        <div class="fiche-row"><label class="fiche-label">Date et heure de sortie</label><input id="so-dt" type="datetime-local"/></div>
+        <div class="fiche-row">
+          <label class="fiche-label">GEMSA</label>
+          <select id="so-gemsa">
+            <option value="">—</option><option value="1">1 - Consultation externe sans acte</option><option value="2">2 - Consultation externe avec acte</option><option value="3">3 - Hospitalisation programmee</option><option value="4">4 - Hospitalisation en urgence</option><option value="5">5 - Transfert</option><option value="6">6 - Deces</option>
+          </select>
+        </div>
+        <div class="fiche-row">
+          <label class="fiche-label">Mode de sortie</label>
+          <select id="so-mode">
+            <option value="">—</option><option>Retour domicile</option><option>Hospitalisation</option><option>Transfert autre etablissement</option><option>Fugue</option><option>Parti sans attendre</option><option>Contre avis medical</option><option>Deces</option><option>HAD</option>
+          </select>
+        </div>
+        <div class="fiche-row" id="so-hosp-row" style="display:none;"><label class="fiche-label">Service / Unite</label><input id="so-hosp" type="text"/></div>
+        <div class="fiche-row" id="so-trans-row" style="display:none;"><label class="fiche-label">Etablissement cible</label><input id="so-trans" type="text"/></div>
+        <div class="fiche-row">
+          <label class="fiche-label">Moyen de transport</label>
+          <select id="so-transport"><option>Autonome</option><option>VSL</option><option>Ambulance couchee</option><option>SMUR</option><option>Helicoptere</option></select>
+        </div>
+        <div class="fiche-row"><label class="fiche-label">Commentaire sortie</label><textarea id="so-comment" rows="2"></textarea></div>
+        <div class="fiche-section-end"><button id="so-close" class="btn-submit fiche-danger" type="button">🔴 Cloturer le dossier</button></div>
+      </section>
+    </div>
+  </div>
+</div>
+
 <!-- BOTTOM BAR -->
 <div id="bbar">
   <div class="bl">
@@ -443,14 +832,42 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
   </div>
 </div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, getDoc, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDa27t7jEnvsGNOHUvr9SRw10gS90qX7Ow",
+  authDomain: "sau96-urgences.firebaseapp.com",
+  projectId: "sau96-urgences",
+  storageBucket: "sau96-urgences.firebasestorage.app",
+  messagingSenderId: "807568498412",
+  appId: "1:807568498412:web:1a83fef33301ef1f604fc9"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const patientsRef = collection(db, "patients");
+
 // ══ DONNÉES ══
 let patients = [];
-let dossierCounter = 960001;
 let muterPatientId = null;
+let selectedSpeIAO = "";
+let selectedSpeIcon = "";
+
+const fbStatus=document.createElement("div");
+fbStatus.id="firebase-status";
+fbStatus.textContent="Connexion Firebase...";
+fbStatus.style.padding="4px 10px";
+fbStatus.style.fontSize="11px";
+fbStatus.style.color="#1a3a60";
+fbStatus.style.background="#eef4fc";
+fbStatus.style.borderBottom="1px solid #c8d8e8";
+document.body.insertBefore(fbStatus, document.body.firstChild);
 
 const SECTEURS_BOXES = {
-  cc:    ["CC.Box 1","CC.Box 2","CC.Box 3","CC.Box 4","CC.Box 5","CC.Box 6","CC.Salle de plâtre"],
+  cc:    ["CC.Box 1","CC.Box 2","CC.Box 3","CC.Box 4","CC.Box 5","CC.Box 6","CC.Salle de plâtre",
+          "CC.Couloir 1","CC.Couloir 2","CC.Couloir 3","CC.Couloir 4","CC.Couloir 5"],
   saupa: ["S.Box 1","S.Box 2","S.Box 3","S.Box 4","S.Box 5","S.Box 6","S.Box 7",
           "S.Salle de bain",
           "S.Zone d'attente 1","S.Zone d'attente 2","S.Zone d'attente 3","S.Zone d'attente 4",
@@ -467,9 +884,53 @@ const SECTEUR_LABELS = {
   cc:"Circuit Court", saupa:"SAUPA", sauv:"SAUV", uhcd:"Pasteur UHCD"
 };
 
+const TRI_META = {
+  "1": {help:"Prise en charge immédiate", color:"#cc0000"},
+  "2": {help:"Prise en charge < 20 min", color:"#cc6600"},
+  "3A": {help:"Prise en charge < 30 min", color:"#8020c0"},
+  "3B": {help:"Vu par médecin < 30 min", color:"#e08020"},
+  "4": {help:"Prise en charge < 2h", color:"#208020"},
+  "5": {help:"Prise en charge < 4h", color:"#60a060"},
+};
+
+const FRENCH_SPECIALITES = [
+  {code:"cardio", icon:"🫀", label:"Cardio-circulatoire", motifs:["Arrêt cardiorespiratoire","Hypotension artérielle","Membre douloureux froid ou pâle / ischémie","Douleur thoracique / SCA","Malaise","Tachycardie / tachyarythmie","Bradycardie / bradyarythmie","Dyspnée / insuffisance cardiaque","Dysfonction stimulateur / défibrillateur","Œdème membres inférieurs / IC","Palpitations","Hypertension artérielle","Membre douloureux chaud / phlébite"]},
+  {code:"resp", icon:"🫁", label:"Respiratoire", motifs:["Dyspnée / insuffisance respiratoire","Asthme ou aggravation BPCO","Hémoptysie","Douleur thoracique / embolie / pneumo","Corps étranger voies aériennes","Toux / bronchite"]},
+  {code:"neuro", icon:"🧠", label:"Neurologie", motifs:["Altération de la conscience / coma","Déficit moteur sensitif sensoriel / AVC","Convulsions","Confusion / désorientation","Céphalée","Vertiges / trouble de l'équilibre"]},
+  {code:"abdo", icon:"🤢", label:"Abdominal", motifs:["Vomissement de sang / hématémèse","Maelena / rectorragies","Douleur abdominale","Ictère","Problème technique stomie / cicatrice","Hernie masse distension abdominale","Corps étranger œsophage / estomac","Corps étranger rectum","Constipation","Vomissements","Diarrhée","Douleur anale","Hoquet"]},
+  {code:"gu", icon:"🚽", label:"Génito-urinaire", motifs:["Douleur fosse lombaire / flanc","Rétention d'urine / anurie","Douleur de bourse / torsion testicule","Dysfonction sonde urinaire / sonde JJ","Hématurie","Dysurie / brûlure mictionnelle","Écoulement ou lésion génitale"]},
+  {code:"gyne", icon:"🤰", label:"Gynéco-obstétrique", motifs:["Accouchement imminent ou réalisé","Problème grossesse 1er-2ème trimestre","Problème grossesse 3ème trimestre","Méno-métrorragie","Problème post-partum","Anomalie du sein","Anomalie vulvo-vaginale / corps étranger"]},
+  {code:"toxico", icon:"☠️", label:"Intoxication", motifs:["Intoxication médicamenteuse","Intoxication non médicamenteuse","Demande de sevrage / toxicomanie","Comportement ébrieux / ivresse"]},
+  {code:"trauma", icon:"🦴", label:"Traumatologie", motifs:["Traumatisme avec amputation","Traumatisme abdomen / thorax / cervical","Agression sexuelle et sévices","Brûlure","Traumatisme bassin / hanche / fémur / rachis","Traumatisme oculaire","Traumatisme maxillo-facial / oreille","Plaie","Traumatisme épaule ou distal de membre","Électrisation","Traumatisme crânien"]},
+  {code:"orl", icon:"🦷", label:"ORL / Stomatologie", motifs:["Épistaxis","Trouble audition / acouphènes","Tuméfaction ORL ou cervicale","Corps étranger ORL","Pathologie oreille / otite","Douleur gorge / angine","Obstruction nasale / rhinite / sinusite","Problème dent ou gencive"]},
+  {code:"opht", icon:"👁️", label:"Ophtalmologie", motifs:["Corps étranger / brûlure oculaire","Trouble visuel / œil douloureux / cécité","Démangeaison / œil rouge"]},
+  {code:"rhum", icon:"🧬", label:"Rhumatologie", motifs:["Douleur articulaire / arthrose / arthrite","Douleur rachidienne","Douleur de membre / sciatique"]},
+  {code:"pedia", icon:"🧒", label:"Pédiatrie ≤ 2 ans", motifs:["Dyspnée avec sifflement","Fièvre ≤ 3 mois","Convulsion hyperthermique","Diarrhée / vomissements nourrisson","Troubles alimentaires nourrisson","Bradycardie","Ictère néonatal","Tachycardie","Hypotension","Pleurs incoercibles"]},
+  {code:"psy", icon:"🧠", label:"Psychiatrie", motifs:["Idée / comportement suicidaire","Troubles du comportement / psychiatrie","Anxiété / dépression / consultation psychiatrique"]},
+  {code:"divers", icon:"🩺", label:"Divers / Infectiologie", motifs:["Fièvre","Exposition maladie contagieuse","AES / liquide biologique","Pathologie rare en poussée","Hypothermie","Hyperglycémie","Hypoglycémie","Anomalie résultat biologique","AEG / Asthénie","Coup de chaleur / insolation","Gelure / lésions froid","Allergie","Problème suite de soins","Renouvellement ordonnance","Examen administratif / certificat","Demande hébergement social"]},
+];
+
+const TRI_BY_MOTIF = {
+  "Arrêt cardiorespiratoire":"1","Hypotension artérielle":"2","Membre douloureux froid ou pâle / ischémie":"2","Douleur thoracique / SCA":"2","Malaise":"3B","Tachycardie / tachyarythmie":"3A","Bradycardie / bradyarythmie":"3A","Dyspnée / insuffisance cardiaque":"2","Dysfonction stimulateur / défibrillateur":"3A","Œdème membres inférieurs / IC":"4","Palpitations":"4","Hypertension artérielle":"4","Membre douloureux chaud / phlébite":"4",
+  "Dyspnée / insuffisance respiratoire":"2","Asthme ou aggravation BPCO":"2","Hémoptysie":"2","Douleur thoracique / embolie / pneumo":"2","Corps étranger voies aériennes":"2","Toux / bronchite":"5",
+  "Altération de la conscience / coma":"1","Déficit moteur sensitif sensoriel / AVC":"1","Convulsions":"2","Confusion / désorientation":"3A","Céphalée":"3B","Vertiges / trouble de l'équilibre":"4",
+  "Vomissement de sang / hématémèse":"2","Maelena / rectorragies":"2","Douleur abdominale":"3B","Ictère":"4","Problème technique stomie / cicatrice":"5","Hernie masse distension abdominale":"3B","Corps étranger œsophage / estomac":"3A","Corps étranger rectum":"4","Constipation":"5","Vomissements":"4","Diarrhée":"4","Douleur anale":"5","Hoquet":"5",
+  "Douleur fosse lombaire / flanc":"3B","Rétention d'urine / anurie":"3A","Douleur de bourse / torsion testicule":"2","Dysfonction sonde urinaire / sonde JJ":"4","Hématurie":"4","Dysurie / brûlure mictionnelle":"5","Écoulement ou lésion génitale":"5",
+  "Accouchement imminent ou réalisé":"1","Problème grossesse 1er-2ème trimestre":"3B","Problème grossesse 3ème trimestre":"2","Méno-métrorragie":"3B","Problème post-partum":"3A","Anomalie du sein":"5","Anomalie vulvo-vaginale / corps étranger":"4",
+  "Intoxication médicamenteuse":"2","Intoxication non médicamenteuse":"2","Demande de sevrage / toxicomanie":"4","Comportement ébrieux / ivresse":"3B",
+  "Traumatisme avec amputation":"1","Traumatisme abdomen / thorax / cervical":"2","Agression sexuelle et sévices":"2","Brûlure":"2","Traumatisme bassin / hanche / fémur / rachis":"2","Traumatisme oculaire":"3A","Traumatisme maxillo-facial / oreille":"3B","Plaie":"4","Traumatisme épaule ou distal de membre":"4","Électrisation":"2","Traumatisme crânien":"3A",
+  "Épistaxis":"4","Trouble audition / acouphènes":"5","Tuméfaction ORL ou cervicale":"4","Corps étranger ORL":"3B","Pathologie oreille / otite":"5","Douleur gorge / angine":"5","Obstruction nasale / rhinite / sinusite":"5","Problème dent ou gencive":"5",
+  "Corps étranger / brûlure oculaire":"3A","Trouble visuel / œil douloureux / cécité":"2","Démangeaison / œil rouge":"5",
+  "Douleur articulaire / arthrose / arthrite":"5","Douleur rachidienne":"4","Douleur de membre / sciatique":"4",
+  "Dyspnée avec sifflement":"2","Fièvre ≤ 3 mois":"2","Convulsion hyperthermique":"2","Diarrhée / vomissements nourrisson":"3A","Troubles alimentaires nourrisson":"3B","Bradycardie":"2","Ictère néonatal":"3B","Tachycardie":"3A","Hypotension":"2","Pleurs incoercibles":"3B",
+  "Idée / comportement suicidaire":"2","Troubles du comportement / psychiatrie":"3B","Anxiété / dépression / consultation psychiatrique":"4",
+  "Fièvre":"4","Exposition maladie contagieuse":"5","AES / liquide biologique":"5","Pathologie rare en poussée":"4","Hypothermie":"2","Hyperglycémie":"4","Hypoglycémie":"2","Anomalie résultat biologique":"5","AEG / Asthénie":"5","Coup de chaleur / insolation":"3A","Gelure / lésions froid":"4","Allergie":"3A","Problème suite de soins":"5","Renouvellement ordonnance":"5","Examen administratif / certificat":"5","Demande hébergement social":"5"
+};
+
 // ══ HELPERS ══
-function elapsed(ms){
-  const s=Math.max(0,Math.floor((Date.now()-ms)/1000));
+function elapsed(iso){
+  const ms=Date.now()-new Date(iso).getTime();
+  const s=Math.max(0,Math.floor(ms/1000));
   const h=Math.floor(s/3600),m=Math.floor((s%3600)/60);
   if(h>0) return h+"h"+String(m).padStart(2,"0")+"m";
   return m+"min";
@@ -489,8 +950,91 @@ function formatDDN(ddn){
   return d+"/"+m+"/"+y;
 }
 
-function nextDossier(){
-  return String(dossierCounter++);
+async function nextDossier(){
+  const snapshot=await getDocs(patientsRef);
+  const count=snapshot.size;
+  return "96"+String(count+1).padStart(4,"0");
+}
+
+function findPatientById(id){
+  return patients.find(x=>String(x.id)===String(id));
+}
+
+async function updatePatientFirestore(patientId, patch){
+  const p=findPatientById(patientId);
+  if(!p||!p._docId) return;
+  const ref=doc(db,"patients",p._docId);
+  await updateDoc(ref, patch);
+}
+
+function patientBgClass(p){
+  const tri=p.triIAO||"5";
+  if(tri==="1") return "bg-rouge";
+  if(tri==="2") return "bg-rouge2";
+  if(tri==="3A"||tri==="3B") return "bg-orange";
+  if(tri==="4") return "bg-vert";
+  return "bg-vert2";
+}
+
+function patientDotClass(p){
+  const tri=p.triIAO||"5";
+  if(tri==="1"||tri==="2") return "";
+  if(tri==="3A"||tri==="3B") return "o";
+  return "g";
+}
+
+function escapeHtml(txt){
+  return String(txt||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;").replace(/'/g,"&#39;");
+}
+
+function renderSpecialites(){
+  const host=document.getElementById("f-spe-grid");
+  host.innerHTML=FRENCH_SPECIALITES.map(s=>
+    `<button type="button" class="spe-btn ${selectedSpeIAO===s.code?"active":""}" onclick="selectSpecialite('${s.code}')">`+
+      `<span>${s.icon}</span><span>${s.label}</span>`+
+    `</button>`
+  ).join("");
+}
+
+function selectSpecialite(code){
+  selectedSpeIAO=code;
+  const sp=FRENCH_SPECIALITES.find(x=>x.code===code);
+  selectedSpeIcon=sp?sp.icon:"";
+  renderSpecialites();
+
+  const sel=document.getElementById("f-motif-iao");
+  if(!sp){
+    sel.disabled=true;
+    sel.innerHTML='<option value="">— Choisir une spécialité d\'abord —</option>';
+    return;
+  }
+  sel.disabled=false;
+  sel.innerHTML='<option value="">— Choisir —</option>'+sp.motifs.map(m=>`<option value="${escapeHtml(m)}">${escapeHtml(m)}</option>`).join("");
+  sel.value="";
+  updateTriBadge("","");
+}
+
+function updateTriBadge(tri, help){
+  const b=document.getElementById("f-tri-badge");
+  const h=document.getElementById("f-tri-help");
+  if(!tri){
+    b.style.display="none";
+    b.textContent="Tri -";
+    b.style.background="#777";
+    h.textContent="";
+    return;
+  }
+  b.style.display="inline-block";
+  b.textContent="Tri "+tri;
+  b.style.background=(TRI_META[tri]||TRI_META["5"]).color;
+  h.textContent=help||"";
+}
+
+function updateTriFromMotif(){
+  const motif=document.getElementById("f-motif-iao").value;
+  const tri=TRI_BY_MOTIF[motif]||"5";
+  const meta=TRI_META[tri]||TRI_META["5"];
+  updateTriBadge(motif?tri:"", motif?meta.help:"");
 }
 
 function statutCssClass(p){
@@ -502,36 +1046,37 @@ function statutLabel(p){
   return "En attente";
 }
 
-function ccmuColor(ccmu){
-  const map={"1":"#20a020","2":"#20a020","3":"#d87020","4":"#d82020","5":"#8020d8","P":"#2060d0","D":"#555"};
-  return map[ccmu]||"#333";
-}
-
-// ══ RENDU TABLEAU ACCUEIL ══
+// ══ RENDU BLOCS ACCUEIL ══
 function renderAccueil(){
-  const tbody=document.getElementById("tbody-accueil");
+  const list=document.getElementById("accueil-list");
   if(!patients.length){
-    tbody.innerHTML='<tr><td colspan="12" style="text-align:center;padding:20px;color:#888;font-style:italic;">Aucun patient enregistré</td></tr>';
+    list.innerHTML='<div class="accueil-empty">Aucun patient enregistré — cliquez sur "+ Entrée administrative"</div>';
     updateCounters(); return;
   }
-  tbody.innerHTML=patients.map(p=>`
-    <tr data-id="${p.id}">
-      <td><b>${p.dossier}</b></td>
-      <td><b>${p.nom}</b> ${p.prenom}</td>
-      <td>${formatDDN(p.ddn)} / ${calcAge(p.ddn)}</td>
-      <td>${p.sexe}</td>
-      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${p.motif}">${p.motif}</td>
-      <td style="text-align:center;font-weight:bold;color:${ccmuColor(p.ccmu)};">${p.ccmu}</td>
-      <td>${p.circuit}</td>
-      <td>${p.medecin||"—"}</td>
-      <td>${p.mode}</td>
-      <td><span class="pt-chron" data-a="${p.arrive}">${elapsed(p.arrive)}</span></td>
-      <td><span class="badge-statut ${statutCssClass(p)}">${statutLabel(p)}</span></td>
-      <td>
-        <button class="btn-action btn-fiche" onclick="voirFiche(${p.id})">Fiche</button>
-        ${!p.secteur?`<button class="btn-action btn-muter" onclick="openMuter(${p.id})">Muter →</button>`:'<span style="color:#888;font-size:10px;">Muté</span>'}
-      </td>
-    </tr>
+  list.innerHTML=patients.map(p=>`
+    <div class="pt-block accueil ${patientBgClass(p)}" data-id="${p.id}" onclick="voirFiche(${p.id})">
+      <div class="pt-top">
+        <div class="pt-dot ${patientDotClass(p)}"></div>
+        <div class="pt-nom">${p.nom}<br>${p.prenom}</div>
+        <div class="pt-icos">
+          <div class="pic">🔍</div>
+          <div class="pic">${p.sexe==="H"?"♂":"♀"}</div>
+          <div class="pic tip">${p.speIcon||"🩺"}<span class="pic-tip">${escapeHtml((p.speIcon||"🩺")+" "+(p.motifIAO||"Motif non renseigné")+" — Tri "+(p.triIAO||"5")+" — "+(p.triLabel||TRI_META["5"].help))}</span></div>
+        </div>
+      </div>
+      <div class="pt-bot">
+        <span class="pt-chron" data-a="${p.arrive}">${elapsed(p.arrive)}</span>
+        <span class="pt-tag">${p.mode}</span>
+        <span class="pt-sa">${p.sexe} ${calcAge(p.ddn)}</span>
+        <span class="pt-num">${p.dossier}</span>
+      </div>
+      <div class="pt-actions">
+        <button class="btn-action btn-fiche" onclick="event.stopPropagation();voirFiche(${p.id})">Fiche</button>
+        ${!p.secteur
+          ? `<button class="btn-action btn-muter" onclick="event.stopPropagation();openMuter(${p.id})">Muter →</button>`
+          : '<span style="color:#fff;font-size:10px;align-self:center;padding:0 4px;">Muté</span>'}
+      </div>
+    </div>
   `).join("");
   updateCounters();
 }
@@ -541,60 +1086,78 @@ function renderSecteur(secteurId){
   const boxes=SECTEURS_BOXES[secteurId]||[];
   const pts=patients.filter(p=>p.secteur===secteurId);
   const board=document.getElementById("board");
+  board.classList.toggle("cc-layout", secteurId==="cc");
   board.innerHTML="";
 
-  // Calculer nb colonnes
-  const nbCols = secteurId==="saupa" ? 3 : secteurId==="uhcd" ? 2 : 2;
-  const colSize = Math.ceil(boxes.length/nbCols);
-  const cols=[];
-  for(let i=0;i<nbCols;i++){
-    const div=document.createElement("div");
-    div.className="col col-lg";
-    cols.push(div);
-    board.appendChild(div);
-  }
-
-  boxes.forEach((b,idx)=>{
-    const colIdx=Math.floor(idx/colSize);
-    const col=cols[Math.min(colIdx,cols.length-1)];
-
+  function appendBox(col, boxName){
     const lbl=document.createElement("div");
-    lbl.className="box-lbl"; lbl.textContent=b;
+    lbl.className="box-lbl";
+    lbl.textContent=boxName;
     col.appendChild(lbl);
 
-    const boxPts=pts.filter(p=>p.box===b);
+    const boxPts=pts.filter(p=>p.box===boxName);
     if(!boxPts.length){
       const v=document.createElement("div");
-      v.className="pt-vide"; v.textContent="Vide";
+      v.className="pt-vide";
+      v.textContent="Vide";
       col.appendChild(v);
-    } else {
-      boxPts.forEach(p=>{
-        const d=document.createElement("div");
-        const bg=parseInt(p.ccmu)>=4?"bg-rouge":p.ccmu==="3"?"bg-orange":"bg-vert";
-        d.className="pt-block "+bg;
-        const dotc=parseInt(p.ccmu)>=4?"":"g";
-        d.innerHTML=
-          `<div class="pt-top">`+
-            `<div class="pt-dot ${dotc}"></div>`+
-            `<div class="pt-nom">${p.nom}<br>${p.prenom}</div>`+
-            `<div class="pt-icos"><div class="pic">🔍</div><div class="pic">${p.sexe==="H"?"♂":"♀"}</div></div>`+
-          `</div>`+
-          `<div class="pt-bot">`+
-            `<span class="pt-chron" data-a="${p.arrive}">${elapsed(p.arrive)}</span>`+
-            `<span class="pt-tag">${p.mode}</span>`+
-            `<span class="pt-sa">${p.sexe} ${calcAge(p.ddn)}</span>`+
-            `<span class="pt-num">${p.dossier}</span>`+
-          `</div>`;
-        d.onclick=()=>voirFiche(p.id);
-        col.appendChild(d);
-      });
+      return;
     }
-  });
+
+    boxPts.forEach(p=>{
+      const d=document.createElement("div");
+      d.className="pt-block "+patientBgClass(p);
+      d.innerHTML=
+        `<div class="pt-top">`+
+          `<div class="pt-dot ${patientDotClass(p)}"></div>`+
+          `<div class="pt-nom">${p.nom}<br>${p.prenom}</div>`+
+            `<div class="pt-icos"><div class="pic">🔍</div><div class="pic">${p.sexe==="H"?"♂":"♀"}</div><div class="pic tip">${p.speIcon||"🩺"}<span class="pic-tip">${escapeHtml((p.speIcon||"🩺")+" "+(p.motifIAO||"Motif non renseigné")+" — Tri "+(p.triIAO||"5")+" — "+(p.triLabel||TRI_META["5"].help))}</span></div></div>`+
+        `</div>`+
+        `<div class="pt-bot">`+
+          `<span class="pt-chron" data-a="${p.arrive}">${elapsed(p.arrive)}</span>`+
+          `<span class="pt-tag">${p.mode}</span>`+
+          `<span class="pt-sa">${p.sexe} ${calcAge(p.ddn)}</span>`+
+          `<span class="pt-num">${p.dossier}</span>`+
+        `</div>`;
+      d.onclick=()=>voirFiche(p.id);
+      col.appendChild(d);
+    });
+  }
+
+  if(secteurId==="cc"){
+    const left=document.createElement("div");
+    left.className="col cc-col";
+    const right=document.createElement("div");
+    right.className="col cc-col";
+    board.appendChild(left);
+    board.appendChild(right);
+
+    ["CC.Box 1","CC.Box 2","CC.Box 3","CC.Box 4","CC.Box 5","CC.Box 6","CC.Salle de plâtre"].forEach(b=>appendBox(left,b));
+    ["CC.Couloir 1","CC.Couloir 2","CC.Couloir 3","CC.Couloir 4","CC.Couloir 5"].forEach(b=>appendBox(right,b));
+  } else {
+
+    // Calculer nb colonnes
+    const nbCols = secteurId==="saupa" ? 3 : 2;
+    const colSize = Math.ceil(boxes.length/nbCols);
+    const cols=[];
+    for(let i=0;i<nbCols;i++){
+      const div=document.createElement("div");
+      div.className="col col-lg";
+      cols.push(div);
+      board.appendChild(div);
+    }
+
+    boxes.forEach((b,idx)=>{
+      const colIdx=Math.floor(idx/colSize);
+      const col=cols[Math.min(colIdx,cols.length-1)];
+      appendBox(col,b);
+    });
+  }
 
   // Sidebar secteur
   document.getElementById("s2-tot").textContent=pts.length+" dossiers";
-  document.getElementById("s2-att").textContent=pts.filter(p=>parseInt(p.ccmu)>=3).length+" En attente";
-  document.getElementById("s2-ok").textContent=pts.filter(p=>parseInt(p.ccmu)<3).length+" Pris en charge";
+  document.getElementById("s2-att").textContent=pts.filter(p=>["1","2","3A","3B"].includes(p.triIAO)).length+" En attente";
+  document.getElementById("s2-ok").textContent=pts.filter(p=>["4","5"].includes(p.triIAO||"5")).length+" Pris en charge";
 }
 
 // ══ TABS / SECTEURS ══
@@ -632,52 +1195,110 @@ function switchVue(vue){
 }
 
 // ══ MODAL ENTRÉE ══
-function openEntree(){
-  document.getElementById("f-dossier").value=dossierCounter;
+async function openEntree(){
+  document.getElementById("f-dossier").value="...";
+  try{
+    document.getElementById("f-dossier").value=await nextDossier();
+  }catch(e){
+    document.getElementById("f-dossier").value="Erreur";
+    alert("Erreur Firebase : "+e.message);
+  }
   document.getElementById("f-nom").value="";
   document.getElementById("f-prenom").value="";
   document.getElementById("f-ddn").value="";
   document.getElementById("f-sexe").value="";
   document.getElementById("f-motif").value="";
-  document.getElementById("f-ccmu").value="";
-  document.getElementById("f-circuit").value="";
-  document.getElementById("f-medecin").value="";
+  document.getElementById("f-hypo").value="";
+  selectedSpeIAO="";
+  selectedSpeIcon="";
+  renderSpecialites();
+  document.getElementById("f-motif-iao").disabled=true;
+  document.getElementById("f-motif-iao").innerHTML='<option value="">— Choisir une spécialité d\'abord —</option>';
+  updateTriBadge("","");
+  document.getElementById("f-douleur").value="Aucune";
+  document.getElementById("f-eva").value="";
+  document.getElementById("f-ta").value="";
+  document.getElementById("f-fc").value="";
+  document.getElementById("f-spo2").value="";
+  document.getElementById("f-fr").value="";
+  document.getElementById("f-temp").value="";
+  document.getElementById("f-allergie").value="";
+  document.getElementById("f-comment").value="";
   document.getElementById("f-mode").value="Seul";
+  toggleEva();
   document.getElementById("modal-entree").classList.add("open");
 }
 
-function validerEntree(){
+function toggleEva(){
+  const douleur=document.getElementById("f-douleur").value;
+  const row=document.getElementById("row-eva");
+  const eva=document.getElementById("f-eva");
+  const show=douleur!=="Aucune";
+  row.style.display=show?"flex":"none";
+  if(!show) eva.value="";
+}
+
+async function validerEntree(){
   const nom=document.getElementById("f-nom").value.trim().toUpperCase();
   const prenom=document.getElementById("f-prenom").value.trim();
   const ddn=document.getElementById("f-ddn").value;
   const sexe=document.getElementById("f-sexe").value;
   const motif=document.getElementById("f-motif").value.trim();
-  const ccmu=document.getElementById("f-ccmu").value;
-  const circuit=document.getElementById("f-circuit").value;
-  const medecin=document.getElementById("f-medecin").value.trim();
+  const hypothese=document.getElementById("f-hypo").value.trim();
+  const motifIAO=document.getElementById("f-motif-iao").value;
+  const triIAO=TRI_BY_MOTIF[motifIAO]||"";
+  const triLabel=triIAO ? TRI_META[triIAO].help : "";
+  const douleur=document.getElementById("f-douleur").value;
+  const eva=document.getElementById("f-eva").value;
+  const ta=document.getElementById("f-ta").value.trim();
+  const fc=document.getElementById("f-fc").value;
+  const spo2=document.getElementById("f-spo2").value;
+  const fr=document.getElementById("f-fr").value;
+  const temp=document.getElementById("f-temp").value;
+  const allergie=document.getElementById("f-allergie").value.trim();
+  const commentaire=document.getElementById("f-comment").value.trim();
   const mode=document.getElementById("f-mode").value;
 
-  if(!nom||!prenom||!ddn||!sexe||!motif||!ccmu||!circuit){
+  if(!nom||!prenom||!ddn||!sexe||!motif||!hypothese||!selectedSpeIAO||!motifIAO||!triIAO){
     alert("Merci de remplir tous les champs obligatoires (*)"); return;
   }
 
-  patients.push({
-    id: Date.now(),
-    dossier: nextDossier(),
-    nom, prenom, ddn, sexe, motif, ccmu, circuit, medecin, mode,
-    arrive: Date.now(),
-    secteur: null,
-    box: null,
-  });
+  if(douleur!=="Aucune" && (eva==="" || +eva<0 || +eva>10)){
+    alert("Renseigner une EVA valide entre 0 et 10."); return;
+  }
 
-  closeModal("modal-entree");
-  renderAccueil();
+  try{
+    await addDoc(patientsRef, {
+      id: Date.now(),
+      dossier: await nextDossier(),
+      nom, prenom, ddn, sexe, mode,
+      motif,
+      hypothese,
+      speIAO: selectedSpeIAO,
+      speIcon: selectedSpeIcon,
+      motifIAO,
+      triIAO,
+      triLabel,
+      douleur,
+      eva: douleur!=="Aucune" ? eva : "",
+      constantes: {ta, fc, spo2, fr, temp},
+      allergie,
+      commentaire,
+      arrive: new Date().toISOString(),
+      secteur: null,
+      box: null,
+      medical:{}, prescriptions:[], biologie:{selected:{},results:{}}, imagerie:[], evolution:[], diagnostic:{}, sortie:{}
+    });
+    closeModal("modal-entree");
+  }catch(e){
+    alert("Erreur Firebase : "+e.message);
+  }
 }
 
 // ══ MODAL MUTATION ══
 function openMuter(id){
   muterPatientId=id;
-  const p=patients.find(x=>x.id===id);
+  const p=findPatientById(id);
   if(!p) return;
   document.getElementById("m-patient").value=p.nom+" "+p.prenom+" — Dossier "+p.dossier;
   document.getElementById("m-secteur").value="";
@@ -698,21 +1319,562 @@ function updateBoxes(){
   }
 }
 
-function validerMutation(){
+async function validerMutation(){
   const secteur=document.getElementById("m-secteur").value;
   const box=document.getElementById("m-box").value;
   if(!secteur||!box){alert("Choisir un secteur et une box.");return;}
-  const p=patients.find(x=>x.id===muterPatientId);
-  if(p){p.secteur=secteur;p.box=box;}
-  closeModal("modal-muter");
-  renderAccueil();
+  try{
+    await updatePatientFirestore(muterPatientId,{secteur,box});
+    closeModal("modal-muter");
+  }catch(e){
+    alert("Erreur Firebase : "+e.message);
+  }
 }
 
 // ══ FICHE (placeholder) ══
 function voirFiche(id){
-  const p=patients.find(x=>x.id===id);
+  const p=findPatientById(id);
   if(!p) return;
-  alert(`── Dossier ${p.dossier} ──\n${p.nom} ${p.prenom}\nNé(e) le ${formatDDN(p.ddn)} (${calcAge(p.ddn)})\nSexe : ${p.sexe}\nCCMU : ${p.ccmu} — Circuit : ${p.circuit}\nMotif : ${p.motif}\nMédecin : ${p.medecin||"—"}\nArrivée : ${p.mode}\nLocalisé : ${p.secteur?SECTEUR_LABELS[p.secteur]+" / "+p.box:"Accueil"}`);
+
+  const modal=document.getElementById("modal-fiche");
+  if(!modal) return;
+
+  const CCMU_DESC={
+    "1":"Etat stable, pas d'acte complementaire",
+    "2":"Etat stable, actes diagnostiques ou therapeutiques",
+    "3":"Pronostic fonctionnel ou vital pouvant s'aggraver",
+    "4":"Pronostic vital engage, pas de manœuvre de reanimation",
+    "5":"Pronostic vital engage, manœuvres de reanimation",
+    "P":"Probleme psychiatrique dominant",
+    "D":"Patient decede"
+  };
+  const CCMU_COL={"1":"#38b838","2":"#60b060","3":"#e08020","4":"#d85030","5":"#d83030","P":"#7a40c0","D":"#555"};
+  const BIO_EXAMS={
+    "NFS":{"fam":"Hematologie","tube":"#cc66aa","u":"G/L","n":"4-10"},
+    "CRP":{"fam":"Biochimie","tube":"#f4d03f","u":"mg/L","n":"<5"},
+    "ASAT":{"fam":"Biochimie","tube":"#f4d03f","u":"UI/L","n":"<45"},
+    "ALAT":{"fam":"Biochimie","tube":"#f4d03f","u":"UI/L","n":"<45"},
+    "Bilirubine":{"fam":"Biochimie","tube":"#f4d03f","u":"umol/L","n":"<20"},
+    "Na+":{"fam":"Biochimie","tube":"#f4d03f","u":"mmol/L","n":"135-145"},
+    "K+":{"fam":"Biochimie","tube":"#f4d03f","u":"mmol/L","n":"3.5-5.1"},
+    "Creatinine":{"fam":"Biochimie","tube":"#f4d03f","u":"umol/L","n":"60-110"},
+    "TP":{"fam":"Hemostase","tube":"#8ecae6","u":"%","n":"70-100"},
+    "TCA":{"fam":"Hemostase","tube":"#8ecae6","u":"sec","n":"25-35"},
+    "Troponine":{"fam":"Biochimie","tube":"#f4d03f","u":"ng/L","n":"<14"},
+    "BNP":{"fam":"Biochimie","tube":"#f4d03f","u":"pg/mL","n":"<100"},
+    "Lactates":{"fam":"Biochimie","tube":"#95d5b2","u":"mmol/L","n":"<2"},
+    "GDS":{"fam":"Biochimie","tube":"#95d5b2","u":"","n":"pH 7.35-7.45"},
+    "Groupage":{"fam":"Immunologie","tube":"#ffcad4","u":"","n":""},
+    "RAI":{"fam":"Immunologie","tube":"#ffcad4","u":"","n":"Negative"},
+    "Alcoolemie":{"fam":"Biochimie","tube":"#f4d03f","u":"g/L","n":"0"},
+    "Toxiques urinaires":{"fam":"Microbiologie","tube":"#bde0fe","u":"","n":"Negatif"},
+    "β-HCG":{"fam":"Immunologie","tube":"#ffcad4","u":"UI/L","n":"<5"}
+  };
+  const BIO_PROTO={
+    "BBS":["NFS","CRP","Na+","K+","Creatinine"],
+    "NFS-CRP":["NFS","CRP"],
+    "Bilan hepatique":["ASAT","ALAT","Bilirubine"],
+    "Ionogramme":["Na+","K+","Creatinine"],
+    "Hemostase":["TP","TCA"],
+    "Troponine":["Troponine"],
+    "BNP":["BNP"],
+    "Lactates":["Lactates"],
+    "GDS":["GDS"],
+    "Groupage / RAI":["Groupage","RAI"],
+    "Alcoolemie":["Alcoolemie"],
+    "Toxiques urinaires":["Toxiques urinaires"],
+    "β-HCG":["β-HCG"]
+  };
+
+  const nowLabel=(ts)=>{
+    const d=new Date(ts||Date.now()), pad=n=>String(n).padStart(2,"0");
+    return pad(d.getHours())+":"+pad(d.getMinutes())+" — "+pad(d.getDate())+"/"+pad(d.getMonth()+1)+"/"+d.getFullYear();
+  };
+  const nowHm=(ts)=>{
+    const d=new Date(ts||Date.now()), pad=n=>String(n).padStart(2,"0");
+    return pad(d.getHours())+":"+pad(d.getMinutes());
+  };
+  const dtLocal=(ts)=>{
+    const d=new Date(ts||Date.now()), pad=n=>String(n).padStart(2,"0");
+    return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())+"T"+pad(d.getHours())+":"+pad(d.getMinutes());
+  };
+  const ccmuBadge=(v)=>v?`<span class="fiche-badge" style="background:${CCMU_COL[v]||"#777"};">CCMU ${v}</span>`:'<span class="fiche-badge fiche-badge-light">CCMU —</span>';
+  const getP=()=>findPatientById(modal.dataset.pid);
+  const setClosedStyle=(pt)=>{
+    document.querySelectorAll(`.pt-block[data-id="${pt.id}"]`).forEach(el=>{
+      el.style.background="#aaa";
+      el.style.color="#fff";
+      const host=el.querySelector(".pt-actions")||el.querySelector(".pt-bot");
+      if(host && !el.querySelector(".pt-closed-tag")){
+        const tg=document.createElement("span");
+        tg.className="pt-closed-tag badge-statut";
+        tg.textContent="Clôturé";
+        tg.style.background="#666";
+        tg.style.color="#fff";
+        host.appendChild(tg);
+      }
+    });
+    document.querySelectorAll("#board .pt-block").forEach(el=>{
+      const num=el.querySelector(".pt-num");
+      if(num && num.textContent===pt.dossier){
+        el.style.background="#aaa";
+        el.style.color="#fff";
+        const host=el.querySelector(".pt-bot");
+        if(host && !el.querySelector(".pt-closed-tag")){
+          const tg=document.createElement("span");
+          tg.className="pt-closed-tag badge-statut";
+          tg.textContent="Clôturé";
+          tg.style.background="#666";
+          tg.style.color="#fff";
+          host.appendChild(tg);
+        }
+      }
+    });
+  };
+
+  if(!window.__ficheInit){
+    window.__ficheInit=true;
+
+    const closeFiche=()=>{modal.classList.remove("open");document.body.classList.remove("fiche-open");};
+    document.getElementById("fiche-close").onclick=closeFiche;
+    modal.addEventListener("click",e=>{if(e.target===modal) closeFiche();});
+    if(!window.__ficheClosedTick){
+      window.__ficheClosedTick=setInterval(()=>patients.filter(x=>x.cloture).forEach(setClosedStyle),1000);
+    }
+
+    document.getElementById("fiche-tabs").addEventListener("click",e=>{
+      const t=e.target.closest(".fiche-tab");
+      if(!t) return;
+      document.querySelectorAll(".fiche-tab").forEach(x=>x.classList.remove("active"));
+      t.classList.add("active");
+      const tab=t.dataset.tab;
+      document.querySelectorAll(".fiche-panel").forEach(pn=>pn.classList.toggle("active",pn.dataset.panel===tab));
+    });
+
+    document.querySelectorAll(".fiche-acc-h").forEach(h=>h.addEventListener("click",()=>h.parentElement.classList.toggle("open")));
+
+    document.getElementById("fh-btn-ccmu").onclick=()=>{
+      const blk=document.getElementById("fh-ccmu-inline");
+      blk.style.display=blk.style.display==="none"?"flex":"none";
+    };
+    document.getElementById("fh-ccmu-valider").onclick=async ()=>{
+      const pt=getP(); if(!pt) return;
+      const v=document.getElementById("fh-ccmu-select").value;
+      if(!v){alert("Choisir un CCMU.");return;}
+      try{
+        await updatePatientFirestore(pt.id,{
+          ccmu:v,
+          diagnostic:{...(pt.diagnostic||{}),lastModified:Date.now()}
+        });
+      }catch(e){
+        alert("Erreur Firebase : "+e.message);
+      }
+    };
+
+    document.querySelectorAll("[data-save-med]").forEach(btn=>btn.addEventListener("click",async ()=>{
+      const pt=getP(); if(!pt) return;
+      const med={...(pt.medical||{})};
+      const sec=btn.dataset.saveMed;
+      if(sec==="personnels"){
+        med.personnels={
+          texte:document.getElementById("med-pers-txt").value,
+          rapides:{
+            hta:document.getElementById("med-hta").checked,
+            diabete:document.getElementById("med-diabete").checked,
+            cardio:document.getElementById("med-cardio").checked,
+            bpco:document.getElementById("med-bpco").checked,
+            insuffRenale:document.getElementById("med-ir").checked,
+            anticoagulants:document.getElementById("med-anti").checked,
+            immunodepression:document.getElementById("med-immuno").checked
+          },
+          savedAt:Date.now()
+        };
+      }
+      if(sec==="familiaux") med.familiaux={texte:document.getElementById("med-fam-txt").value,savedAt:Date.now()};
+      if(sec==="traitements"){
+        med.traitements={
+          texte:document.getElementById("med-trait-txt").value,
+          liste:Array.from(document.querySelectorAll(".med-line")).map(i=>i.value.trim()).filter(Boolean),
+          savedAt:Date.now()
+        };
+      }
+      if(sec==="allergies") med.allergies={texte:document.getElementById("med-allergies").value,savedAt:Date.now()};
+      if(sec==="examen"){
+        med.examen={
+          etat:document.getElementById("med-etat").value,
+          gcs:document.getElementById("med-gcs").value,
+          hemo:document.getElementById("med-hemo").value,
+          examen:document.getElementById("med-examen").value,
+          constantes:{
+            ta:document.getElementById("med-ta").value,fc:document.getElementById("med-fc").value,
+            spo2:document.getElementById("med-spo2").value,fr:document.getElementById("med-fr").value,
+            temp:document.getElementById("med-temp").value,glycemie:document.getElementById("med-gly").value
+          },
+          savedAt:Date.now()
+        };
+      }
+      if(sec==="complements") med.complements={texte:document.getElementById("med-complements").value,savedAt:Date.now()};
+      try{
+        await updatePatientFirestore(pt.id,{medical:med});
+        alert("Section medicale enregistree.");
+      }catch(e){
+        alert("Erreur Firebase : "+e.message);
+      }
+    }));
+
+    document.getElementById("med-add-line").onclick=()=>{
+      const box=document.getElementById("med-meds-list");
+      const inp=document.createElement("input");
+      inp.type="text"; inp.className="med-line"; inp.placeholder="Medicament habituel";
+      inp.style.marginTop="4px";
+      box.appendChild(inp);
+    };
+
+    document.getElementById("pr-add").onclick=async ()=>{
+      const pt=getP(); if(!pt) return;
+      const med=document.getElementById("pr-med").value.trim();
+      if(!med){alert("Renseigner le medicament.");return;}
+      const nextPrescriptions=[...(pt.prescriptions||[]),{
+        id:Date.now(),heure:nowHm(),medicament:med,voie:document.getElementById("pr-voie").value,
+        posologie:document.getElementById("pr-poso").value,frequence:document.getElementById("pr-freq").value,
+        duree:document.getElementById("pr-duree").value,prescripteur:"GOLF Stan",statut:"En attente"
+      }];
+      try{
+        await updatePatientFirestore(pt.id,{prescriptions:nextPrescriptions});
+        document.getElementById("pr-med").value="";
+        document.getElementById("pr-poso").value="";
+        document.getElementById("pr-duree").value="";
+      }catch(e){
+        alert("Erreur Firebase : "+e.message);
+      }
+    };
+
+    document.getElementById("pr-tbody").addEventListener("click",async e=>{
+      const pt=getP(); if(!pt) return;
+      const idp=+(e.target.dataset.id||0);
+      const list=[...(pt.prescriptions||[])];
+      const pr=list.find(x=>x.id===idp);
+      if(!pr) return;
+      if(e.target.dataset.act==="admin") pr.statut="Administre";
+      if(e.target.dataset.act==="annule") pr.statut="Annule";
+      try{
+        await updatePatientFirestore(pt.id,{prescriptions:list});
+      }catch(e2){
+        alert("Erreur Firebase : "+e2.message);
+      }
+    });
+
+    document.getElementById("bio-protocols").addEventListener("click",async e=>{
+      const pt=getP(); if(!pt) return;
+      const b=e.target.closest("[data-proto]"); if(!b) return;
+      const k=b.dataset.proto;
+      const bio={...(pt.biologie||{selected:{},results:{}}),selected:{...((pt.biologie&&pt.biologie.selected)||{})}};
+      (BIO_PROTO[k]||[]).forEach(ex=>{bio.selected[ex]=true;});
+      try{
+        await updatePatientFirestore(pt.id,{biologie:bio});
+      }catch(e2){
+        alert("Erreur Firebase : "+e2.message);
+      }
+    });
+
+    document.getElementById("bio-exams").addEventListener("change",async e=>{
+      const pt=getP(); if(!pt) return;
+      if(!e.target.matches("input[type='checkbox'][data-ex]")) return;
+      const bio={...(pt.biologie||{selected:{},results:{}}),selected:{...((pt.biologie&&pt.biologie.selected)||{})}};
+      bio.selected[e.target.dataset.ex]=e.target.checked;
+      try{
+        await updatePatientFirestore(pt.id,{biologie:bio});
+      }catch(e2){
+        alert("Erreur Firebase : "+e2.message);
+      }
+    });
+
+    document.getElementById("bio-results").addEventListener("input",async e=>{
+      const pt=getP(); if(!pt) return;
+      if(!e.target.matches("input[data-res]")) return;
+      const bio={...(pt.biologie||{selected:{},results:{}}),results:{...((pt.biologie&&pt.biologie.results)||{})},selected:{...((pt.biologie&&pt.biologie.selected)||{})}};
+      bio.results[e.target.dataset.res]=e.target.value;
+      try{
+        await updatePatientFirestore(pt.id,{biologie:bio});
+      }catch(e2){
+        alert("Erreur Firebase : "+e2.message);
+      }
+    });
+
+    document.getElementById("bio-valider").onclick=async ()=>{
+      const pt=getP(); if(!pt) return;
+      try{
+        await updatePatientFirestore(pt.id,{biologie:{...(pt.biologie||{selected:{},results:{}}),validatedAt:Date.now()}});
+        alert("Bon de biologie valide.");
+      }catch(e){
+        alert("Erreur Firebase : "+e.message);
+      }
+    };
+
+    document.getElementById("im-send").onclick=async ()=>{
+      const pt=getP(); if(!pt) return;
+      const reg=document.getElementById("im-region").value.trim();
+      if(!reg){alert("Renseigner la region.");return;}
+      const nextImagerie=[...(pt.imagerie||[]),{
+        id:Date.now(),type:document.getElementById("im-type").value,region:reg,cote:document.getElementById("im-cote").value,
+        urgence:document.getElementById("im-urgence").value,signes:document.getElementById("im-signes").value,
+        iode:document.getElementById("im-iode").value,demandeLe:nowLabel(),statut:"En attente",cr:""
+      }];
+      try{
+        await updatePatientFirestore(pt.id,{imagerie:nextImagerie});
+        document.getElementById("im-region").value="";
+        document.getElementById("im-signes").value="";
+      }catch(e){
+        alert("Erreur Firebase : "+e.message);
+      }
+    };
+
+    document.getElementById("im-tbody").addEventListener("click",async e=>{
+      const pt=getP(); if(!pt) return;
+      const idm=+(e.target.dataset.id||0);
+      const list=[...(pt.imagerie||[])];
+      const dm=list.find(x=>x.id===idm);
+      if(!dm) return;
+      if(e.target.dataset.cr){
+        const ta=document.getElementById("cr-"+idm);
+        if(ta) ta.style.display=ta.style.display==="none"?"block":"none";
+      }
+      if(e.target.dataset.done){
+        dm.statut="Realise";
+        try{
+          await updatePatientFirestore(pt.id,{imagerie:list});
+        }catch(e2){
+          alert("Erreur Firebase : "+e2.message);
+        }
+      }
+    });
+    document.getElementById("im-tbody").addEventListener("input",async e=>{
+      const pt=getP(); if(!pt) return;
+      if(!e.target.matches("textarea[data-cr]")) return;
+      const list=[...(pt.imagerie||[])];
+      const dm=list.find(x=>x.id===+e.target.dataset.cr);
+      if(!dm) return;
+      dm.cr=e.target.value;
+      try{
+        await updatePatientFirestore(pt.id,{imagerie:list});
+      }catch(e2){
+        alert("Erreur Firebase : "+e2.message);
+      }
+    });
+
+    document.getElementById("evo-add").onclick=async ()=>{
+      const pt=getP(); if(!pt) return;
+      const txt=document.getElementById("evo-text").value.trim();
+      if(!txt) return;
+      const nextEvolution=[{ts:Date.now(),auteur:"GOLF Stan",texte:txt},...(pt.evolution||[])];
+      try{
+        await updatePatientFirestore(pt.id,{evolution:nextEvolution});
+        document.getElementById("evo-text").value="";
+      }catch(e){
+        alert("Erreur Firebase : "+e.message);
+      }
+    };
+
+    document.getElementById("diag-ccmu").onchange=async ()=>{
+      const pt=getP(); if(!pt) return;
+      const ccmu=document.getElementById("diag-ccmu").value||"";
+      try{
+        await updatePatientFirestore(pt.id,{ccmu,diagnostic:{...(pt.diagnostic||{}),lastModified:Date.now()}});
+      }catch(e){
+        alert("Erreur Firebase : "+e.message);
+      }
+    };
+    ["diag-main","diag-assoc","diag-plan"].forEach(idf=>{
+      document.getElementById(idf).addEventListener("input",()=>{
+        const pt=getP(); if(!pt) return;
+        pt.diagnostic.principal=document.getElementById("diag-main").value;
+        pt.diagnostic.associes=document.getElementById("diag-assoc").value;
+        pt.diagnostic.conduite=document.getElementById("diag-plan").value;
+        pt.diagnostic.lastModified=Date.now();
+      });
+    });
+    document.getElementById("diag-save").onclick=async ()=>{
+      const pt=getP(); if(!pt) return;
+      try{
+        await updatePatientFirestore(pt.id,{
+          ccmu:document.getElementById("diag-ccmu").value||"",
+          diagnostic:{
+            ...(pt.diagnostic||{}),
+            principal:document.getElementById("diag-main").value,
+            associes:document.getElementById("diag-assoc").value,
+            conduite:document.getElementById("diag-plan").value,
+            lastModified:Date.now(),
+            savedAt:Date.now()
+          }
+        });
+        alert("Diagnostic enregistre.");
+      }catch(e){
+        alert("Erreur Firebase : "+e.message);
+      }
+    };
+
+    const syncSortieVisibility=()=>{
+      const mode=document.getElementById("so-mode").value;
+      document.getElementById("so-hosp-row").style.display=mode==="Hospitalisation"?"grid":"none";
+      document.getElementById("so-trans-row").style.display=mode==="Transfert autre etablissement"?"grid":"none";
+    };
+    document.getElementById("so-mode").addEventListener("change",syncSortieVisibility);
+    document.getElementById("so-close").onclick=async ()=>{
+      const pt=getP(); if(!pt) return;
+      const sortie={
+        dateHeure:document.getElementById("so-dt").value||dtLocal(),
+        gemsa:document.getElementById("so-gemsa").value,
+        mode:document.getElementById("so-mode").value,
+        service:document.getElementById("so-hosp").value,
+        etab:document.getElementById("so-trans").value,
+        transport:document.getElementById("so-transport").value,
+        commentaire:document.getElementById("so-comment").value,
+        savedAt:Date.now()
+      };
+      try{
+        await updatePatientFirestore(pt.id,{sortie,cloture:true,heureSortie:new Date().toISOString()});
+        setClosedStyle({...pt,cloture:true});
+      }catch(e){
+        alert("Erreur Firebase : "+e.message);
+      }
+    };
+
+    window.__ficheRender=()=>{
+      const pt=getP(); if(!pt) return;
+
+      pt.medical=pt.medical||{};
+      pt.prescriptions=pt.prescriptions||[];
+      pt.biologie=pt.biologie||{selected:{},results:{}};
+      pt.imagerie=pt.imagerie||[];
+      pt.evolution=pt.evolution||[];
+      pt.diagnostic=pt.diagnostic||{};
+      pt.sortie=pt.sortie||{};
+
+      const triColor=(TRI_META[pt.triIAO]||TRI_META["5"]).color;
+      const secLabel=pt.secteur?(SECTEUR_LABELS[pt.secteur]+" / "+(pt.box||"")):
+        "Accueil IAO";
+      const secColor=pt.secteur?"#2a70b0":"#7088a0";
+
+      document.getElementById("fh-nom").textContent=pt.nom+" "+pt.prenom;
+      document.getElementById("fh-ddn").textContent="DDN : "+formatDDN(pt.ddn)+" ("+calcAge(pt.ddn)+")";
+      document.getElementById("fh-dossier").textContent="Dossier : "+(pt.dossier||"—");
+      document.getElementById("fh-sexe").textContent="Sexe : "+(pt.sexe||"—");
+      document.getElementById("fh-arrive").textContent="Arrivee : "+nowHm(pt.arrive)+" — il y a "+elapsed(pt.arrive);
+      document.getElementById("fh-secteur").innerHTML=`Secteur : <span class="fiche-badge" style="background:${secColor};">${escapeHtml(secLabel)}</span> ${pt.cloture?'<span class="fiche-badge" style="background:#666;">Clôturé</span>':''}`;
+      document.getElementById("fh-tri").innerHTML=`Tri FRENCH : <span class="fiche-badge" style="background:${triColor};">Tri ${pt.triIAO||"—"}</span> Motif : ${escapeHtml(pt.motifIAO||"—")} ${ccmuBadge(pt.ccmu)}`;
+      document.getElementById("fh-ccmu-select").value=pt.ccmu||"";
+
+      document.getElementById("fi-dossier").textContent=pt.dossier||"—";
+      document.getElementById("fi-nom").textContent=pt.nom||"—";
+      document.getElementById("fi-prenom").textContent=pt.prenom||"—";
+      document.getElementById("fi-ddn").textContent=formatDDN(pt.ddn);
+      document.getElementById("fi-age").textContent=calcAge(pt.ddn);
+      document.getElementById("fi-sexe").textContent=pt.sexe||"—";
+      document.getElementById("fi-mode").textContent=pt.mode||"—";
+      document.getElementById("fi-heure").textContent=nowLabel(pt.arrive);
+      document.getElementById("fi-motif").textContent=pt.motif||"—";
+      document.getElementById("fi-hypo").textContent=pt.hypothese||"—";
+      document.getElementById("fi-spe").textContent=pt.speIAO||"—";
+      document.getElementById("fi-tri").textContent=(pt.triIAO?"Tri "+pt.triIAO+" — "+(pt.triLabel||""):"—");
+      document.getElementById("fi-douleur").textContent=pt.douleur||"Aucune";
+      document.getElementById("fi-eva").textContent=pt.eva===""?"—":String(pt.eva);
+      document.getElementById("fi-const").textContent=`TA ${pt.constantes?.ta||"—"} / FC ${pt.constantes?.fc||"—"} / SpO2 ${pt.constantes?.spo2||"—"} / FR ${pt.constantes?.fr||"—"} / T° ${pt.constantes?.temp||"—"}`;
+      document.getElementById("fi-allergie").textContent=pt.allergie||"—";
+      document.getElementById("fi-comment").textContent=pt.commentaire||"—";
+
+      const med=pt.medical;
+      document.getElementById("med-pers-txt").value=med.personnels?.texte||"";
+      document.getElementById("med-hta").checked=!!med.personnels?.rapides?.hta;
+      document.getElementById("med-diabete").checked=!!med.personnels?.rapides?.diabete;
+      document.getElementById("med-cardio").checked=!!med.personnels?.rapides?.cardio;
+      document.getElementById("med-bpco").checked=!!med.personnels?.rapides?.bpco;
+      document.getElementById("med-ir").checked=!!med.personnels?.rapides?.insuffRenale;
+      document.getElementById("med-anti").checked=!!med.personnels?.rapides?.anticoagulants;
+      document.getElementById("med-immuno").checked=!!med.personnels?.rapides?.immunodepression;
+      document.getElementById("med-fam-txt").value=med.familiaux?.texte||"";
+      document.getElementById("med-trait-txt").value=med.traitements?.texte||"";
+      const meds=med.traitements?.liste||[];
+      document.getElementById("med-meds-list").innerHTML=meds.map(v=>`<input type="text" class="med-line" value="${escapeHtml(v)}" style="margin-top:4px;"/>`).join("");
+      document.getElementById("med-allergies").value=med.allergies?.texte||pt.allergie||"";
+      document.getElementById("med-etat").value=med.examen?.etat||"";
+      document.getElementById("med-gcs").value=med.examen?.gcs||"";
+      document.getElementById("med-hemo").value=med.examen?.hemo||"";
+      document.getElementById("med-examen").value=med.examen?.examen||"";
+      document.getElementById("med-ta").value=med.examen?.constantes?.ta||"";
+      document.getElementById("med-fc").value=med.examen?.constantes?.fc||"";
+      document.getElementById("med-spo2").value=med.examen?.constantes?.spo2||"";
+      document.getElementById("med-fr").value=med.examen?.constantes?.fr||"";
+      document.getElementById("med-temp").value=med.examen?.constantes?.temp||"";
+      document.getElementById("med-gly").value=med.examen?.constantes?.glycemie||"";
+      document.getElementById("med-complements").value=med.complements?.texte||"";
+
+      document.getElementById("pr-tbody").innerHTML=pt.prescriptions.map(pr=>{
+        const c=pr.statut==="Administre"?"st-admin":(pr.statut==="Annule"?"st-annule":"st-attente");
+        return `<tr><td>${pr.heure}</td><td>${escapeHtml(pr.medicament)}</td><td>${escapeHtml(pr.voie)}</td><td>${escapeHtml(pr.posologie||"")}</td><td>${escapeHtml(pr.frequence||"")}</td><td>${escapeHtml(pr.duree||"")}</td><td>${escapeHtml(pr.prescripteur||"")}</td><td><span class="badge-statut ${c}">${escapeHtml(pr.statut)}</span></td><td><button class="btn-action" data-id="${pr.id}" data-act="admin">✓ Administre</button><button class="btn-action" data-id="${pr.id}" data-act="annule">✗ Annuler</button></td></tr>`;
+      }).join("")||'<tr><td colspan="9" class="fiche-mini">Aucune prescription.</td></tr>';
+
+      const fams=["Hematologie","Biochimie","Hemostase","Microbiologie","Immunologie"];
+      const byFam={};
+      fams.forEach(f=>byFam[f]=[]);
+      Object.keys(BIO_EXAMS).forEach(k=>byFam[BIO_EXAMS[k].fam].push(k));
+      document.getElementById("bio-exams").innerHTML=fams.map(f=>
+        `<div class="fiche-title" style="margin-top:6px;">${f}</div>`+
+        byFam[f].map(ex=>`<label style="display:inline-flex;align-items:center;gap:4px;margin:2px 10px 2px 0;"><input type="checkbox" data-ex="${ex}" ${pt.biologie.selected[ex]?"checked":""}/><span><span class="tube" style="background:${BIO_EXAMS[ex].tube};"></span>${ex}</span></label>`).join("")
+      ).join("");
+
+      const selected=Object.keys(pt.biologie.selected).filter(k=>pt.biologie.selected[k]);
+      const interp=(ex,val)=>{
+        const raw=(val||"").replace(",", ".");
+        const n=Number(raw); if(Number.isNaN(n)) return "N";
+        if(ex==="CRP") return n>5?"↑":"N";
+        if(ex==="Na+") return n<135?"↓":(n>145?"↑":"N");
+        if(ex==="K+") return n<3.5?"↓":(n>5.1?"↑":"N");
+        if(ex==="Creatinine") return n>110?"↑":"N";
+        if(ex==="Troponine") return n>14?"↑":"N";
+        if(ex==="Lactates") return n>2?"↑":"N";
+        return "N";
+      };
+      document.getElementById("bio-results").innerHTML=selected.map(ex=>{
+        const meta=BIO_EXAMS[ex], v=pt.biologie.results[ex]||"", it=interp(ex,v), col=it==="↑"?"#c00":(it==="↓"?"#1460c8":"#222");
+        return `<tr><td>${ex}</td><td><input data-res="${ex}" value="${escapeHtml(v)}"/></td><td>${meta.u||""}</td><td>${meta.n||""}</td><td style="color:${col};font-weight:bold;">${it}</td></tr>`;
+      }).join("")||'<tr><td colspan="5" class="fiche-mini">Pas de resultat disponible.</td></tr>';
+
+      document.getElementById("im-tbody").innerHTML=pt.imagerie.map(dm=>`<tr><td>${escapeHtml(dm.type)}</td><td>${escapeHtml(dm.region)} (${escapeHtml(dm.cote||"")})</td><td>${escapeHtml(dm.demandeLe)}</td><td>${escapeHtml(dm.urgence)}</td><td>${escapeHtml(dm.statut)}</td><td><button class="btn-action" data-cr="1" data-id="${dm.id}">Compte rendu</button> <button class="btn-action" data-done="1" data-id="${dm.id}">Realise</button><textarea id="cr-${dm.id}" data-cr="${dm.id}" rows="2" style="display:none;margin-top:4px;">${escapeHtml(dm.cr||"")}</textarea></td></tr>`).join("")||'<tr><td colspan="6" class="fiche-mini">Aucune demande.</td></tr>';
+
+      document.getElementById("evo-list").innerHTML=pt.evolution.map(en=>`<div class="fiche-journal-item"><div class="fiche-journal-head">[${nowHm(en.ts)} — ${nowLabel(en.ts).split(" — ")[1]}] [${escapeHtml(en.auteur)}]</div><div>${escapeHtml(en.texte)}</div></div>`).join("")||'<div class="fiche-mini">Aucune entree.</div>';
+
+      document.getElementById("diag-ccmu").value=pt.ccmu||"";
+      document.getElementById("diag-ccmu-desc").textContent=CCMU_DESC[pt.ccmu]||"";
+      document.getElementById("diag-main").value=pt.diagnostic.principal||"";
+      document.getElementById("diag-assoc").value=pt.diagnostic.associes||"";
+      document.getElementById("diag-plan").value=pt.diagnostic.conduite||"";
+
+      document.getElementById("so-dt").value=pt.sortie.dateHeure||"";
+      document.getElementById("so-gemsa").value=pt.sortie.gemsa||"";
+      document.getElementById("so-mode").value=pt.sortie.mode||"";
+      document.getElementById("so-hosp").value=pt.sortie.service||"";
+      document.getElementById("so-trans").value=pt.sortie.etab||"";
+      document.getElementById("so-transport").value=pt.sortie.transport||"Autonome";
+      document.getElementById("so-comment").value=pt.sortie.commentaire||"";
+      const mode=document.getElementById("so-mode").value;
+      document.getElementById("so-hosp-row").style.display=mode==="Hospitalisation"?"grid":"none";
+      document.getElementById("so-trans-row").style.display=mode==="Transfert autre etablissement"?"grid":"none";
+      if(pt.cloture) setClosedStyle(pt);
+    };
+  }
+
+  p.medical=p.medical||{};
+  p.prescriptions=p.prescriptions||[];
+  p.biologie=p.biologie||{selected:{},results:{}};
+  p.imagerie=p.imagerie||[];
+  p.evolution=p.evolution||[];
+  p.diagnostic=p.diagnostic||{};
+  p.sortie=p.sortie||{};
+
+  modal.dataset.pid=String(id);
+  window.__ficheRender();
+  modal.classList.add("open");
+  document.body.classList.add("fiche-open");
 }
 
 function closeModal(id){document.getElementById(id).classList.remove("open");}
@@ -747,7 +1909,7 @@ function updateCounters(){
 // ══ CLOCK + TICK ══
 function tick(){
   document.querySelectorAll(".pt-chron[data-a]").forEach(el=>{
-    el.textContent=elapsed(+el.dataset.a);
+    el.textContent=elapsed(el.dataset.a);
   });
   const d=new Date(),pad=n=>String(n).padStart(2,"0");
   document.getElementById("clock").textContent=
@@ -756,9 +1918,39 @@ function tick(){
 }
 
 // Init
-renderAccueil();
+renderSpecialites();
 tick();
 setInterval(tick,1000);
+
+const q=query(patientsRef, orderBy("arrive", "asc"));
+let firstSnapshot=false;
+onSnapshot(q, (snapshot)=>{
+  patients=snapshot.docs.map(d=>({ ...d.data(), _docId:d.id }));
+  if(currentVue==="accueil") renderAccueil();
+  else renderSecteur(currentVue);
+  updateCounters();
+  if(!firstSnapshot){
+    firstSnapshot=true;
+    if(fbStatus) fbStatus.remove();
+  }
+}, (error)=>{
+  alert("Erreur Firebase : "+error.message);
+});
+
+Object.assign(window, {
+  setSecteur,
+  setTab,
+  openEntree,
+  closeModal,
+  validerEntree,
+  openMuter,
+  updateBoxes,
+  validerMutation,
+  voirFiche,
+  updateTriFromMotif,
+  toggleEva,
+  selectSpecialite
+});
 </script>
 </body>
 </html>
