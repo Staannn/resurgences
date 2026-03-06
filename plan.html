@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<title>BL.ResUrgences 5 - Plan</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px;color:#111;}
+
+/* ══ NAVBAR ══ */
+#navbar{
+  height:22px;background:linear-gradient(180deg,#2060a8,#154080);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6px;border-bottom:1px solid #0a2860;
+}
+.nv{color:#d8e8ff;font-size:11px;padding:0 6px;line-height:22px;cursor:pointer;
+  border-right:1px solid rgba(255,255,255,0.15);white-space:nowrap;}
+.nv:first-child{border-left:1px solid rgba(255,255,255,0.15);}
+.nv:hover{background:rgba(255,255,255,0.12);}
+#nav-right{font-size:11px;color:#c0d8ff;display:flex;align-items:center;gap:8px;}
+
+/* ══ VERSION ══ */
+#verbar{height:14px;background:#3a7acc;color:#c0d8ff;font-size:9px;
+  display:flex;align-items:center;padding:0 8px;gap:10px;border-bottom:1px solid #1a5090;}
+
+/* ══ SECTEURS ══ */
+#sectbar{background:#c8d8e8;border-bottom:1px solid #90b0cc;
+  display:flex;align-items:center;padding:2px 6px;gap:3px;height:26px;}
+.sect-btn{height:20px;padding:0 8px;border:1px solid #6090b8;
+  background:linear-gradient(#dde8f4,#c0d0e4);color:#1a3a60;font-size:10px;
+  cursor:pointer;border-radius:2px;white-space:nowrap;}
+.sect-btn.active{background:linear-gradient(#4080c0,#2060a0);color:#fff;border-color:#1a50a0;font-weight:bold;}
+
+/* ══ ONGLETS ══ */
+#tabbar{background:#b8cce0;border-bottom:2px solid #7090b0;
+  display:flex;align-items:flex-end;padding:0 6px;height:26px;}
+.tab{height:22px;min-width:60px;padding:0 8px;border:1px solid #80a0c0;border-bottom:none;
+  background:#c8d8e8;color:#224;font-size:10px;cursor:pointer;margin-right:2px;
+  border-radius:2px 2px 0 0;display:flex;align-items:center;white-space:nowrap;}
+.tab.active{background:#fff;font-weight:bold;color:#000;border-top:2px solid #1a50a0;height:23px;}
+
+/* ══ PAGE ══ */
+#page{background:#fff;padding:6px 10px 50px;min-height:calc(100vh - 88px);}
+
+/* ══ VUE ACCUEIL ══ */
+#vue-accueil{display:flex;gap:8px;align-items:flex-start;}
+#accueil-main{flex:1;}
+
+/* Bouton entrée admin */
+#btn-entree{
+  background:linear-gradient(#4a90d0,#2a70b0);color:#fff;
+  border:1px solid #1a5090;padding:4px 14px;font-size:11px;font-weight:bold;
+  cursor:pointer;border-radius:2px;margin-bottom:8px;display:inline-block;
+}
+#btn-entree:hover{background:linear-gradient(#5aa0e0,#3a80c0);}
+
+/* Tableau patients accueil */
+#tbl-accueil{width:100%;border-collapse:collapse;font-size:11px;}
+#tbl-accueil th{
+  background:linear-gradient(#5590c8,#3a6eaa);color:#fff;
+  padding:3px 6px;text-align:left;border:1px solid #2a5a90;font-weight:bold;font-size:11px;
+}
+#tbl-accueil td{padding:3px 6px;border:1px solid #c8d8e8;vertical-align:middle;}
+#tbl-accueil tr:nth-child(even) td{background:#eef4fc;}
+#tbl-accueil tr:hover td{background:#ddeeff;cursor:pointer;}
+
+.badge-statut{display:inline-block;padding:1px 6px;border-radius:2px;font-size:10px;font-weight:bold;}
+.bs-attente{background:#d83030;color:#fff;}
+.bs-encours{background:#2090c0;color:#fff;}
+.bs-mute{background:#38b838;color:#fff;}
+
+.btn-action{
+  padding:2px 7px;border:1px solid #6090b8;border-radius:2px;
+  background:linear-gradient(#e8f0f8,#c8d8ec);color:#1a3a60;
+  font-size:10px;cursor:pointer;white-space:nowrap;margin-right:2px;
+}
+.btn-action:hover{background:linear-gradient(#f0f8ff,#d8eeff);}
+.btn-muter{background:linear-gradient(#d0e850,#a8c020);color:#1a3000;border-color:#8aa000;}
+.btn-muter:hover{background:linear-gradient(#e0f860,#b8d030);}
+.btn-fiche{background:linear-gradient(#50b8e8,#2090c8);color:#fff;border-color:#1070a0;}
+
+/* ══ VUE SECTEUR (boxes) ══ */
+#vue-secteur{display:none;}
+#secteur-title{font-size:14px;font-weight:bold;color:#1a3a60;margin-bottom:6px;
+  display:flex;align-items:center;gap:8px;}
+#secteur-title span{font-size:11px;color:#446;font-weight:normal;}
+
+#board{display:flex;gap:4px;align-items:flex-start;}
+.col{display:flex;flex-direction:column;gap:0;min-width:0;}
+.col-sm{width:200px;flex-shrink:0;}
+.col-lg{width:260px;flex-shrink:0;}
+.col-xl{flex:1;min-width:220px;}
+
+.box-lbl{background:linear-gradient(#b8d8ec,#90bcd8);color:#1a3a5a;font-size:10px;font-weight:bold;
+  padding:2px 6px;text-align:center;border:1px solid #7aacc8;border-bottom:none;margin-top:3px;}
+.box-lbl:first-child{margin-top:0;}
+
+.pt-block{border:1px solid rgba(0,0,0,0.18);border-top:none;padding:3px 5px 2px;
+  cursor:pointer;min-height:44px;display:flex;flex-direction:column;gap:2px;}
+.pt-block:hover{filter:brightness(0.93);}
+.bg-rouge{background:#d83030;color:#fff;}
+.bg-vert{background:#38b838;color:#fff;}
+.bg-orange{background:#e08020;color:#fff;}
+.bg-bleu{background:#3070d0;color:#fff;}
+
+.pt-vide{background:#b0d8ec;color:#224;text-align:center;padding:4px 6px;
+  border:1px solid #80b8d0;border-top:none;cursor:pointer;font-size:11px;}
+.pt-vide:hover{background:#90c8e0;}
+
+.pt-top{display:flex;align-items:flex-start;gap:4px;}
+.pt-dot{width:9px;height:9px;border-radius:50%;margin-top:2px;flex-shrink:0;
+  border:1px solid rgba(255,255,255,0.5);background:#e03030;}
+.pt-dot.g{background:#20b020;} .pt-dot.o{background:#e07020;} .pt-dot.b{background:#2060e0;}
+.pt-nom{font-size:11px;font-weight:bold;line-height:1.25;flex:1;}
+.pt-icos{display:flex;gap:1px;margin-left:2px;flex-wrap:wrap;justify-content:flex-end;}
+.pic{width:15px;height:15px;background:rgba(255,255,255,0.82);border:1px solid rgba(0,0,0,0.25);
+  border-radius:1px;display:flex;align-items:center;justify-content:center;font-size:9px;color:#222;flex-shrink:0;}
+.pt-bot{display:flex;align-items:center;gap:3px;margin-top:1px;}
+.pt-chron{font-size:10px;font-weight:bold;white-space:nowrap;}
+.pt-tag{font-size:9px;padding:0 3px;border-radius:2px;background:rgba(0,0,0,0.22);white-space:nowrap;}
+.pt-sa{font-size:10px;white-space:nowrap;}
+.pt-num{font-size:9px;margin-left:auto;opacity:.75;}
+
+/* ══ SIDEBAR ══ */
+#sidebar{width:120px;flex-shrink:0;display:flex;flex-direction:column;gap:3px;}
+.s-head{border:1px solid #aac0d4;padding:4px 6px;background:#fff;}
+.s-total{font-size:12px;font-weight:bold;color:#cc0000;margin-bottom:2px;}
+.s-line{font-size:11px;color:#cc0000;line-height:1.65;}
+.s-grid{border:1px solid #aac0d4;padding:4px;background:#fff;}
+.s-grid table{width:100%;border-collapse:collapse;}
+.s-grid th{font-size:10px;background:#d0dce8;padding:2px 4px;text-align:center;border:1px solid #b0c4d4;color:#223;}
+.sgc{font-size:14px;font-weight:bold;text-align:center;padding:4px 2px;border:1px solid #ccc;}
+.cr{background:#d83030;color:#fff;} .cg{background:#30a030;color:#fff;}
+.cy{background:#c8a820;color:#fff;} .cb{background:#2060b8;color:#fff;}
+.clb{background:#5888c8;color:#fff;} .clg{background:#48a848;color:#fff;}
+.cor{background:#c86020;color:#fff;} .clv{background:#70b870;color:#111;}
+.s-tot{border:1px solid #aac0d4;padding:4px;background:#fff;}
+.s-tot table{width:100%;border-collapse:collapse;}
+.s-tot td{font-size:11px;padding:2px 4px;border:1px solid #ccc;}
+.tl{background:#f0f0f0;color:#333;} .tv{font-weight:bold;text-align:center;background:#fff;}
+
+/* ══ MODALS ══ */
+.modal-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:500;
+  align-items:center;justify-content:center;
+}
+.modal-overlay.open{display:flex;}
+.modal{background:#fff;border:2px solid #3a6eaa;border-radius:3px;
+  min-width:460px;max-width:600px;box-shadow:0 4px 20px rgba(0,0,0,0.3);}
+.modal-head{background:linear-gradient(#3a7acc,#1a5090);color:#fff;
+  padding:6px 12px;font-weight:bold;font-size:12px;display:flex;justify-content:space-between;align-items:center;}
+.modal-head .close-btn{cursor:pointer;font-size:14px;background:none;border:none;color:#fff;padding:0 4px;}
+.modal-body{padding:12px;}
+.modal-foot{padding:8px 12px;background:#f0f4f8;border-top:1px solid #c0d0e0;
+  display:flex;justify-content:flex-end;gap:6px;}
+
+/* Form */
+.form-row{display:flex;gap:8px;margin-bottom:6px;align-items:center;}
+.form-row label{width:130px;flex-shrink:0;text-align:right;color:#334;font-size:11px;}
+.form-row input,.form-row select{
+  flex:1;height:22px;border:1px solid #90b0cc;padding:0 5px;font-size:11px;
+  background:#f8fbff;border-radius:2px;
+}
+.form-row input:focus,.form-row select:focus{outline:none;border-color:#3a7acc;background:#fff;}
+.form-row .readonly{background:#e8eef4;color:#446;}
+
+.btn-submit{background:linear-gradient(#4a90d0,#2a70b0);color:#fff;
+  border:1px solid #1a5090;padding:4px 16px;font-size:11px;font-weight:bold;cursor:pointer;border-radius:2px;}
+.btn-submit:hover{background:linear-gradient(#5aa0e0,#3a80c0);}
+.btn-cancel{background:linear-gradient(#e8eef4,#c8d8e8);color:#334;
+  border:1px solid #90a8c0;padding:4px 16px;font-size:11px;cursor:pointer;border-radius:2px;}
+
+/* ══ BOTTOM BAR ══ */
+#bbar{position:fixed;bottom:0;left:0;right:0;height:40px;
+  background:linear-gradient(#f0f4f8,#d8e4f0);border-top:1px solid #90a8c0;
+  display:flex;align-items:center;justify-content:space-between;padding:0 8px;z-index:200;}
+.bl{display:flex;align-items:center;gap:4px;}
+.br{display:flex;align-items:center;gap:6px;}
+.blogo{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#60b0f0,#0840a0);
+  border:2px solid #50a0e0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:bold;color:#fff;}
+.blw{display:flex;flex-direction:column;align-items:center;margin-right:8px;}
+.blt{font-size:8px;color:#446;text-align:center;line-height:1.2;margin-top:1px;}
+.bui{font-size:9px;color:#334;line-height:1.4;margin-right:6px;}
+.bib{display:flex;flex-direction:column;align-items:center;cursor:pointer;margin:0 2px;}
+.bib .sq{width:32px;height:26px;border:1px solid #8aaac0;background:linear-gradient(#e8f0f8,#c8d8e8);
+  display:flex;align-items:center;justify-content:center;font-size:15px;border-radius:2px;}
+.bib .lb{font-size:9px;color:#334;margin-top:1px;}
+.brb{display:flex;flex-direction:column;align-items:center;cursor:pointer;width:48px;}
+.brb .ri{width:26px;height:26px;border-radius:50%;background:#d0d8e0;border:1px solid #90a8c0;
+  display:flex;align-items:center;justify-content:center;font-size:13px;}
+.brb .rl{font-size:8px;color:#334;margin-top:1px;text-align:center;line-height:1.2;}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div id="navbar">
+  <div style="display:flex;align-items:center;">
+    <span class="nv" style="font-weight:bold;">📍 Plan</span>
+    <span class="nv">🔍 Recherche</span>
+    <span class="nv">■ Status Board</span>
+    <span class="nv">📅 Planification</span>
+    <span class="nv">🖨 Editions</span>
+    <span class="nv">/ Mes infos</span>
+    <span class="nv">? Guide</span>
+  </div>
+  <div id="nav-right">
+    <span id="clock"></span>
+    <span>GOLF Stan</span>
+  </div>
+</div>
+<div id="verbar">
+  <b>BL.ResUrgences 5</b>
+  <span style="opacity:.7">(v2022.3.210.14β)</span>
+  <span>DM (v1.01.2b)</span>
+  <span style="opacity:.5">VERSION TEST</span>
+  <span style="margin-left:auto;">SAU 96 — Urgences RP</span>
+</div>
+
+<!-- SECTEURS -->
+<div id="sectbar">
+  <button class="sect-btn active" onclick="setSecteur('sau',this)">Pasteur SAU</button>
+  <button class="sect-btn" onclick="setSecteur('uhcd',this)">Pasteur UHCD</button>
+</div>
+
+<!-- ONGLETS -->
+<div id="tabbar">
+  <div class="tab active" data-vue="accueil" onclick="setTab('accueil',this)">Accueil</div>
+  <div class="tab" data-vue="cc" onclick="setTab('cc',this)">Circuit court</div>
+  <div class="tab" data-vue="saupa" onclick="setTab('saupa',this)">SAUPA</div>
+  <div class="tab" data-vue="sauv" onclick="setTab('sauv',this)">SAUV</div>
+</div>
+
+<!-- PAGE -->
+<div id="page">
+
+  <!-- VUE ACCUEIL -->
+  <div id="vue-accueil">
+    <div id="accueil-main">
+      <button id="btn-entree" onclick="openEntree()">+ Entrée administrative</button>
+      <table id="tbl-accueil">
+        <thead>
+          <tr>
+            <th>N° dossier</th>
+            <th>Nom Prénom</th>
+            <th>DDN / Âge</th>
+            <th>Sexe</th>
+            <th>Motif d'entrée</th>
+            <th>CCMU</th>
+            <th>Circuit</th>
+            <th>Médecin</th>
+            <th>Mode arrivée</th>
+            <th>Arrivé depuis</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-accueil">
+          <tr><td colspan="12" style="text-align:center;padding:20px;color:#888;font-style:italic;">Aucun patient enregistré — cliquez sur "+ Entrée administrative"</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="sidebar">
+      <div class="s-head">
+        <div class="s-total" id="s-tot">0 dossiers</div>
+        <div class="s-line" id="s-att">0 Attente</div>
+        <div class="s-line" id="s-sau">0 SAU</div>
+        <div class="s-line" id="s-sat">0 Unités Sat</div>
+        <div class="s-line" id="s-sauv">0 SAUV</div>
+        <div class="s-line" id="s-nc">0 Non clôturés</div>
+      </div>
+      <div class="s-grid">
+        <table>
+          <thead><tr><th>Attente</th><th>Service</th></tr></thead>
+          <tbody>
+            <tr><td class="sgc cr" id="g1a">0</td><td class="sgc cg" id="g1s">0</td></tr>
+            <tr><td class="sgc cy" id="g2a">0</td><td class="sgc cb" id="g2s">0</td></tr>
+            <tr><td class="sgc clb" id="g3a">0</td><td class="sgc clg" id="g3s">0</td></tr>
+            <tr><td class="sgc cor" id="g4a">0</td><td class="sgc clv" id="g4s">0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="s-tot">
+        <table>
+          <tr><td class="tl">Total vus</td><td class="tv" id="s-vus">0</td><td class="tv" id="s-vus2">0</td></tr>
+          <tr><td class="tl">Non vus</td><td class="tv" id="s-nv">0</td><td class="tv" id="s-nv2">0</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- VUE SECTEUR -->
+  <div id="vue-secteur" style="display:none;">
+    <div id="secteur-title">
+      <span id="secteur-nom">—</span>
+      <span id="secteur-sub"></span>
+    </div>
+    <div style="display:flex;gap:6px;align-items:flex-start;">
+      <div id="board"></div>
+      <div id="sidebar2" class="s-head" style="width:120px;flex-shrink:0;">
+        <div class="s-total" id="s2-tot">0 dossiers</div>
+        <div class="s-line" id="s2-att">0 En attente</div>
+        <div class="s-line" id="s2-ok">0 Pris en charge</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL ENTRÉE ADMINISTRATIVE -->
+<div class="modal-overlay" id="modal-entree">
+  <div class="modal">
+    <div class="modal-head">
+      Entrée administrative — nouveau patient
+      <button class="close-btn" onclick="closeModal('modal-entree')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <label>N° dossier</label>
+        <input type="text" id="f-dossier" class="readonly" readonly/>
+      </div>
+      <div class="form-row">
+        <label>Nom *</label>
+        <input type="text" id="f-nom" placeholder="NOM (majuscules)"/>
+      </div>
+      <div class="form-row">
+        <label>Prénom *</label>
+        <input type="text" id="f-prenom" placeholder="Prénom"/>
+      </div>
+      <div class="form-row">
+        <label>Date de naissance *</label>
+        <input type="date" id="f-ddn"/>
+      </div>
+      <div class="form-row">
+        <label>Sexe *</label>
+        <select id="f-sexe">
+          <option value="">— Choisir —</option>
+          <option value="H">Masculin</option>
+          <option value="F">Féminin</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Motif d'entrée *</label>
+        <input type="text" id="f-motif" placeholder="Ex: Douleur thoracique, trauma crânien..."/>
+      </div>
+      <div class="form-row">
+        <label>CCMU *</label>
+        <select id="f-ccmu">
+          <option value="">— Choisir —</option>
+          <option value="1">CCMU 1 — État stable, pas d'acte</option>
+          <option value="2">CCMU 2 — État stable, actes diagnostiques</option>
+          <option value="3">CCMU 3 — État pouvant s'aggraver</option>
+          <option value="4">CCMU 4 — Pronostic vital engagé</option>
+          <option value="5">CCMU 5 — Pronostic vital immédiat</option>
+          <option value="P">CCMU P — Psychiatrique</option>
+          <option value="D">CCMU D — Décédé</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Circuit *</label>
+        <select id="f-circuit">
+          <option value="">— Choisir —</option>
+          <option value="Court">Circuit court</option>
+          <option value="Long">Circuit long</option>
+          <option value="UHCD">UHCD</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Médecin</label>
+        <input type="text" id="f-medecin" placeholder="Dr..."/>
+      </div>
+      <div class="form-row">
+        <label>Mode d'arrivée</label>
+        <select id="f-mode">
+          <option value="Seul">Venu seul</option>
+          <option value="Famille">Accompagné famille</option>
+          <option value="SP">Sapeurs-Pompiers</option>
+          <option value="SMUR">SMUR</option>
+          <option value="Ambulance">Ambulance</option>
+          <option value="Police">Police</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeModal('modal-entree')">Annuler</button>
+      <button class="btn-submit" onclick="validerEntree()">Enregistrer le patient</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL MUTATION -->
+<div class="modal-overlay" id="modal-muter">
+  <div class="modal">
+    <div class="modal-head">
+      Muter le patient vers un secteur
+      <button class="close-btn" onclick="closeModal('modal-muter')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <label>Patient</label>
+        <input type="text" id="m-patient" class="readonly" readonly/>
+      </div>
+      <div class="form-row">
+        <label>Secteur cible *</label>
+        <select id="m-secteur" onchange="updateBoxes()">
+          <option value="">— Choisir —</option>
+          <option value="cc">Circuit Court</option>
+          <option value="saupa">SAUPA</option>
+          <option value="sauv">SAUV</option>
+          <option value="uhcd">Pasteur UHCD</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Box / Emplacement *</label>
+        <select id="m-box">
+          <option value="">— Choisir d'abord un secteur —</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeModal('modal-muter')">Annuler</button>
+      <button class="btn-submit" onclick="validerMutation()">Confirmer la mutation</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM BAR -->
+<div id="bbar">
+  <div class="bl">
+    <div class="blw"><div class="blogo">RU</div><div class="blt">New Infra<br>v1.1</div></div>
+    <div class="bui">Utilisateur :<br><b>GOLF Stan</b></div>
+    <div style="width:1px;height:28px;background:#b0c0d0;margin:0 4px;"></div>
+    <div class="bib"><div class="sq">▦</div><div class="lb">Plan</div></div>
+    <div class="bib"><div class="sq">🔍</div><div class="lb">Recherche</div></div>
+    <div class="bib"><div class="sq">≡</div><div class="lb">Statusboard</div></div>
+  </div>
+  <div class="br">
+    <div class="brb"><div class="ri">📊</div><div class="rl">Statistiques</div></div>
+    <div class="brb"><div class="ri">👤</div><div class="rl">Mes infos</div></div>
+    <div class="brb"><div class="ri">🔒</div><div class="rl">Verrouiller</div></div>
+    <div class="brb"><div class="ri">🔄</div><div class="rl">Changer<br>d'auteur</div></div>
+    <div class="brb"><div class="ri" style="background:#f0d0d0;">⏻</div><div class="rl" style="color:#c00;">Déconnexion</div></div>
+  </div>
+</div>
+
+<script>
+// ══ DONNÉES ══
+let patients = [];
+let dossierCounter = 960001;
+let muterPatientId = null;
+
+const SECTEURS_BOXES = {
+  cc:    ["CC.Box 1","CC.Box 2","CC.Box 3","CC.Box 4","CC.Box 5","CC.Box 6","CC.Salle de plâtre"],
+  saupa: ["S.Box 1","S.Box 2","S.Box 3","S.Box 4","S.Box 5","S.Box 6","S.Box 7",
+          "S.Salle de bain",
+          "S.Zone d'attente 1","S.Zone d'attente 2","S.Zone d'attente 3","S.Zone d'attente 4",
+          "S.Zone d'attente 5","S.Zone d'attente 6","S.Zone d'attente 7","S.Zone d'attente 8",
+          "S.Zone d'attente 9","S.Zone d'attente 10","S.Zone d'attente 11","S.Zone d'attente 12",
+          "S.Couloir 1","S.Couloir 2","S.Couloir 3","S.Couloir 4",
+          "S.Couloir 5","S.Couloir 6","S.Couloir 7","S.Couloir 8","S.Attente"],
+  sauv:  ["SV.Box 1","SV.Box 2","SV.Box 3","SV.Box 4","SV.Box 5","SV.Box 6"],
+  uhcd:  ["Ch 1","Ch 2","Ch 3","Ch 4","Ch 5","Ch 6","Ch 7",
+          "Ch 8","Ch 9","Ch 10","Ch 11","Ch 12","Ch 13","Ch 14"],
+};
+
+const SECTEUR_LABELS = {
+  cc:"Circuit Court", saupa:"SAUPA", sauv:"SAUV", uhcd:"Pasteur UHCD"
+};
+
+// ══ HELPERS ══
+function elapsed(ms){
+  const s=Math.max(0,Math.floor((Date.now()-ms)/1000));
+  const h=Math.floor(s/3600),m=Math.floor((s%3600)/60);
+  if(h>0) return h+"h"+String(m).padStart(2,"0")+"m";
+  return m+"min";
+}
+
+function calcAge(ddn){
+  if(!ddn) return "—";
+  const d=new Date(ddn), n=new Date();
+  let a=n.getFullYear()-d.getFullYear();
+  if(n.getMonth()<d.getMonth()||(n.getMonth()===d.getMonth()&&n.getDate()<d.getDate())) a--;
+  return a+"a";
+}
+
+function formatDDN(ddn){
+  if(!ddn) return "—";
+  const [y,m,d]=ddn.split("-");
+  return d+"/"+m+"/"+y;
+}
+
+function nextDossier(){
+  return String(dossierCounter++);
+}
+
+function statutCssClass(p){
+  if(p.secteur) return "bs-mute";
+  return "bs-attente";
+}
+function statutLabel(p){
+  if(p.secteur) return "Muté → "+SECTEUR_LABELS[p.secteur];
+  return "En attente";
+}
+
+function ccmuColor(ccmu){
+  const map={"1":"#20a020","2":"#20a020","3":"#d87020","4":"#d82020","5":"#8020d8","P":"#2060d0","D":"#555"};
+  return map[ccmu]||"#333";
+}
+
+// ══ RENDU TABLEAU ACCUEIL ══
+function renderAccueil(){
+  const tbody=document.getElementById("tbody-accueil");
+  if(!patients.length){
+    tbody.innerHTML='<tr><td colspan="12" style="text-align:center;padding:20px;color:#888;font-style:italic;">Aucun patient enregistré</td></tr>';
+    updateCounters(); return;
+  }
+  tbody.innerHTML=patients.map(p=>`
+    <tr data-id="${p.id}">
+      <td><b>${p.dossier}</b></td>
+      <td><b>${p.nom}</b> ${p.prenom}</td>
+      <td>${formatDDN(p.ddn)} / ${calcAge(p.ddn)}</td>
+      <td>${p.sexe}</td>
+      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${p.motif}">${p.motif}</td>
+      <td style="text-align:center;font-weight:bold;color:${ccmuColor(p.ccmu)};">${p.ccmu}</td>
+      <td>${p.circuit}</td>
+      <td>${p.medecin||"—"}</td>
+      <td>${p.mode}</td>
+      <td><span class="pt-chron" data-a="${p.arrive}">${elapsed(p.arrive)}</span></td>
+      <td><span class="badge-statut ${statutCssClass(p)}">${statutLabel(p)}</span></td>
+      <td>
+        <button class="btn-action btn-fiche" onclick="voirFiche(${p.id})">Fiche</button>
+        ${!p.secteur?`<button class="btn-action btn-muter" onclick="openMuter(${p.id})">Muter →</button>`:'<span style="color:#888;font-size:10px;">Muté</span>'}
+      </td>
+    </tr>
+  `).join("");
+  updateCounters();
+}
+
+// ══ RENDU VUE SECTEUR (boxes) ══
+function renderSecteur(secteurId){
+  const boxes=SECTEURS_BOXES[secteurId]||[];
+  const pts=patients.filter(p=>p.secteur===secteurId);
+  const board=document.getElementById("board");
+  board.innerHTML="";
+
+  // Calculer nb colonnes
+  const nbCols = secteurId==="saupa" ? 3 : secteurId==="uhcd" ? 2 : 2;
+  const colSize = Math.ceil(boxes.length/nbCols);
+  const cols=[];
+  for(let i=0;i<nbCols;i++){
+    const div=document.createElement("div");
+    div.className="col col-lg";
+    cols.push(div);
+    board.appendChild(div);
+  }
+
+  boxes.forEach((b,idx)=>{
+    const colIdx=Math.floor(idx/colSize);
+    const col=cols[Math.min(colIdx,cols.length-1)];
+
+    const lbl=document.createElement("div");
+    lbl.className="box-lbl"; lbl.textContent=b;
+    col.appendChild(lbl);
+
+    const boxPts=pts.filter(p=>p.box===b);
+    if(!boxPts.length){
+      const v=document.createElement("div");
+      v.className="pt-vide"; v.textContent="Vide";
+      col.appendChild(v);
+    } else {
+      boxPts.forEach(p=>{
+        const d=document.createElement("div");
+        const bg=parseInt(p.ccmu)>=4?"bg-rouge":p.ccmu==="3"?"bg-orange":"bg-vert";
+        d.className="pt-block "+bg;
+        const dotc=parseInt(p.ccmu)>=4?"":"g";
+        d.innerHTML=
+          `<div class="pt-top">`+
+            `<div class="pt-dot ${dotc}"></div>`+
+            `<div class="pt-nom">${p.nom}<br>${p.prenom}</div>`+
+            `<div class="pt-icos"><div class="pic">🔍</div><div class="pic">${p.sexe==="H"?"♂":"♀"}</div></div>`+
+          `</div>`+
+          `<div class="pt-bot">`+
+            `<span class="pt-chron" data-a="${p.arrive}">${elapsed(p.arrive)}</span>`+
+            `<span class="pt-tag">${p.mode}</span>`+
+            `<span class="pt-sa">${p.sexe} ${calcAge(p.ddn)}</span>`+
+            `<span class="pt-num">${p.dossier}</span>`+
+          `</div>`;
+        d.onclick=()=>voirFiche(p.id);
+        col.appendChild(d);
+      });
+    }
+  });
+
+  // Sidebar secteur
+  document.getElementById("s2-tot").textContent=pts.length+" dossiers";
+  document.getElementById("s2-att").textContent=pts.filter(p=>parseInt(p.ccmu)>=3).length+" En attente";
+  document.getElementById("s2-ok").textContent=pts.filter(p=>parseInt(p.ccmu)<3).length+" Pris en charge";
+}
+
+// ══ TABS / SECTEURS ══
+let currentVue = "accueil";
+
+function setTab(vue, el){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  el.classList.add("active");
+  switchVue(vue);
+}
+
+function setSecteur(vue, el){
+  document.querySelectorAll(".sect-btn").forEach(b=>b.classList.remove("active"));
+  if(el) el.classList.add("active");
+  if(vue==="uhcd"){
+    document.getElementById("tabbar").style.display="none";
+    switchVue("uhcd");
+    return;
+  }
+  document.getElementById("tabbar").style.display="flex";
+  const activeTab=document.querySelector("#tabbar .tab.active");
+  switchVue(activeTab ? activeTab.dataset.vue : "accueil");
+}
+
+function switchVue(vue){
+  currentVue=vue;
+  document.getElementById("vue-accueil").style.display=(vue==="accueil"||vue==="uhcd-acc")?"flex":"none";
+  document.getElementById("vue-secteur").style.display=(vue!=="accueil"&&vue!=="uhcd-acc")?"block":"none";
+  if(vue==="accueil"){
+    renderAccueil();
+  } else {
+    document.getElementById("secteur-nom").textContent=SECTEUR_LABELS[vue]||vue;
+    renderSecteur(vue);
+  }
+}
+
+// ══ MODAL ENTRÉE ══
+function openEntree(){
+  document.getElementById("f-dossier").value=dossierCounter;
+  document.getElementById("f-nom").value="";
+  document.getElementById("f-prenom").value="";
+  document.getElementById("f-ddn").value="";
+  document.getElementById("f-sexe").value="";
+  document.getElementById("f-motif").value="";
+  document.getElementById("f-ccmu").value="";
+  document.getElementById("f-circuit").value="";
+  document.getElementById("f-medecin").value="";
+  document.getElementById("f-mode").value="Seul";
+  document.getElementById("modal-entree").classList.add("open");
+}
+
+function validerEntree(){
+  const nom=document.getElementById("f-nom").value.trim().toUpperCase();
+  const prenom=document.getElementById("f-prenom").value.trim();
+  const ddn=document.getElementById("f-ddn").value;
+  const sexe=document.getElementById("f-sexe").value;
+  const motif=document.getElementById("f-motif").value.trim();
+  const ccmu=document.getElementById("f-ccmu").value;
+  const circuit=document.getElementById("f-circuit").value;
+  const medecin=document.getElementById("f-medecin").value.trim();
+  const mode=document.getElementById("f-mode").value;
+
+  if(!nom||!prenom||!ddn||!sexe||!motif||!ccmu||!circuit){
+    alert("Merci de remplir tous les champs obligatoires (*)"); return;
+  }
+
+  patients.push({
+    id: Date.now(),
+    dossier: nextDossier(),
+    nom, prenom, ddn, sexe, motif, ccmu, circuit, medecin, mode,
+    arrive: Date.now(),
+    secteur: null,
+    box: null,
+  });
+
+  closeModal("modal-entree");
+  renderAccueil();
+}
+
+// ══ MODAL MUTATION ══
+function openMuter(id){
+  muterPatientId=id;
+  const p=patients.find(x=>x.id===id);
+  if(!p) return;
+  document.getElementById("m-patient").value=p.nom+" "+p.prenom+" — Dossier "+p.dossier;
+  document.getElementById("m-secteur").value="";
+  document.getElementById("m-box").innerHTML='<option value="">— Choisir d\'abord un secteur —</option>';
+  document.getElementById("modal-muter").classList.add("open");
+}
+
+function updateBoxes(){
+  const secteur=document.getElementById("m-secteur").value;
+  const sel=document.getElementById("m-box");
+  sel.innerHTML='<option value="">— Choisir une box —</option>';
+  if(secteur && SECTEURS_BOXES[secteur]){
+    SECTEURS_BOXES[secteur].forEach(b=>{
+      const o=document.createElement("option");
+      o.value=b; o.textContent=b;
+      sel.appendChild(o);
+    });
+  }
+}
+
+function validerMutation(){
+  const secteur=document.getElementById("m-secteur").value;
+  const box=document.getElementById("m-box").value;
+  if(!secteur||!box){alert("Choisir un secteur et une box.");return;}
+  const p=patients.find(x=>x.id===muterPatientId);
+  if(p){p.secteur=secteur;p.box=box;}
+  closeModal("modal-muter");
+  renderAccueil();
+}
+
+// ══ FICHE (placeholder) ══
+function voirFiche(id){
+  const p=patients.find(x=>x.id===id);
+  if(!p) return;
+  alert(`── Dossier ${p.dossier} ──\n${p.nom} ${p.prenom}\nNé(e) le ${formatDDN(p.ddn)} (${calcAge(p.ddn)})\nSexe : ${p.sexe}\nCCMU : ${p.ccmu} — Circuit : ${p.circuit}\nMotif : ${p.motif}\nMédecin : ${p.medecin||"—"}\nArrivée : ${p.mode}\nLocalisé : ${p.secteur?SECTEUR_LABELS[p.secteur]+" / "+p.box:"Accueil"}`);
+}
+
+function closeModal(id){document.getElementById(id).classList.remove("open");}
+
+// ══ COMPTEURS ══
+function updateCounters(){
+  const tot=patients.length;
+  const att=patients.filter(p=>!p.secteur).length;
+  const mutes=patients.filter(p=>p.secteur).length;
+  const cc=patients.filter(p=>p.secteur==="cc").length;
+  const sauv=patients.filter(p=>p.secteur==="sauv").length;
+  document.getElementById("s-tot").textContent=tot+" dossiers";
+  document.getElementById("s-att").textContent=att+" Attente";
+  document.getElementById("s-sau").textContent=cc+" Circuit Court";
+  document.getElementById("s-sat").textContent=patients.filter(p=>p.secteur==="saupa").length+" SAUPA";
+  document.getElementById("s-sauv").textContent=sauv+" SAUV";
+  document.getElementById("s-nc").textContent=mutes+" Mutés";
+  document.getElementById("g1a").textContent=att;
+  document.getElementById("g1s").textContent=mutes;
+  document.getElementById("g2a").textContent=cc;
+  document.getElementById("g2s").textContent=sauv;
+  document.getElementById("g3a").textContent=patients.filter(p=>p.secteur==="saupa").length;
+  document.getElementById("g3s").textContent=patients.filter(p=>p.secteur==="uhcd").length;
+  document.getElementById("g4a").textContent="0";
+  document.getElementById("g4s").textContent="0";
+  document.getElementById("s-vus").textContent=mutes;
+  document.getElementById("s-vus2").textContent=tot;
+  document.getElementById("s-nv").textContent=att;
+  document.getElementById("s-nv2").textContent="0";
+}
+
+// ══ CLOCK + TICK ══
+function tick(){
+  document.querySelectorAll(".pt-chron[data-a]").forEach(el=>{
+    el.textContent=elapsed(+el.dataset.a);
+  });
+  const d=new Date(),pad=n=>String(n).padStart(2,"0");
+  document.getElementById("clock").textContent=
+    pad(d.getDate())+"/"+pad(d.getMonth()+1)+"/"+d.getFullYear()+" "+
+    pad(d.getHours())+":"+pad(d.getMinutes())+":"+pad(d.getSeconds());
+}
+
+// Init
+renderAccueil();
+tick();
+setInterval(tick,1000);
+</script>
+</body>
+</html>
