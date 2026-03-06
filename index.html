@@ -96,6 +96,46 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
   display:flex;align-items:center;gap:8px;}
 #secteur-title span{font-size:11px;color:#446;font-weight:normal;}
 
+/* ══ VUE STATUS BOARD ══ */
+#vue-statusboard{display:none;min-height:calc(100vh - 170px);border:1px solid #b0c4d8;background:#fff;}
+#sb-title{height:28px;background:linear-gradient(#2060a8,#154080);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 12px;}
+#sb-title-left{font-weight:bold;font-size:12px;letter-spacing:.2px;}
+#sb-title-right{display:flex;align-items:center;gap:10px;font-size:11px;}
+#sb-back{background:transparent;border:1px solid rgba(255,255,255,0.4);color:#fff;font-size:11px;padding:2px 7px;border-radius:2px;cursor:pointer;}
+#sb-body{display:flex;min-height:calc(100% - 28px);}
+#sb-left{width:140px;flex-shrink:0;background:#f0f4f8;border-right:1px solid #c0d0e0;padding:6px;font-size:11px;}
+.sb-blk{margin-bottom:8px;background:#fff;border:1px solid #d0deea;padding:5px;}
+.sb-blk h4{font-size:10px;color:#335;margin-bottom:4px;text-transform:uppercase;}
+.sb-total-num{font-size:20px;font-weight:bold;color:#cc0000;line-height:1;}
+.sb-total-lbl{font-size:10px;color:#556;}
+.sb-line{display:flex;justify-content:space-between;gap:4px;padding:1px 0;}
+.sb-line .n{font-weight:bold;color:#223;}
+.sb-line.orange .n{color:#e07820;}
+.sb-line.gray .n{color:#777;}
+.sb-tri{display:flex;align-items:center;justify-content:space-between;gap:4px;margin-bottom:2px;}
+.sb-tri-badge{display:inline-block;border-radius:2px;padding:1px 4px;font-size:10px;color:#fff;min-width:48px;text-align:center;}
+.sb-alert{padding:4px;border:1px solid #e0e6ef;background:#fff;}
+.sb-alert.crit{background:#fff0f0;border-color:#f0c8c8;}
+#sb-main{flex:1;padding:8px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;}
+.sb-sector{border:1px solid #b8cce0;background:#f8fbff;}
+.sb-sector-head{background:#2060a0;color:#fff;padding:4px 8px;font-weight:bold;font-size:11px;}
+.sb-table{width:100%;border-collapse:collapse;font-size:11px;}
+.sb-table th{background:#5590c8;color:#fff;font-size:11px;padding:3px 6px;border:1px solid #3f78b0;text-align:left;}
+.sb-table td{padding:3px 6px;border:1px solid #c8d8e8;vertical-align:middle;}
+.sb-table tr:nth-child(even) td{background:#fff;}
+.sb-table tr:nth-child(odd) td{background:#eef4fc;}
+.sb-box{display:inline-block;background:#b8d8ec;color:#1a3a60;padding:2px 4px;border-radius:2px;font-size:10px;}
+.sb-name{font-weight:bold;}
+.sb-tri-chip{display:inline-block;color:#fff;border-radius:2px;padding:1px 5px;font-size:10px;font-weight:bold;}
+.sb-const{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
+.sb-c-hi{color:#cc0000;font-weight:bold;}
+.sb-c-lo{color:#2060a0;font-weight:bold;}
+.sb-c-ok svg{width:11px;height:11px;stroke:#20a020;fill:none;stroke-width:2;}
+.sb-c-none{color:#888;}
+.sb-staff-wrap{display:flex;gap:4px;}
+.sb-staff{width:80px;height:20px;border:1px solid #90b0cc;border-radius:2px;font-size:10px;padding:0 4px;background:#fff;}
+.sb-empty{text-align:center;padding:24px;color:#888;font-style:italic;border:1px dashed #c8d8e8;background:#f8fbff;}
+
 #board{display:flex;gap:4px;align-items:flex-start;}
 .col{display:flex;flex-direction:column;gap:0;min-width:0;}
 .col-sm{width:200px;flex-shrink:0;}
@@ -237,13 +277,44 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 /* ══ MODAL FICHE PATIENT ══ */
 #modal-fiche{z-index:600;}
 #modal-fiche .bl5-wrap{width:95vw;height:92vh;background:#fff;border:2px solid #3a6eaa;border-radius:3px;display:flex;flex-direction:column;overflow:hidden;position:relative;}
-.bl5-header{background:#fff;border-bottom:1px solid #ccc;padding:4px 10px;min-height:55px;display:grid;grid-template-columns:1.4fr 1.2fr 1.3fr 1fr auto;gap:8px;align-items:center;font-size:11px;position:relative;}
-.bl5-col{line-height:1.35;color:#223;}
-.bl5-name{font-weight:bold;font-size:13px;color:#000;}
-.bl5-close{position:absolute;right:6px;top:4px;border:none;background:none;cursor:pointer;font-size:14px;color:#223;}
+.bl5-header{height:65px;background:#fff;border-bottom:1px solid #ccc;padding:4px 10px;display:flex;align-items:center;gap:12px;font-size:11px;position:relative;overflow-x:auto;}
+.bl5-close{position:absolute;right:8px;top:4px;border:1px solid #aab8c8;background:#e8eef4;cursor:pointer;font-size:11px;color:#334;border-radius:2px;padding:1px 6px;}
 .bl5-badge{display:inline-block;padding:1px 6px;border-radius:2px;font-size:10px;font-weight:bold;color:#fff;}
 .bl5-ccmu{cursor:pointer;}
-.bl5-actions{display:flex;align-items:center;gap:6px;padding-right:20px;}
+.bl5-h-avatar{flex:0 0 50px;width:50px;height:50px;border:1px solid #c0d0e0;border-radius:3px;background:#e8f0f8;display:flex;align-items:center;justify-content:center;}
+.bl5-h-avatar svg{width:32px;height:32px;stroke:#6090b8;fill:#d0e4f4;stroke-width:1.5;}
+.bl5-h-z2{flex:0 0 200px;color:#223;line-height:1.28;}
+.bl5-h-z2 .bl5-name{font-weight:bold;font-size:13px;color:#000;text-transform:uppercase;}
+.bl5-h-z3{flex:0 0 160px;color:#223;line-height:1.25;}
+.bl5-h-z4{flex:0 0 180px;color:#223;line-height:1.25;}
+.bl5-h-z5{flex:0 0 160px;color:#223;line-height:1.25;}
+.bl5-h-z6{flex:0 0 150px;color:#223;line-height:1.2;}
+.bl5-h-z7{flex:0 0 130px;color:#223;line-height:1.2;}
+.bl5-actions{flex:0 0 120px;display:flex;flex-direction:column;align-items:stretch;gap:4px;padding-right:26px;}
+.bl5-h-mini{color:#666;font-size:10px;}
+.bl5-h-inline{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.bl5-h-input{width:45px;height:18px;border:1px solid #90b0cc;border-radius:2px;font-size:11px;text-align:center;padding:0 3px;}
+.bl5-h-read{background:#f2f6fa;}
+.bl5-imc-badge{display:inline-block;border-radius:2px;padding:1px 5px;font-size:10px;color:#fff;}
+.bl5-save-mini{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border:1px solid #90b0cc;border-radius:2px;background:#f0f4f8;cursor:pointer;}
+.bl5-save-mini svg{width:12px;height:12px;stroke:#205080;fill:none;stroke-width:1.5;}
+.bl5-mode-badge{display:inline-block;border-radius:2px;padding:1px 5px;font-size:10px;color:#fff;}
+.bl5-sec-badge{display:inline-block;border-radius:2px;padding:1px 5px;font-size:10px;color:#fff;}
+.bl5-pec-ide{background:#2060a0;color:#fff;border-radius:2px;padding:1px 5px;font-size:10px;display:inline-block;}
+.bl5-pec-med{background:#8020c0;color:#fff;border-radius:2px;padding:1px 5px;font-size:10px;display:inline-block;}
+.bl5-cgrid{display:grid;grid-template-columns:auto 1fr auto;gap:2px 4px;font-size:10px;align-items:center;}
+.bl5-dot{width:6px;height:6px;border-radius:50%;display:inline-block;background:#aaa;}
+.bl5-all-band{display:flex;align-items:center;gap:4px;border-radius:2px;padding:3px 6px;font-weight:bold;font-size:11px;color:#fff;}
+.bl5-all-band svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.5;}
+.bl5-all-band.red{background:#cc0000;}
+.bl5-all-band.green{background:#20a020;font-size:10px;}
+.bl5-all-text{margin-top:3px;color:#cc0000;font-size:10px;word-break:break-word;}
+.bl5-ccmu-row{display:flex;gap:4px;align-items:center;}
+.bl5-ccmu-badge.c1,.bl5-ccmu-badge.c2{background:#20a020;}
+.bl5-ccmu-badge.c3{background:#e07820;}
+.bl5-ccmu-badge.c4,.bl5-ccmu-badge.c5{background:#cc0000;}
+.bl5-ccmu-badge.cP{background:#8020c0;}
+.bl5-ccmu-badge.cD{background:#777;}
 
 .bl5-yellow{height:24px;background:#fffacd;border-bottom:1px solid #e8d870;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-size:10px;}
 .bl5-icons{display:flex;align-items:center;gap:3px;}
@@ -283,11 +354,86 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 .bs-afaire{background:#e07820;} .bs-enc{background:#2070c0;} .bs-fait{background:#20a020;} .bs-ann{background:#cc0000;}
 
 .bl5-synth{background:#f8fbff;border:1px solid #c0d0e0;padding:6px;}
+.bl5-headline{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-weight:bold;color:#1a3a60;}
+.bl5-card{background:#f8fbff;border:1px solid #c0d0e0;padding:8px;margin-top:8px;}
+.bl5-hours-grid{display:grid;grid-template-columns:repeat(12,minmax(24px,1fr));gap:3px;}
+.bl5-hour{height:20px;border:1px solid #90b0cc;background:#fff;border-radius:2px;font-size:10px;cursor:pointer;}
+.bl5-hour.active{background:#2060a0;color:#fff;}
+
+.bl5-bio-layout{display:grid;grid-template-columns:40% 60%;gap:10px;}
+.bl5-bio-left,.bl5-bio-right{border:1px solid #c0d0e0;background:#fff;padding:6px;min-height:420px;}
+.bl5-proto-grid{display:flex;flex-wrap:wrap;gap:4px;}
+.bl5-proto-btn{border:1px solid #90b0cc;background:#f0f4f8;font-size:10px;padding:2px 6px;border-radius:2px;cursor:pointer;}
+.bl5-proto-btn.active{background:#2060a0;color:#fff;}
+.bl5-bio-catalog{max-height:260px;overflow:auto;border:1px solid #c8d8e8;background:#fff;}
+.bl5-bio-family{background:#d8e8f4;color:#1a3a60;font-weight:bold;padding:3px 6px;font-size:10px;border-top:1px solid #b8d0e4;}
+.bl5-bio-line{display:flex;align-items:center;gap:6px;padding:2px 6px;border-top:1px solid #eef4fc;font-size:10px;}
+.bl5-tube{width:10px;height:10px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,0.25);}
+.tube-Rouge{background:#cc2020;}
+.tube-Violet{background:#8020c0;}
+.tube-Bleu{background:#2060c0;}
+.tube-Vert{background:#20a020;}
+.tube-Jaune{background:#c8a820;}
+.tube-Noir{background:#333;}
+.bl5-bio-pane{display:none;}
+.bl5-bio-pane.active{display:block;}
+.bio-hi td{background:#fff0f0 !important;}
+.bio-lo td{background:#f0f0ff !important;}
+
+.bl5-radio-col{display:flex;flex-direction:column;align-items:flex-start;gap:2px;}
+.bl5-ecg-grid{display:grid;grid-template-columns:repeat(6,minmax(52px,1fr));gap:2px 6px;}
+.bl5-hist{max-height:120px;overflow:auto;border:1px solid #c8d8e8;background:#fff;padding:4px;line-height:1.4;}
+.bl5-ori-pane{display:none;}
+.bl5-ori-pane.active{display:block;}
+.bl5-diag-subpane{display:none;}
+.bl5-diag-subpane.active{display:block;}
+
+.bl5-param-layout{display:grid;grid-template-columns:35% 65%;gap:10px;align-items:start;}
+.bl5-param-col{border:1px solid #c0d0e0;background:#fff;padding:6px;}
+.bl5-param-col .bl5-title{margin-top:0;}
+.bl5-param-hidden{display:none;}
+.bl5-cat-badge{display:inline-block;border-radius:2px;padding:1px 5px;font-size:10px;color:#fff;white-space:nowrap;}
+.bl5-isbar{margin-top:8px;border:1px solid #c0d0e0;background:#fff;padding:6px;}
+.bl5-isbar-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.bl5-isbar-item{flex:1 1 260px;min-width:220px;}
+.bl5-isbar-item textarea{min-height:52px;}
+#bl5-pa-list tr:nth-child(odd) td{background:#eef4fc;}
+#bl5-pa-list tr:nth-child(even) td{background:#fff;}
+
+.bl5-synth-wrap{background:#f8fbff;padding:6px;}
+.bl5-synth-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;}
+.bl5-scard{border:1px solid #c0d0e0;border-radius:3px;margin-bottom:8px;background:#fff;overflow:hidden;}
+.bl5-scard-title{background:#e8f0f8;color:#1a3a60;border-left:3px solid #2060a0;padding:4px 8px;font-weight:bold;font-size:11px;}
+.bl5-scard-body{padding:6px 8px;font-size:11px;line-height:1.4;}
+.bl5-sname{font-weight:bold;font-size:13px;color:#000;}
+.bl5-hr{height:1px;background:#d8e4f0;margin:5px 0;}
+.bl5-muted{font-style:italic;color:#888;}
+.bl5-alert{color:#c00;font-weight:bold;}
+.bl5-kv{display:flex;gap:6px;flex-wrap:wrap;}
+.bl5-mini-table{width:100%;border-collapse:collapse;font-size:11px;}
+.bl5-mini-table th{background:#5590c8;color:#fff;padding:3px 5px;border:1px solid #2a5a90;text-align:left;}
+.bl5-mini-table td{padding:3px 5px;border:1px solid #c8d8e8;}
+.bl5-sbadge{display:inline-block;border-radius:2px;padding:1px 5px;font-size:10px;color:#fff;white-space:nowrap;}
+.bl5-band{padding:4px 8px;font-weight:bold;border-radius:2px;display:inline-block;}
+.bl5-band.red{background:#f8d0d0;color:#900;}
+.bl5-band.blue{background:#d8e8f8;color:#14508c;}
+.bl5-print-wrap{text-align:center;margin-top:8px;}
+.bl5-print-btn{display:inline-flex;align-items:center;gap:6px;}
+.bl5-print-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.5;}
+
+@media print{
+  body *{visibility:hidden !important;}
+  #synthese-content,#synthese-content *{visibility:visible !important;}
+  #synthese-content{position:absolute;left:0;top:0;width:100%;background:#fff !important;padding:0 !important;}
+  .bl5-scard,.bl5-scard-title,.bl5-scard-body{background:#fff !important;color:#000 !important;border-color:#ddd !important;}
+  .bl5-print-wrap{display:none !important;}
+}
 
 @media (max-width:1200px){
   .bl5-header{grid-template-columns:1fr 1fr;}
   .bl5-grid2{grid-template-columns:1fr;}
   .bl5-row{grid-template-columns:1fr;}
+  .bl5-synth-cols{grid-template-columns:1fr;}
 }
 
 /* ══ BOTTOM BAR ══ */
@@ -316,9 +462,9 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 <!-- NAVBAR -->
 <div id="navbar">
   <div style="display:flex;align-items:center;">
-    <span class="nv" style="font-weight:bold;">📍 Plan</span>
+    <span class="nv" id="nav-plan" style="font-weight:bold;">📍 Plan</span>
     <span class="nv">🔍 Recherche</span>
-    <span class="nv">■ Status Board</span>
+    <span class="nv" id="nav-statusboard">■ Status Board</span>
     <span class="nv">📅 Planification</span>
     <span class="nv">🖨 Editions</span>
     <span class="nv">/ Mes infos</span>
@@ -371,6 +517,21 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
       <span id="secteur-sub"></span>
     </div>
     <div id="board"></div>
+  </div>
+
+  <div id="vue-statusboard" style="display:none;">
+    <div id="sb-title">
+      <div id="sb-title-left">■ STATUS BOARD — SAU 96</div>
+      <div id="sb-title-right">
+        <button id="sb-back" type="button">← Retour au Plan</button>
+        <span id="sb-clock">--/--/---- --:--:--</span>
+        <span>GOLF Stan</span>
+      </div>
+    </div>
+    <div id="sb-body">
+      <aside id="sb-left"></aside>
+      <section id="sb-main"></section>
+    </div>
   </div>
 
   </div>
@@ -563,11 +724,57 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
   <div class="bl5-wrap">
     <button id="bl5-close" class="bl5-close" type="button">Fermer</button>
     <div class="bl5-header">
-      <div class="bl5-col"><div class="bl5-name" id="bl5-h-name"></div><div id="bl5-h-ident"></div><div id="bl5-h-dossier"></div></div>
-      <div class="bl5-col"><div id="bl5-h-arrive"></div><div id="bl5-h-mode"></div><div id="bl5-h-secteur"></div></div>
-      <div class="bl5-col"><div id="bl5-h-tri"></div><div id="bl5-h-motif"></div><div id="bl5-h-pec"></div></div>
-      <div class="bl5-col" id="bl5-h-const"></div>
-      <div class="bl5-actions"><button id="bl5-ccmu-btn" class="btn-submit" type="button">Poser CCMU</button><span id="bl5-ccmu-badge" class="bl5-badge bl5-ccmu" style="display:none;background:#555;">CCMU</span><div id="bl5-ccmu-edit" style="display:none;"><select id="bl5-ccmu-select"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>P</option><option>D</option></select></div></div>
+      <div class="bl5-h-avatar" id="bl5-h-avatar"></div>
+
+      <div class="bl5-h-z2">
+        <div class="bl5-name" id="bl5-h-nom"></div>
+        <div id="bl5-h-ddnage"></div>
+        <div id="bl5-h-sexe-num"></div>
+        <div id="bl5-h-ipp"></div>
+      </div>
+
+      <div class="bl5-h-z3">
+        <div class="bl5-h-inline">
+          <span class="bl5-h-mini">Poids</span><input id="bl5-h-poids" class="bl5-h-input" type="number" min="1" max="400" step="0.1"/>
+          <span class="bl5-h-mini">Taille</span><input id="bl5-h-taille" class="bl5-h-input" type="number" min="30" max="250" step="0.1"/>
+          <button id="bl5-h-save-morpho" class="bl5-save-mini" type="button" title="Enregistrer morphologie"><svg viewBox="0 0 16 16"><path d="M3.5 2.5h8l1 1v10h-9z"/><path d="M5 2.5v4h6v-4"/><path d="M5.5 11h5"/></svg></button>
+        </div>
+        <div class="bl5-h-inline"><span class="bl5-h-mini">IMC</span><input id="bl5-h-imc" class="bl5-h-input bl5-h-read" readonly/><span id="bl5-h-imc-badge" class="bl5-imc-badge" style="background:#777;">-</span></div>
+        <div class="bl5-h-inline"><span class="bl5-h-mini">SC</span><input id="bl5-h-sc" class="bl5-h-input bl5-h-read" readonly/></div>
+      </div>
+
+      <div class="bl5-h-z4">
+        <div id="bl5-h-arrive-fixed"></div>
+        <div id="bl5-h-arrive-live" class="bl5-h-mini"></div>
+        <div class="bl5-h-inline"><span class="bl5-h-mini">Localisation</span><span id="bl5-h-local"></span></div>
+        <div class="bl5-h-inline"><span class="bl5-h-mini">Mode</span><span id="bl5-h-mode" class="bl5-mode-badge"></span></div>
+      </div>
+
+      <div class="bl5-h-z5">
+        <div class="bl5-h-inline"><span class="bl5-h-mini">Tri</span><span id="bl5-h-tri" class="bl5-badge"></span></div>
+        <div class="bl5-h-inline"><span class="bl5-h-mini">PEC</span><span id="bl5-h-pec-ide" class="bl5-pec-ide">IDE non vu</span><span id="bl5-h-pec-med" class="bl5-pec-med">Médecin non vu</span></div>
+        <div id="bl5-h-spe-short" class="bl5-h-mini"></div>
+      </div>
+
+      <div class="bl5-h-z6">
+        <div class="bl5-h-mini" style="margin-bottom:2px;">Constantes</div>
+        <div class="bl5-cgrid" id="bl5-h-const"></div>
+      </div>
+
+      <div class="bl5-h-z7">
+        <div id="bl5-h-all-band" class="bl5-all-band green"><svg viewBox="0 0 16 16"><path d="M2 8l3 3 9-9"/></svg>Aucune allergie</div>
+        <div id="bl5-h-all-text" class="bl5-all-text" style="display:none;"></div>
+      </div>
+
+      <div class="bl5-actions">
+        <button id="bl5-ccmu-btn" class="btn-submit" type="button">Poser CCMU</button>
+        <span id="bl5-ccmu-badge" class="bl5-badge bl5-ccmu bl5-ccmu-badge" style="display:none;">CCMU</span>
+        <div id="bl5-ccmu-edit" class="bl5-ccmu-row" style="display:none;">
+          <select id="bl5-ccmu-select"><option value="">-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>P</option><option>D</option></select>
+          <button id="bl5-ccmu-apply" class="btn-action" type="button">Valider</button>
+        </div>
+        <button id="bl5-h-muter" class="btn-action" type="button" style="display:none;">Muter</button>
+      </div>
     </div>
 
     <div class="bl5-yellow">
@@ -600,22 +807,178 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 
         <div class="bl5-pane" data-pane="exam"><div class="bl5-grid2"><div><div class="bl5-row"><label class="bl5-label">État général</label><select id="bl5-eg"><option>Bon</option><option>Altéré</option><option>Mauvais</option></select></div><div class="bl5-row"><label class="bl5-label">Conscience (GCS)</label><div class="bl5-inline"><input id="bl5-gcs" style="max-width:60px;"/><input id="bl5-gcs-y" placeholder="Y" style="max-width:45px;"/><input id="bl5-gcs-v" placeholder="V" style="max-width:45px;"/><input id="bl5-gcs-m" placeholder="M" style="max-width:45px;"/></div></div><div class="bl5-row"><label class="bl5-label">Douleur EVA</label><input id="bl5-eva" type="range" min="0" max="10"/></div><div class="bl5-title">Constantes réévaluées</div><div class="bl5-inline"><input id="bl5-c-ta" placeholder="TA" style="max-width:95px;"/><input id="bl5-c-fc" placeholder="FC" style="max-width:85px;"/><input id="bl5-c-spo2" placeholder="SpO2" style="max-width:85px;"/><input id="bl5-c-fr" placeholder="FR" style="max-width:85px;"/><input id="bl5-c-t" placeholder="T°" style="max-width:85px;"/><input id="bl5-c-gly" placeholder="Gly cap" style="max-width:85px;"/></div><div class="bl5-end"><button id="bl5-save-const" class="btn-submit">Enregistrer</button></div></div><div><div class="bl5-row"><label class="bl5-label">Examen physique</label><textarea id="bl5-exam-phy" rows="6" placeholder="Examen cardio-vasculaire : ...&#10;Examen respiratoire : ...&#10;Examen abdominal : ...&#10;Examen neurologique : ..."></textarea></div></div></div></div>
 
-        <div class="bl5-pane" data-pane="presc"><div class="bl5-inline"><select id="bl5-pr-type" style="width:170px;"><option>Médicament injectable</option><option>Perfusion</option><option>Aérosol</option><option>Mise en condition</option><option>Médicament oral</option></select><input id="bl5-pr-med" placeholder="Médicament" style="min-width:160px;"/><select id="bl5-pr-voie" style="width:95px;"><option>IV</option><option>IM</option><option>SC</option><option>PO</option><option>Inhalée</option></select><input id="bl5-pr-poso" placeholder="Posologie" style="min-width:120px;"/><select id="bl5-pr-freq" style="width:120px;"><option>Unique</option><option>Si besoin</option><option>Toutes les Xh</option><option>En continu</option></select><input id="bl5-pr-duree" placeholder="Durée" style="width:80px;"/><select id="bl5-pr-urg" style="width:75px;"><option>Non</option><option>Oui</option></select><button id="bl5-pr-add" class="btn-submit">Ajouter</button></div><table class="bl5-table"><thead><tr><th>Statut</th><th>Voie</th><th>Type</th><th>Médicament</th><th>Posologie</th><th>Prescrit le</th><th>Début</th><th>Fin</th><th>Actions</th></tr></thead><tbody id="bl5-pr-list"></tbody></table></div>
+        <div class="bl5-pane" data-pane="presc">
+          <div class="bl5-headline"><span>Prescriptions actives</span><button id="bl5-pr-new" class="btn-submit" type="button">+ Nouvelle prescription</button></div>
+          <table class="bl5-table">
+            <thead><tr><th>Statut</th><th>Voie</th><th>Livret</th><th>Prescription</th><th>Posologie</th><th>Prescrit par</th><th>Prescrit le</th><th>Date début</th><th>Date fin</th></tr></thead>
+            <tbody id="bl5-pr-list"></tbody>
+          </table>
+          <div id="bl5-pr-editor" class="bl5-card" style="display:none;">
+            <div class="bl5-title">Fiche prescription détaillée</div>
+            <div class="bl5-grid2">
+              <div>
+                <div class="bl5-row"><label class="bl5-label">Type</label><select id="bl5-pr-type"><option>Perfusion</option><option>Médicament injectable</option><option>Aérosol</option><option>Mise en condition</option><option>Médicament oral</option></select></div>
+                <div class="bl5-row"><label class="bl5-label">Statut</label><select id="bl5-pr-statut"><option>À faire</option><option>En cours</option><option>Fait</option><option>Annulé</option></select></div>
+                <div class="bl5-row"><label class="bl5-label">Urgence</label><select id="bl5-pr-urg"><option>Non</option><option>Oui</option></select></div>
+                <div class="bl5-row"><label class="bl5-label">Voie d'administration</label><input id="bl5-pr-voie" value="IV"/></div>
+                <div class="bl5-row"><label class="bl5-label">Médicament</label><input id="bl5-pr-med"/></div>
+                <div class="bl5-row"><label class="bl5-label">Posologie</label><input id="bl5-pr-poso"/></div>
+                <div class="bl5-row"><label class="bl5-label">Durée d'acte</label><input id="bl5-pr-duree"/></div>
+                <div class="bl5-row"><label class="bl5-label">Fréquence</label><select id="bl5-pr-freq"><option>Unique</option><option>Horaires</option><option>Toujours</option><option>Plusieurs fois</option><option>Si besoin</option></select></div>
+                <div id="bl5-pr-hours-wrap" style="display:none;">
+                  <div class="bl5-label" style="margin-bottom:4px;">Horaires 1h à 23h</div>
+                  <div id="bl5-pr-hours" class="bl5-hours-grid"></div>
+                </div>
+              </div>
+              <div>
+                <div class="bl5-row"><label class="bl5-label">Poids (kg)</label><input id="bl5-pr-poids" readonly/></div>
+                <div class="bl5-row"><label class="bl5-label">Taille (cm)</label><input id="bl5-pr-taille" readonly/></div>
+                <div class="bl5-row"><label class="bl5-label">SC (m²)</label><input id="bl5-pr-sc" readonly/></div>
+                <div class="bl5-row"><label class="bl5-label">Alerte sévérité</label><div class="bl5-inline"><select id="bl5-pr-sev"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select><span id="bl5-pr-sev-badge" class="bl5-bstat bs-fait">1</span></div></div>
+                <div class="bl5-end"><button id="bl5-pr-save" class="btn-submit" type="button">Enregistrer</button><button id="bl5-pr-cancel" class="btn-cancel" type="button">Annuler</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <div class="bl5-pane" data-pane="bio"><div class="bl5-inline" id="bl5-bio-protos"><button class="btn-action" data-p="BBS">BBS</button><button class="btn-action" data-p="NFS-CRP">NFS-CRP</button><button class="btn-action" data-p="Bilan hépatique">Bilan hépatique</button><button class="btn-action" data-p="Ionogramme">Ionogramme</button><button class="btn-action" data-p="Hémostase">Hémostase</button><button class="btn-action" data-p="Troponine">Troponine</button><button class="btn-action" data-p="BNP">BNP</button><button class="btn-action" data-p="Lactates">Lactates</button><button class="btn-action" data-p="GDS">GDS</button><button class="btn-action" data-p="Groupage/RAI">Groupage/RAI</button><button class="btn-action" data-p="Alcoolémie">Alcoolémie</button><button class="btn-action" data-p="Toxiques urinaires">Toxiques urinaires</button><button class="btn-action" data-p="β-HCG">β-HCG</button></div><div id="bl5-bio-list"></div><div class="bl5-end"><button id="bl5-bio-val" class="btn-submit">Valider le bon de biologie</button></div><table class="bl5-table"><thead><tr><th>Examen</th><th>Résultat</th><th>Unité</th><th>Normale</th><th>Statut</th></tr></thead><tbody id="bl5-bio-res"></tbody></table></div>
+        <div class="bl5-pane" data-pane="bio">
+          <div class="bl5-bio-layout">
+            <div class="bl5-bio-left">
+              <div class="bl5-title">Protocoles</div>
+              <div id="bl5-bio-protos" class="bl5-proto-grid">
+                <button class="bl5-proto-btn" data-p="BBS" type="button">BBS</button><button class="bl5-proto-btn" data-p="GDS" type="button">GDS</button><button class="bl5-proto-btn" data-p="Alcoolémie" type="button">Alcoolémie</button><button class="bl5-proto-btn" data-p="Toxiques urinaires" type="button">Toxiques urinaires</button><button class="bl5-proto-btn" data-p="Bilan hépatique" type="button">Bilan hépatique</button><button class="bl5-proto-btn" data-p="Groupage / RAI" type="button">Groupage / RAI</button><button class="bl5-proto-btn" data-p="NFS-CRP" type="button">NFS-CRP</button><button class="bl5-proto-btn" data-p="Ionogramme" type="button">Ionogramme</button><button class="bl5-proto-btn" data-p="Hémostase" type="button">Hémostase</button><button class="bl5-proto-btn" data-p="Troponine" type="button">Troponine</button><button class="bl5-proto-btn" data-p="BNP" type="button">BNP</button><button class="bl5-proto-btn" data-p="Lactates" type="button">Lactates</button><button class="bl5-proto-btn" data-p="β-HCG" type="button">β-HCG</button>
+              </div>
+              <div class="bl5-title">Sélection manuelle</div>
+              <div class="bl5-inline"><input id="bl5-bio-search" placeholder="Rechercher un examen..."/></div>
+              <div class="bl5-inline"><select id="bl5-bio-family"><option value="">Famille</option><option>Hématologie</option><option>Biochimie</option><option>Hémostase</option><option>Microbiologie</option><option>Immunologie</option><option>Gaz du sang</option></select><select id="bl5-bio-tube"><option value="">Tube</option><option>Rouge</option><option>Violet</option><option>Bleu</option><option>Vert</option><option>Jaune</option><option>Noir</option></select></div>
+              <div id="bl5-bio-catalog" class="bl5-bio-catalog"></div>
+              <div class="bl5-end"><button id="bl5-bio-val" class="btn-submit" type="button" style="width:100%;">Valider le bon de biologie</button></div>
+            </div>
+            <div class="bl5-bio-right">
+              <div class="bl5-subsubtabs" id="bl5-bio-tabs"><button class="bl5-subsubtab active" data-bio="orders" type="button">Examens</button><button class="bl5-subsubtab" data-bio="comments" type="button">Commentaires</button><button class="bl5-subsubtab" data-bio="results" type="button">Résultats</button></div>
+              <div class="bl5-bio-pane active" data-bio="orders"><table class="bl5-table"><thead><tr><th>Statut</th><th>Examen / Protocole</th><th>Prescripteur</th><th>Prescrit le</th><th>Fait le</th></tr></thead><tbody id="bl5-bio-order-list"></tbody></table></div>
+              <div class="bl5-bio-pane" data-bio="comments"><textarea id="bl5-bio-comment" rows="4" placeholder="Commentaires biologiques"></textarea><div class="bl5-end"><button id="bl5-bio-comment-save" class="btn-submit" type="button">Enregistrer</button></div></div>
+              <div class="bl5-bio-pane" data-bio="results"><table class="bl5-table"><thead><tr><th>Examen</th><th>Résultat</th><th>Unité</th><th>N. Basses</th><th>N. Hautes</th><th>Statut</th></tr></thead><tbody id="bl5-bio-results-list"></tbody></table></div>
+            </div>
+          </div>
+        </div>
 
-        <div class="bl5-pane" data-pane="img"><div class="bl5-inline"><select id="bl5-im-type" style="width:130px;"><option>Radiographie</option><option>Scanner</option><option>IRM</option><option>Échographie</option><option>ECG</option></select><input id="bl5-im-region" placeholder="Région" style="min-width:140px;"/><select id="bl5-im-cote" style="width:110px;"><option>Gauche</option><option>Droit</option><option>Bilatéral</option><option>Sans objet</option></select><select id="bl5-im-urg" style="width:95px;"><option>Immédiate</option><option>Urgente</option><option>Normale</option></select><select id="bl5-im-iode" style="width:90px;"><option>Non</option><option>Oui</option></select></div><textarea id="bl5-im-signes" rows="2" placeholder="Signes cliniques"></textarea><div class="bl5-end"><button id="bl5-im-add" class="btn-submit">Envoyer la demande</button></div><table class="bl5-table"><thead><tr><th>Type</th><th>Région</th><th>Demandé le</th><th>Urgence</th><th>Statut</th><th>CR</th></tr></thead><tbody id="bl5-im-list"></tbody></table></div>
+        <div class="bl5-pane" data-pane="img">
+          <div class="bl5-grid2">
+            <div>
+              <div class="bl5-row"><label class="bl5-label">Type</label><select id="bl5-im-type"><option>Radiographie</option><option>Scanner</option><option>IRM</option><option>Échographie</option><option>ECG</option><option>Scintigraphie</option></select></div>
+              <div id="bl5-im-radio-extra">
+                <div class="bl5-row"><label class="bl5-label">Région</label><input id="bl5-im-region"/></div>
+                <div class="bl5-row"><label class="bl5-label">Côté</label><select id="bl5-im-cote"><option>G</option><option>D</option><option>Bilat</option><option>Sans objet</option></select></div>
+                <div class="bl5-row"><label class="bl5-label">Incidences</label><div class="bl5-inline"><label><input id="bl5-im-inc-face" type="checkbox"/>Face</label><label><input id="bl5-im-inc-profil" type="checkbox"/>Profil</label><label><input id="bl5-im-inc-oblique" type="checkbox"/>Oblique</label></div></div>
+                <div class="bl5-row"><label class="bl5-label">Position patient</label><select id="bl5-im-pos"><option>Debout</option><option>Couché</option><option>Assis</option></select></div>
+              </div>
+              <div class="bl5-row" id="bl5-im-iode-row" style="display:none;"><label class="bl5-label">Allergie iode</label><select id="bl5-im-iode"><option>Non</option><option>Oui</option></select></div>
+              <div class="bl5-row"><label class="bl5-label">Urgence</label><select id="bl5-im-urg"><option>Immédiate</option><option>Urgente</option><option>Normale</option></select></div>
+              <div class="bl5-row"><label class="bl5-label">Signes cliniques</label><textarea id="bl5-im-signes" rows="2"></textarea></div>
+              <div class="bl5-row"><label class="bl5-label">ATCD et allergies</label><textarea id="bl5-im-atcdro" rows="2" readonly></textarea></div>
+              <div class="bl5-end"><button id="bl5-im-add" class="btn-submit" type="button">Envoyer la demande</button></div>
+            </div>
+            <div>
+              <table class="bl5-table"><thead><tr><th>Examen</th><th>Côté</th><th>Demandé le</th><th>Par</th><th>Pour le</th><th>Fait le</th><th>Compte rendu</th></tr></thead><tbody id="bl5-im-list"></tbody></table>
+              <div class="bl5-title">Autres examens</div>
+              <div class="bl5-row"><label class="bl5-label">ECG 10 dérivations</label><div class="bl5-inline bl5-ecg-grid"><label><input type="checkbox" class="bl5-ecg-deriv" data-d="DI"/>DI</label><label><input type="checkbox" class="bl5-ecg-deriv" data-d="DII"/>DII</label><label><input type="checkbox" class="bl5-ecg-deriv" data-d="DIII"/>DIII</label><label><input type="checkbox" class="bl5-ecg-deriv" data-d="aVR"/>aVR</label><label><input type="checkbox" class="bl5-ecg-deriv" data-d="aVL"/>aVL</label><label><input type="checkbox" class="bl5-ecg-deriv" data-d="aVF"/>aVF</label><label><input type="checkbox" class="bl5-ecg-deriv" data-d="V1"/>V1</label><label><input type="checkbox" class="bl5-ecg-deriv" data-d="V2"/>V2</label><label><input type="checkbox" class="bl5-ecg-deriv" data-d="V3"/>V3</label><label><input type="checkbox" class="bl5-ecg-deriv" data-d="V4"/>V4</label><label><input type="checkbox" class="bl5-ecg-deriv" data-d="V5"/>V5</label><label><input type="checkbox" class="bl5-ecg-deriv" data-d="V6"/>V6</label></div></div>
+              <div class="bl5-row"><label class="bl5-label">Signes cliniques</label><textarea id="bl5-ecg-signes" rows="2"></textarea></div>
+              <div class="bl5-end"><button id="bl5-ecg-add" class="btn-submit" type="button">Demander ECG</button></div>
+            </div>
+          </div>
+        </div>
 
         <div class="bl5-pane" data-pane="evo"><textarea id="bl5-evo-input" rows="3"></textarea><div class="bl5-end"><button id="bl5-evo-add" class="btn-submit">Ajouter</button></div><div id="bl5-evo-list"></div></div>
 
-        <div class="bl5-pane" data-pane="diag"><div class="bl5-row"><label class="bl5-label">CCMU</label><div class="bl5-inline"><select id="bl5-diag-ccmu"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>P</option><option>D</option></select><span id="bl5-diag-ccmu-desc"></span></div></div><div class="bl5-row"><label class="bl5-label">Diagnostic principal</label><input id="bl5-diag-main"/></div><div class="bl5-row"><label class="bl5-label">Diagnostics associés</label><textarea id="bl5-diag-assoc" rows="2"></textarea></div><div class="bl5-row"><label class="bl5-label">Conduite à tenir</label><textarea id="bl5-diag-plan" rows="3"></textarea></div><div class="bl5-end"><button id="bl5-diag-save" class="btn-submit">Enregistrer</button></div></div>
+        <div class="bl5-pane" data-pane="diag">
+          <div class="bl5-row"><label class="bl5-label">CCMU</label><div class="bl5-inline"><select id="bl5-diag-ccmu"><option value="">—</option><option value="1">I</option><option value="2">II</option><option value="3">III</option><option value="4">IV</option><option value="5">V</option><option value="P">P</option><option value="D">D</option></select><span id="bl5-diag-ccmu-desc"></span></div></div>
+          <div class="bl5-row"><label class="bl5-label">Motif de recours</label><div class="bl5-inline"><label><input type="radio" name="bl5-mr-type" value="MR" checked/>MR</label><label><input type="radio" name="bl5-mr-type" value="MA"/>MA</label><input id="bl5-diag-motif" placeholder="Motif"/></div></div>
+          <div class="bl5-subsubtabs" id="bl5-diag-tabs"><button class="bl5-subsubtab active" data-dsub="dp" type="button">DP SAU</button><button class="bl5-subsubtab" data-dsub="dpu" type="button">DPU UHCD</button><button class="bl5-subsubtab" data-dsub="da" type="button">DA</button></div>
+          <div class="bl5-diag-subpane active" data-dsub="dp"><div class="bl5-row"><label class="bl5-label">Recherche CIM-10</label><input id="bl5-cim-search-dp" placeholder="Ex: I21.9"/></div><div class="bl5-row"><label class="bl5-label">Sélection</label><span id="bl5-cim-sel-dp" class="bl5-badge" style="background:#2060a0;">—</span></div></div>
+          <div class="bl5-diag-subpane" data-dsub="dpu"><div class="bl5-row"><label class="bl5-label">Recherche CIM-10</label><input id="bl5-cim-search-dpu" placeholder="Ex: J18.9"/></div><div class="bl5-row"><label class="bl5-label">Sélection</label><span id="bl5-cim-sel-dpu" class="bl5-badge" style="background:#2060a0;">—</span></div></div>
+          <div class="bl5-diag-subpane" data-dsub="da"><div class="bl5-row"><label class="bl5-label">Recherche CIM-10</label><input id="bl5-cim-search-da" placeholder="Ex: E11.9"/></div><div class="bl5-row"><label class="bl5-label">Sélection</label><span id="bl5-cim-sel-da" class="bl5-badge" style="background:#2060a0;">—</span></div></div>
+          <div class="bl5-row"><label class="bl5-label">Diagnostic médical et conduite à tenir</label><textarea id="bl5-diag-plan" rows="4"></textarea></div>
+          <div class="bl5-row"><label class="bl5-label">Protocole appliqué</label><input id="bl5-diag-proto"/></div>
+          <div class="bl5-title">Historique modifications</div>
+          <div id="bl5-diag-hist" class="bl5-hist"></div>
+          <div class="bl5-end"><button id="bl5-diag-save" class="btn-submit" type="button">Enregistrer le diagnostic</button></div>
+        </div>
 
-        <div class="bl5-pane" data-pane="ori"><div class="bl5-row"><label class="bl5-label">Date/heure sortie</label><input id="bl5-out-dt" type="datetime-local"/></div><div class="bl5-row"><label class="bl5-label">GEMSA</label><select id="bl5-out-gemsa"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select></div><div class="bl5-row"><label class="bl5-label">Mode sortie</label><select id="bl5-out-mode"><option>Domicile</option><option>Hospitalisation</option><option>Transfert</option><option>Fugue</option><option>Parti sans attendre</option><option>Contre avis médical</option><option>Décès</option></select></div><div class="bl5-row" id="bl5-out-hosp-row" style="display:none;"><label class="bl5-label">Service/Unité</label><input id="bl5-out-hosp"/></div><div class="bl5-row" id="bl5-out-trans-row" style="display:none;"><label class="bl5-label">Établissement cible</label><input id="bl5-out-trans"/></div><div class="bl5-row"><label class="bl5-label">Transport</label><select id="bl5-out-transport"><option>Autonome</option><option>VSL</option><option>Ambulance</option><option>SMUR</option><option>Héli</option></select></div><div class="bl5-row"><label class="bl5-label">Commentaire</label><textarea id="bl5-out-comment" rows="2"></textarea></div><div class="bl5-end"><button id="bl5-close-dossier" class="btn-submit" style="background:linear-gradient(#f04a4a,#c82828);border-color:#900;">Clôturer</button></div></div>
+        <div class="bl5-pane" data-pane="ori">
+          <div class="bl5-subsubtabs" id="bl5-ori-tabs"><button class="bl5-subsubtab active" data-ori="orientation" type="button">Orientation</button><button class="bl5-subsubtab" data-ori="diagnostic" type="button">Diagnostic</button><button class="bl5-subsubtab" data-ori="agenda" type="button">Agenda</button><button class="bl5-subsubtab" data-ori="actes" type="button">Actes</button><button class="bl5-subsubtab" data-ori="senior" type="button">Validation Senior</button></div>
+
+          <div class="bl5-ori-pane active" data-ori="orientation">
+            <div class="bl5-row"><label class="bl5-label">Date/heure sortie</label><input id="bl5-out-dt" type="datetime-local"/></div>
+            <div class="bl5-row"><label class="bl5-label">GEMSA</label><div class="bl5-inline"><select id="bl5-out-gemsa"><option value="">—</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option></select><span id="bl5-out-gemsa-desc"></span></div></div>
+            <div class="bl5-row"><label class="bl5-label">Modes de sortie</label><div class="bl5-inline bl5-radio-col"><label><input type="radio" name="bl5-out-mode" value="Domicile" checked/>Retour domicile</label><label><input type="radio" name="bl5-out-mode" value="Reconvoqué"/>Reconvoqué</label><label><input type="radio" name="bl5-out-mode" value="HAD"/>Structure HAD / hébergement médico-social</label><label><input type="radio" name="bl5-out-mode" value="Consultation"/>Consultation vers UF</label><label><input type="radio" name="bl5-out-mode" value="Hospitalisation"/>Hospitalisation vers UF</label><label><input type="radio" name="bl5-out-mode" value="Transfert"/>Transfert autre hôpital</label><label><input type="radio" name="bl5-out-mode" value="Décès"/>Décès</label></div></div>
+
+            <div class="bl5-row bl5-mode-row" data-mode="Reconvoqué" style="display:none;"><label class="bl5-label">Date RDV</label><input id="bl5-out-rdv" type="datetime-local"/></div>
+            <div class="bl5-row bl5-mode-row" data-mode="Consultation" style="display:none;"><label class="bl5-label">Spécialité + Service</label><div class="bl5-inline"><input id="bl5-out-cons-spe" placeholder="Spécialité"/><input id="bl5-out-cons-serv" placeholder="Service"/></div></div>
+            <div class="bl5-row bl5-mode-row" data-mode="Hospitalisation" style="display:none;"><label class="bl5-label">Hospitalisation UF</label><div class="bl5-inline"><input id="bl5-out-hosp-spe" placeholder="Spécialité"/><input id="bl5-out-hosp-serv" placeholder="Service"/><input id="bl5-out-hosp-resp" placeholder="Responsabilité médicale"/></div></div>
+            <div class="bl5-row bl5-mode-row" data-mode="Hospitalisation" style="display:none;"><label class="bl5-label">Lit</label><div class="bl5-inline"><label><input id="bl5-out-hosp-req" type="checkbox"/>Réquisition</label><label><input id="bl5-out-hosp-refus" type="checkbox"/>Refus de lit</label></div></div>
+            <div class="bl5-row bl5-mode-row" data-mode="Transfert" style="display:none;"><label class="bl5-label">Établissement</label><input id="bl5-out-trans"/></div>
+
+            <div class="bl5-row"><label class="bl5-label">Cases</label><div class="bl5-inline"><label><input id="bl5-flag-medinf" type="checkbox"/>Médecin traitant informé</label><label><input id="bl5-flag-cav" type="checkbox"/>Contre avis médical</label><label><input id="bl5-flag-police" type="checkbox"/>Remis à la police</label><label><input id="bl5-flag-fugue" type="checkbox"/>Fugue</label><label><input id="bl5-flag-psa" type="checkbox"/>Parti sans attendre</label><label><input id="bl5-flag-paio" type="checkbox"/>Parti avant IOA</label><label><input id="bl5-flag-trans" type="checkbox"/>Transfert</label></div></div>
+            <div class="bl5-row"><label class="bl5-label">Moyen de transport</label><select id="bl5-out-transport"><option>Autonome</option><option>VSL</option><option>Ambulance couchée</option><option>SMUR</option><option>Hélicoptère</option><option>Décès sur place</option></select></div>
+            <div class="bl5-row"><label class="bl5-label">Commentaire sortie</label><textarea id="bl5-out-comment" rows="2"></textarea></div>
+            <div class="bl5-end"><button id="bl5-close-dossier" class="btn-submit" type="button" style="background:linear-gradient(#f04a4a,#c82828);border-color:#900;">Clôturer le dossier</button></div>
+          </div>
+
+          <div class="bl5-ori-pane" data-ori="diagnostic"><div class="bl5-ro">Reprise diagnostic orientée par onglet Diagnostic.</div></div>
+          <div class="bl5-ori-pane" data-ori="agenda"><div class="bl5-ro">Agenda de suivi non connecté.</div></div>
+          <div class="bl5-ori-pane" data-ori="actes"><div class="bl5-ro">Actes d'orientation à compléter.</div></div>
+          <div class="bl5-ori-pane" data-ori="senior"><div class="bl5-row"><label class="bl5-label">Validé par senior</label><input id="bl5-senior-ok" type="checkbox"/></div><div class="bl5-row"><label class="bl5-label">Nom du médecin senior</label><input id="bl5-senior-name"/></div><div class="bl5-row"><label class="bl5-label">Datetime validation</label><input id="bl5-senior-dt" type="datetime-local"/></div><div class="bl5-row"><label class="bl5-label">Commentaire senior</label><textarea id="bl5-senior-comment" rows="3"></textarea></div><div class="bl5-end"><button id="bl5-senior-save" class="btn-submit" type="button">Valider</button></div></div>
+        </div>
       </section>
 
-      <section class="bl5-main" data-main="param"><div class="bl5-inline"><input id="bl5-pa-heure" style="max-width:80px;" readonly/><input id="bl5-pa-acte" placeholder="Acte"/><input id="bl5-pa-dose" placeholder="Produit/Dose"/><input id="bl5-pa-effet" placeholder="Effet observé"/><button id="bl5-pa-add" class="btn-submit">Ajouter</button></div><table class="bl5-table"><thead><tr><th>Heure</th><th>Acte</th><th>Produit/Dose</th><th>Effet observé</th><th>Auteur</th><th>Annuler</th></tr></thead><tbody id="bl5-pa-list"></tbody></table></section>
+      <section class="bl5-main" data-main="param">
+        <div class="bl5-param-layout">
+          <div class="bl5-param-col">
+            <div class="bl5-title">Nouvel acte paramédical</div>
+            <div class="bl5-row"><label class="bl5-label">Heure</label><input id="bl5-pa-heure" type="time"/></div>
+            <div class="bl5-row"><label class="bl5-label">Catégorie</label><select id="bl5-pa-cat"><option>Surveillance</option><option>Soins</option><option>Médicament</option><option>Perfusion</option><option>Prélèvement</option><option>Nursing</option><option>Mobilisation</option><option>Éducation</option><option>Transmissions</option><option>Autre</option></select></div>
+            <div class="bl5-row"><label class="bl5-label">Acte</label><input id="bl5-pa-acte" placeholder="Ex: Pose VVP, Bilan sanguin, ECG..."/></div>
+            <div class="bl5-row" id="bl5-pa-prod-row"><label class="bl5-label">Produit / Dose</label><input id="bl5-pa-produit" placeholder="Ex: NaCl 0.9% 500ml, Morphine 3mg..."/></div>
+            <div class="bl5-row" id="bl5-pa-voie-row"><label class="bl5-label">Voie d'administration</label><select id="bl5-pa-voie"><option>IV</option><option>IM</option><option>SC</option><option>PO</option><option>Sublinguale</option><option>Inhalée</option><option>Locale</option><option>Rectale</option><option>Nasale</option><option>Transcutanée</option></select></div>
+            <div class="bl5-row"><label class="bl5-label">Effet observé / Résultat</label><input id="bl5-pa-effet" placeholder="Ex: Bon débit, apyrexie, EVA 3/10..."/></div>
+            <div class="bl5-row"><label class="bl5-label">Réalisé par</label><input id="bl5-pa-auteur" value="GOLF Stan"/></div>
+            <div class="bl5-end"><button id="bl5-pa-add" class="btn-submit" type="button" style="width:100%;">Enregistrer l'acte</button></div>
+          </div>
+          <div class="bl5-param-col">
+            <div class="bl5-title">Actes paramédicaux</div>
+            <div class="bl5-inline"><select id="bl5-pa-filter"><option value="">Toutes catégories</option><option>Surveillance</option><option>Soins</option><option>Médicament</option><option>Perfusion</option><option>Prélèvement</option><option>Nursing</option><option>Mobilisation</option><option>Éducation</option><option>Transmissions</option><option>Autre</option></select></div>
+            <table class="bl5-table">
+              <thead><tr><th>Heure</th><th>Catégorie</th><th>Acte</th><th>Produit/Dose</th><th>Voie</th><th>Effet observé</th><th>Réalisé par</th><th>✕</th></tr></thead>
+              <tbody id="bl5-pa-list"></tbody>
+            </table>
+          </div>
+        </div>
 
-      <section class="bl5-main" data-main="synth"><div class="bl5-grid2"><div class="bl5-synth" id="bl5-synth-left"></div><div class="bl5-synth" id="bl5-synth-right"></div></div></section>
+        <div class="bl5-isbar">
+          <div class="bl5-title">Transmissions ISBAR</div>
+          <div class="bl5-isbar-grid">
+            <div class="bl5-isbar-item"><label class="bl5-label">I — Identité</label><textarea id="bl5-isbar-i" rows="2"></textarea></div>
+            <div class="bl5-isbar-item"><label class="bl5-label">S — Situation</label><textarea id="bl5-isbar-s" rows="2" placeholder="Motif d'appel, situation actuelle..."></textarea></div>
+            <div class="bl5-isbar-item"><label class="bl5-label">B — Background / Antécédents</label><textarea id="bl5-isbar-b" rows="2"></textarea></div>
+            <div class="bl5-isbar-item"><label class="bl5-label">A — Analyse</label><textarea id="bl5-isbar-a" rows="2" placeholder="Évaluation clinique actuelle, constantes, évolution..."></textarea></div>
+            <div class="bl5-isbar-item"><label class="bl5-label">R — Recommandations</label><textarea id="bl5-isbar-r" rows="2" placeholder="Actions demandées, transmissions pour la suite..."></textarea></div>
+          </div>
+          <div class="bl5-end"><button id="bl5-isbar-save" class="btn-submit" type="button">Enregistrer les transmissions ISBAR</button></div>
+        </div>
+      </section>
+
+      <section class="bl5-main" data-main="synth">
+        <div id="synthese-content" class="bl5-synth-wrap">
+          <div class="bl5-synth-cols">
+            <div id="bl5-synth-left"></div>
+            <div id="bl5-synth-right"></div>
+          </div>
+          <div class="bl5-print-wrap">
+            <button id="bl5-synth-print" class="btn-submit bl5-print-btn" type="button"><svg viewBox="0 0 16 16"><path d="M4 6V2h8v4M3 12H2V7h12v5h-1M4 10h8v4H4z"/></svg>Imprimer la synthèse</button>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 </div>
@@ -626,9 +989,9 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
     <div class="blw"><div class="blogo">RU</div><div class="blt">New Infra<br>v1.1</div></div>
     <div class="bui">Utilisateur :<br><b>GOLF Stan</b></div>
     <div style="width:1px;height:28px;background:#b0c0d0;margin:0 4px;"></div>
-    <div class="bib"><div class="sq">▦</div><div class="lb">Plan</div></div>
+    <div class="bib" id="bb-plan"><div class="sq">▦</div><div class="lb">Plan</div></div>
     <div class="bib"><div class="sq">🔍</div><div class="lb">Recherche</div></div>
-    <div class="bib"><div class="sq">≡</div><div class="lb">Statusboard</div></div>
+    <div class="bib" id="bb-statusboard"><div class="sq">≡</div><div class="lb">Statusboard</div></div>
   </div>
   <div class="br">
     <div class="brb"><div class="ri">📊</div><div class="rl">Statistiques</div></div>
@@ -1036,11 +1399,12 @@ function statutLabel(p){
 // ══ RENDU BLOCS ACCUEIL ══
 function renderAccueil(){
   const list=document.getElementById("accueil-list");
-  if(!patients.length){
-    list.innerHTML='<div class="accueil-empty">Aucun patient enregistré — cliquez sur "+ Entrée administrative"</div>';
+  const patientsAccueil = patients.filter(p => !p.secteur && !p.cloture);
+  if(!patientsAccueil.length){
+    list.innerHTML='<div style="text-align:center;padding:30px;color:#888;font-style:italic;">Aucun patient en attente à l\'accueil</div>';
     updateCounters(); return;
   }
-  list.innerHTML=patients.map(p=>`
+  list.innerHTML=patientsAccueil.map(p=>`
     <div class="pt-block accueil ${patientBgClass(p)}" data-id="${p.id}" onclick="voirFiche(${p.id})">
       <div class="pt-top">
         <div class="pt-dot ${patientDotClass(p)}"></div>
@@ -1171,10 +1535,166 @@ function setSecteur(vue, el){
   switchVue(activeTab ? activeTab.dataset.vue : "accueil");
 }
 
+const SB_TRI_COLORS={"1":"#cc0000","2":"#cc4400","3A":"#8020c0","3B":"#e07820","4":"#20a020","5":"#5090d0"};
+const SB_TRI_ORDER=["1","2","3A","3B","4","5"];
+const SB_SECTOR_ORDER=[
+  {key:"accueil",label:"Accueil IAO"},
+  {key:"cc",label:"Circuit Court"},
+  {key:"saupa",label:"SAUPA"},
+  {key:"sauv",label:"SAUV"},
+  {key:"uhcd",label:"Pasteur UHCD"}
+];
+
+function sbTriColor(tri){
+  return SB_TRI_COLORS[tri]||"#888";
+}
+
+function sbTrunc(txt,max=25){
+  const s=String(txt||"");
+  return s.length>max ? s.slice(0,max)+"..." : s;
+}
+
+function sbElapsedMin(arrive){
+  if(!arrive) return 0;
+  return Math.max(0,Math.floor((Date.now()-new Date(arrive).getTime())/60000));
+}
+
+function sbPecIdeMinutes(tri){
+  const ide=(getPecByTri(tri||"5").ide||"").toLowerCase();
+  if(ide.includes("imm")) return 0;
+  const m=ide.match(/(\d+)\s*min/);
+  if(m) return Number(m[1]);
+  const h=ide.match(/(\d+)\s*h/);
+  if(h) return Number(h[1])*60;
+  return null;
+}
+
+function sbChronoPaint(el){
+  const lim=Number(el.dataset.pecide||"-1");
+  const mins=sbElapsedMin(el.dataset.a);
+  let col="#20a020",fw="normal";
+  if(Number.isFinite(lim) && lim>=0){
+    const over=mins-lim;
+    if(over>30){col="#cc0000";fw="bold";}
+    else if(over>0){col="#e07820";}
+  }
+  el.style.color=col;
+  el.style.fontWeight=fw;
+}
+
+function sbConstCell(p){
+  const a=analyseConstantes(p||{});
+  const crit=(a.rows||[]).filter(r=>r.status&&r.status.level==="critique");
+  if(!(a.rows||[]).length) return '<span class="sb-c-none">—</span>';
+  if(!crit.length){
+    return '<span class="sb-c-ok" title="Constantes normales"><svg viewBox="0 0 16 16"><path d="M2 8l3 3 9-9"/></svg></span>';
+  }
+  const map={tas:"TA",tad:"TA",fc:"FC",spo2:"SpO2",fr:"FR",temp:"T°"};
+  return crit.map(r=>{
+    const up=r.status.text.includes("↑");
+    const arrow=up?"↑":"↓";
+    const cls=up?"sb-c-hi":"sb-c-lo";
+    const val=r.value===null?"—":r.value;
+    return `<span class="${cls}">${map[r.key]||r.label}${arrow} ${escapeHtml(String(val))}</span>`;
+  }).join(" ");
+}
+
+function renderStatusBoard(){
+  const sbLeft=document.getElementById("sb-left");
+  const sbMain=document.getElementById("sb-main");
+  if(!sbLeft||!sbMain) return;
+
+  const openPatients=patients.filter(p=>!p.cloture);
+  const closedCount=patients.filter(p=>!!p.cloture).length;
+  const bySector={
+    accueil:openPatients.filter(p=>!p.secteur),
+    cc:openPatients.filter(p=>p.secteur==="cc"),
+    saupa:openPatients.filter(p=>p.secteur==="saupa"),
+    sauv:openPatients.filter(p=>p.secteur==="sauv"),
+    uhcd:openPatients.filter(p=>p.secteur==="uhcd")
+  };
+  const triCounts={"1":0,"2":0,"3A":0,"3B":0,"4":0,"5":0,"none":0};
+  openPatients.forEach(p=>{if(triCounts[p.triIAO]!==undefined) triCounts[p.triIAO]++; else triCounts.none++;});
+  const critPatients=openPatients.filter(p=>((analyseConstantes(p)||{}).critiques||[]).length>0).length;
+
+  sbLeft.innerHTML=
+    `<div class="sb-blk"><h4>Total dossiers</h4><div class="sb-total-num">${openPatients.length}</div><div class="sb-total-lbl">dossiers ouverts</div></div>`+
+    `<div class="sb-blk"><h4>Par secteur</h4>`+
+      `<div class="sb-line ${bySector.accueil.length>0?"orange":""}"><span>Accueil IAO</span><span class="n">${bySector.accueil.length}</span></div>`+
+      `<div class="sb-line"><span>Circuit Court</span><span class="n">${bySector.cc.length}</span></div>`+
+      `<div class="sb-line"><span>SAUPA</span><span class="n">${bySector.saupa.length}</span></div>`+
+      `<div class="sb-line"><span>SAUV</span><span class="n">${bySector.sauv.length}</span></div>`+
+      `<div class="sb-line"><span>Pasteur UHCD</span><span class="n">${bySector.uhcd.length}</span></div>`+
+      `<div class="sb-line gray"><span>Clôturés</span><span class="n">${closedCount}</span></div>`+
+    `</div>`+
+    `<div class="sb-blk"><h4>Par tri FRENCH</h4>`+
+      SB_TRI_ORDER.map(t=>`<div class="sb-tri"><span class="sb-tri-badge" style="background:${sbTriColor(t)};">Tri ${t}</span><span class="n">${triCounts[t]}</span></div>`).join("")+
+      `<div class="sb-tri"><span class="sb-tri-badge" style="background:#888;">Non trié</span><span class="n">${triCounts.none}</span></div>`+
+    `</div>`+
+    `<div class="sb-blk"><h4>Alertes constantes</h4><div class="sb-alert ${critPatients>0?"crit":""}">${critPatients} patient(s) avec constante(s) critique(s)</div></div>`;
+
+  const sectorsToShow=SB_SECTOR_ORDER.filter(s=>bySector[s.key].length>0);
+  if(!sectorsToShow.length){
+    sbMain.innerHTML='<div class="sb-empty">Aucun patient enregistré</div>';
+    return;
+  }
+
+  sbMain.innerHTML=sectorsToShow.map(s=>{
+    const rows=bySector[s.key]
+      .slice()
+      .sort((a,b)=>new Date(a.arrive||0)-new Date(b.arrive||0))
+      .map(p=>{
+        const tri=p.triIAO||"—";
+        const triBg=sbTriColor(p.triIAO);
+        const ageSex=`${calcAge(p.ddn)} / ${p.sexe||"—"}`;
+        const motif=String(p.motifIAO||"—");
+        const limit=sbPecIdeMinutes(p.triIAO);
+        return `<tr data-id="${p.id}">`+
+          `<td><span class="sb-box">${escapeHtml(p.box||"Accueil")}</span></td>`+
+          `<td><span class="sb-name" style="color:${triBg};">${escapeHtml((p.nom||"")+" "+(p.prenom||""))}</span></td>`+
+          `<td>${escapeHtml(ageSex)}</td>`+
+          `<td><span class="sb-tri-chip" style="background:${triBg};">Tri ${escapeHtml(tri)}</span></td>`+
+          `<td title="${escapeHtml(motif)}">${escapeHtml(sbTrunc(motif,25))}</td>`+
+          `<td><span class="pt-chron" data-a="${escapeHtml(p.arrive||"")}" data-pecide="${limit===null?"":String(limit)}">${elapsed(p.arrive)}</span></td>`+
+          `<td><div class="sb-const">${sbConstCell(p)}</div></td>`+
+          `<td><div class="sb-staff-wrap"><input class="sb-staff" data-id="${p.id}" data-k="medecin" placeholder="Médecin..." value="${escapeHtml(p.medecin||"")}"/><input class="sb-staff" data-id="${p.id}" data-k="ide" placeholder="IDE..." value="${escapeHtml(p.ide||"")}"/></div></td>`+
+        `</tr>`;
+      }).join("");
+
+    return `<div class="sb-sector">`+
+      `<div class="sb-sector-head">${escapeHtml(s.label)} — ${bySector[s.key].length} patient(s)</div>`+
+      `<table class="sb-table"><thead><tr><th>Box/Emplacement</th><th>NOM Prénom</th><th>Âge/Sexe</th><th>Tri</th><th>Motif IAO</th><th>Chrono</th><th>Constantes</th><th>Médecin/IDE</th></tr></thead><tbody>${rows}</tbody></table>`+
+    `</div>`;
+  }).join("");
+
+  sbMain.querySelectorAll("tr[data-id]").forEach(tr=>{
+    tr.addEventListener("click",()=>voirFiche(tr.dataset.id));
+  });
+  sbMain.querySelectorAll(".sb-staff").forEach(inp=>{
+    inp.addEventListener("click",e=>e.stopPropagation());
+    inp.addEventListener("blur",async()=>{
+      const id=inp.dataset.id;
+      const k=inp.dataset.k;
+      const p=findPatientById(id);
+      if(!p||p[k]===inp.value) return;
+      p[k]=inp.value;
+      try{await updatePatientFirestore(id,{[k]:inp.value});}catch(_){ }
+    });
+  });
+}
+
 function switchVue(vue){
   currentVue=vue;
+  const isStatus=vue==="statusboard";
   document.getElementById("vue-accueil").style.display=(vue==="accueil"||vue==="uhcd-acc")?"flex":"none";
-  document.getElementById("vue-secteur").style.display=(vue!=="accueil"&&vue!=="uhcd-acc")?"block":"none";
+  document.getElementById("vue-secteur").style.display=(!isStatus&&vue!=="accueil"&&vue!=="uhcd-acc")?"block":"none";
+  document.getElementById("vue-statusboard").style.display=isStatus?"block":"none";
+  document.getElementById("tabbar").style.display=isStatus?"none":(vue==="uhcd"?"none":"flex");
+  document.getElementById("sectbar").style.display=isStatus?"none":"flex";
+  if(isStatus){
+    renderStatusBoard();
+    return;
+  }
   if(vue==="accueil"){
     renderAccueil();
   } else {
@@ -1366,9 +1886,22 @@ function voirFiche(id){
 
   const ACTES=["IAO","Constantes","ECG","VVP","Prélèvements","Imagerie"];
   const CCMU_DESC={"1":"Etat stable, pas d'acte complémentaire","2":"Etat stable, actes diagnostics/thérapeutiques","3":"Pronostic pouvant s'aggraver","4":"Pronostic vital engagé sans réa","5":"Pronostic vital engagé avec réa","P":"Problème psychiatrique dominant","D":"Patient décédé"};
+  const GEMSA_DESC={"1":"Retour domicile simple","2":"Orientation programmée","3":"Hospitalisation conventionnelle","4":"Unité de soins intensifs","5":"Transfert inter-établissement","6":"Décès / médico-légal"};
+  const BIO_EXAMS=[
+    {f:"Hématologie",t:"Violet",n:"NFS"},{f:"Hématologie",t:"Violet",n:"Réticulocytes"},{f:"Hématologie",t:"Violet",n:"Frottis sanguin"},
+    {f:"Biochimie",t:"Rouge",n:"Glycémie"},{f:"Biochimie",t:"Rouge",n:"Créatininémie"},{f:"Biochimie",t:"Rouge",n:"Urée"},{f:"Biochimie",t:"Jaune",n:"Ionogramme complet"},{f:"Biochimie",t:"Jaune",n:"Natrémie"},{f:"Biochimie",t:"Jaune",n:"Kaliémie"},{f:"Biochimie",t:"Jaune",n:"Chlorémie"},{f:"Biochimie",t:"Jaune",n:"Bicarbonates"},{f:"Biochimie",t:"Rouge",n:"Protéines totales"},{f:"Biochimie",t:"Rouge",n:"Albumine"},{f:"Biochimie",t:"Rouge",n:"CRP"},{f:"Biochimie",t:"Rouge",n:"Procalcitonine"},{f:"Biochimie",t:"Rouge",n:"Troponine I"},{f:"Biochimie",t:"Rouge",n:"Troponine T us"},{f:"Biochimie",t:"Rouge",n:"BNP"},{f:"Biochimie",t:"Rouge",n:"NT-proBNP"},{f:"Biochimie",t:"Rouge",n:"CPK"},{f:"Biochimie",t:"Rouge",n:"CPK-MB"},{f:"Biochimie",t:"Rouge",n:"Myoglobine"},{f:"Biochimie",t:"Rouge",n:"LDH"},{f:"Biochimie",t:"Rouge",n:"ASAT"},{f:"Biochimie",t:"Rouge",n:"ALAT"},{f:"Biochimie",t:"Rouge",n:"GGT"},{f:"Biochimie",t:"Rouge",n:"PAL"},{f:"Biochimie",t:"Rouge",n:"Bilirubine totale"},{f:"Biochimie",t:"Rouge",n:"Bilirubine directe"},{f:"Biochimie",t:"Rouge",n:"Lipase"},{f:"Biochimie",t:"Rouge",n:"Amylase"},{f:"Biochimie",t:"Rouge",n:"Acide urique"},{f:"Biochimie",t:"Rouge",n:"Cholestérol"},{f:"Biochimie",t:"Rouge",n:"Triglycérides"},{f:"Biochimie",t:"Rouge",n:"Calcium"},{f:"Biochimie",t:"Rouge",n:"Phosphore"},{f:"Biochimie",t:"Rouge",n:"Magnésium"},{f:"Biochimie",t:"Jaune",n:"Lactates"},{f:"Biochimie",t:"Jaune",n:"β-HCG"},{f:"Biochimie",t:"Rouge",n:"TSH"},{f:"Biochimie",t:"Rouge",n:"T4L"},{f:"Biochimie",t:"Rouge",n:"Cortisol"},{f:"Biochimie",t:"Rouge",n:"Alcoolémie"},{f:"Biochimie",t:"Rouge",n:"Paracétamolémie"},{f:"Biochimie",t:"Rouge",n:"Salicylémie"},
+    {f:"Hémostase",t:"Bleu",n:"TP"},{f:"Hémostase",t:"Bleu",n:"TCA"},{f:"Hémostase",t:"Bleu",n:"Fibrinogène"},{f:"Hémostase",t:"Bleu",n:"D-Dimères"},{f:"Hémostase",t:"Bleu",n:"Anti-Xa"},
+    {f:"Microbiologie",t:"Rouge",n:"Hémocultures x2"},{f:"Microbiologie",t:"Rouge",n:"ECBU"},{f:"Microbiologie",t:"Rouge",n:"Coproculture"},{f:"Microbiologie",t:"Rouge",n:"Antigénurie pneumocoque"},{f:"Microbiologie",t:"Rouge",n:"Antigénurie légionelle"},{f:"Microbiologie",t:"Rouge",n:"Sérologie VIH"},{f:"Microbiologie",t:"Rouge",n:"Sérologie hépatite B/C"},
+    {f:"Immunologie",t:"Rouge",n:"Groupage ABO-RH"},{f:"Immunologie",t:"Rouge",n:"RAI"},{f:"Immunologie",t:"Rouge",n:"Test de Coombs direct"},
+    {f:"Gaz du sang",t:"Vert",n:"GDS artériel"},{f:"Gaz du sang",t:"Vert",n:"GDS veineux"},{f:"Gaz du sang",t:"Vert",n:"Lactates artériels"}
+  ];
+  const BIO_PROTOCOLS={
+    "BBS":["NFS","Ionogramme complet","CRP"],"GDS":["GDS artériel"],"Alcoolémie":["Alcoolémie"],"Toxiques urinaires":["Paracétamolémie","Salicylémie"],"Bilan hépatique":["ASAT","ALAT","GGT","PAL","Bilirubine totale","Bilirubine directe"],"Groupage / RAI":["Groupage ABO-RH","RAI"],"NFS-CRP":["NFS","CRP"],"Ionogramme":["Ionogramme complet","Natrémie","Kaliémie"],"Hémostase":["TP","TCA","Fibrinogène"],"Troponine":["Troponine I"],"BNP":["BNP"],"Lactates":["Lactates"],"β-HCG":["β-HCG"]
+  };
   const nowHm=(ts)=>{const d=new Date(ts||Date.now()),p2=n=>String(n).padStart(2,"0");return p2(d.getHours())+":"+p2(d.getMinutes());};
   const nowFull=(ts)=>{const d=new Date(ts||Date.now()),p2=n=>String(n).padStart(2,"0");return p2(d.getHours())+":"+p2(d.getMinutes())+" "+p2(d.getDate())+"/"+p2(d.getMonth()+1)+"/"+d.getFullYear();};
   const getP=()=>findPatientById(modal.dataset.pid);
+  window.__bl5State=window.__bl5State||{prEditId:null,bioTab:"orders",diagTab:"dp",oriTab:"orientation",bioProtos:{}};
   const acteSvg=(k)=>{
     if(k==="IAO") return '<svg width="16" height="16" viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M8 4.5v7M4.5 8h7"/></svg>';
     if(k==="Constantes") return '<svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 13s-4-2.4-4-5.2A2.3 2.3 0 0 1 8 6a2.3 2.3 0 0 1 4 1.8C12 10.6 8 13 8 13z"/><path d="M1.5 8h2l1-2 1.5 4 1-2h2.5"/></svg>';
@@ -1377,11 +1910,37 @@ function voirFiche(id){
     if(k==="Prélèvements") return '<svg width="16" height="16" viewBox="0 0 16 16"><path d="M6 2h4M7 2v4l-2.5 6h7L9 6V2"/></svg>';
     return '<svg width="16" height="16" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M8 5.5v5M5.5 8h5"/></svg>';
   };
+  const avatarSvg=(sexe)=>String(sexe||"").toUpperCase().startsWith("F")
+    ? '<svg viewBox="0 0 32 32"><circle cx="16" cy="9" r="5"/><path d="M16 14c-4.5 0-8 3.5-8 8v6h16v-6c0-4.5-3.5-8-8-8z"/></svg>'
+    : '<svg viewBox="0 0 32 32"><circle cx="16" cy="8.5" r="5"/><path d="M10 29v-8h12v8M16 14v15M9 17h14"/></svg>';
+  const morphoFrom=(poids,tailleCm)=>{
+    const p=Number(String(poids||"").replace(",","."));
+    const t=Number(String(tailleCm||"").replace(",","."));
+    if(!Number.isFinite(p)||!Number.isFinite(t)||p<=0||t<=0) return {imc:"",sc:"",imcLevel:""};
+    const tm=t/100;
+    const imc=p/(tm*tm);
+    const sc=Math.sqrt((p*t)/3600);
+    let imcLevel="Normal";
+    if(imc<18.5) imcLevel="Maigreur";
+    else if(imc<25) imcLevel="Normal";
+    else if(imc<30) imcLevel="Surpoids";
+    else imcLevel="Obésité";
+    return {imc:imc.toFixed(1),sc:sc.toFixed(2),imcLevel};
+  };
+  const elapsedLong=(ts)=>{
+    if(!ts) return "";
+    const d=Math.max(0,Date.now()-ts),m=Math.floor(d/60000),h=Math.floor(m/60),mm=m%60;
+    return h>0?`${h} h ${String(mm).padStart(2,"0")} min`:`${mm} min`;
+  };
 
   if(!window.__bl5Init){
     window.__bl5Init=true;
 
-    const close=()=>{modal.classList.remove("open");document.body.classList.remove("fiche-open");};
+    const close=()=>{
+      if(window.__bl5HeaderTimer){clearInterval(window.__bl5HeaderTimer);window.__bl5HeaderTimer=null;}
+      modal.classList.remove("open");
+      document.body.classList.remove("fiche-open");
+    };
     document.getElementById("bl5-close").onclick=close;
     modal.addEventListener("click",e=>{if(e.target===modal) close();});
 
@@ -1389,6 +1948,7 @@ function voirFiche(id){
       const b=e.target.closest(".bl5-tab"); if(!b) return;
       document.querySelectorAll(".bl5-tab").forEach(x=>x.classList.remove("active")); b.classList.add("active");
       document.querySelectorAll(".bl5-main").forEach(x=>x.classList.toggle("active",x.dataset.main===b.dataset.main));
+      if(b.dataset.main==="synth" && window.__bl5Render) window.__bl5Render();
     });
     document.getElementById("bl5-med-tabs").addEventListener("click",e=>{
       const b=e.target.closest(".bl5-subtab"); if(!b) return;
@@ -1403,41 +1963,108 @@ function voirFiche(id){
 
     const toggleCcmu=()=>{
       const s=document.getElementById("bl5-ccmu-edit");
-      s.style.display=s.style.display==="none"?"block":"none";
+      s.style.display=s.style.display==="none"?"flex":"none";
     };
     document.getElementById("bl5-ccmu-btn").onclick=toggleCcmu;
     document.getElementById("bl5-ccmu-badge").onclick=toggleCcmu;
-    document.getElementById("bl5-ccmu-select").onchange=()=>{const pt=getP();if(!pt)return;pt.ccmu=document.getElementById("bl5-ccmu-select").value;window.__bl5Render();};
+    document.getElementById("bl5-ccmu-apply").onclick=()=>{
+      const pt=getP();
+      if(!pt) return;
+      const v=document.getElementById("bl5-ccmu-select").value;
+      if(!v) return;
+      pt.ccmu=v;
+      document.getElementById("bl5-ccmu-edit").style.display="none";
+      window.__bl5Render();
+    };
+    document.getElementById("bl5-h-muter").onclick=()=>{const pt=getP();if(pt)openMuter(pt.id);};
+
+    const recomputeMorpho=()=>{
+      const calc=morphoFrom(document.getElementById("bl5-h-poids").value,document.getElementById("bl5-h-taille").value);
+      document.getElementById("bl5-h-imc").value=calc.imc;
+      document.getElementById("bl5-h-sc").value=calc.sc;
+      const b=document.getElementById("bl5-h-imc-badge");
+      b.textContent=calc.imcLevel||"-";
+      b.style.background=calc.imcLevel==="Normal"?"#20a020":(calc.imcLevel==="Surpoids"?"#e07820":(calc.imcLevel==="Obésité"?"#cc0000":"#2060a0"));
+    };
+    document.getElementById("bl5-h-poids").addEventListener("input",recomputeMorpho);
+    document.getElementById("bl5-h-taille").addEventListener("input",recomputeMorpho);
+    document.getElementById("bl5-h-save-morpho").onclick=()=>{
+      const pt=getP();
+      if(!pt) return;
+      const poids=document.getElementById("bl5-h-poids").value;
+      const taille=document.getElementById("bl5-h-taille").value;
+      const calc=morphoFrom(poids,taille);
+      pt.morpho={poids:poids||"",taille:taille||"",imc:calc.imc||"",sc:calc.sc||"",updatedAt:Date.now()};
+      window.__bl5Render();
+    };
 
     document.getElementById("bl5-add-atcd").onclick=()=>{const pt=getP();if(!pt)return;pt.medical.atcdPersonnels.push({type:"Médical",pathologie:"",cim:"",commentaire:"",gravite:""});window.__bl5Render();};
     document.getElementById("bl5-add-trait").onclick=()=>{const pt=getP();if(!pt)return;pt.medical.traitementsHab.push({medicament:"",posologie:"",voie:"",frequence:"",commentaire:""});window.__bl5Render();};
 
-    document.getElementById("bl5-pr-add").onclick=()=>{const pt=getP();if(!pt)return;pt.prescriptions.push({id:Date.now(),statut:"À faire",voie:document.getElementById("bl5-pr-voie").value,type:document.getElementById("bl5-pr-type").value,medicament:document.getElementById("bl5-pr-med").value,posologie:document.getElementById("bl5-pr-poso").value,prescritLe:nowFull(),debut:"",fin:""});window.__bl5Render();};
-    document.getElementById("bl5-pr-list").addEventListener("click",e=>{const pt=getP();if(!pt)return;const idp=+(e.target.dataset.id||0);const pr=pt.prescriptions.find(x=>x.id===idp);if(!pr)return;if(e.target.dataset.act==="fait")pr.statut="Fait";if(e.target.dataset.act==="ann")pr.statut="Annulé";window.__bl5Render();});
+    const renderHours=()=>{const host=document.getElementById("bl5-pr-hours");if(!host)return;host.innerHTML=Array.from({length:23},(_,i)=>`<button class="bl5-hour" data-h="${i+1}" type="button">${i+1}</button>`).join("");};
+    renderHours();
+    const updatePrSev=()=>{const sev=document.getElementById("bl5-pr-sev").value,b=document.getElementById("bl5-pr-sev-badge");b.textContent=sev;b.className="bl5-bstat "+(sev==="1"?"bs-fait":(sev==="2"?"bs-afaire":(sev==="3"?"bs-enc":"bs-ann")));};
+    updatePrSev();
+    document.getElementById("bl5-pr-sev").onchange=updatePrSev;
+    document.getElementById("bl5-pr-freq").onchange=()=>{document.getElementById("bl5-pr-hours-wrap").style.display=document.getElementById("bl5-pr-freq").value==="Horaires"?"block":"none";};
+    document.getElementById("bl5-pr-hours").addEventListener("click",e=>{const b=e.target.closest(".bl5-hour");if(!b)return;b.classList.toggle("active");});
+    document.getElementById("bl5-pr-new").onclick=()=>{window.__bl5State.prEditId=null;document.getElementById("bl5-pr-editor").style.display="block";};
+    document.getElementById("bl5-pr-cancel").onclick=()=>{window.__bl5State.prEditId=null;document.getElementById("bl5-pr-editor").style.display="none";};
+    document.getElementById("bl5-pr-save").onclick=()=>{const pt=getP();if(!pt)return;const idp=window.__bl5State.prEditId||Date.now();const row={id:idp,categorie:document.getElementById("bl5-pr-type").value,type:document.getElementById("bl5-pr-type").value,statut:document.getElementById("bl5-pr-statut").value,urgence:document.getElementById("bl5-pr-urg").value,voie:document.getElementById("bl5-pr-voie").value,livret:"Oui",medicament:document.getElementById("bl5-pr-med").value,posologie:document.getElementById("bl5-pr-poso").value,duree:document.getElementById("bl5-pr-duree").value,frequence:document.getElementById("bl5-pr-freq").value,hours:Array.from(document.querySelectorAll("#bl5-pr-hours .bl5-hour.active")).map(x=>x.dataset.h),prescritPar:"GOLF Stan",prescritLe:nowFull(),debut:nowFull(),fin:"",severite:document.getElementById("bl5-pr-sev").value};const arr=pt.prescriptions||[];const i=arr.findIndex(x=>x.id===idp);if(i>=0)arr[i]={...arr[i],...row};else arr.push(row);pt.prescriptions=arr;document.getElementById("bl5-pr-editor").style.display="none";window.__bl5State.prEditId=null;window.__bl5Render();};
+    document.getElementById("bl5-pr-list").addEventListener("click",e=>{const pt=getP();if(!pt)return;const tr=e.target.closest("tr[data-id]");if(!tr)return;const idp=+tr.dataset.id;const pr=(pt.prescriptions||[]).find(x=>x.id===idp);if(!pr)return;window.__bl5State.prEditId=idp;document.getElementById("bl5-pr-editor").style.display="block";document.getElementById("bl5-pr-type").value=pr.type||"Perfusion";document.getElementById("bl5-pr-statut").value=pr.statut||"À faire";document.getElementById("bl5-pr-urg").value=pr.urgence||"Non";document.getElementById("bl5-pr-voie").value=pr.voie||"IV";document.getElementById("bl5-pr-med").value=pr.medicament||"";document.getElementById("bl5-pr-poso").value=pr.posologie||"";document.getElementById("bl5-pr-duree").value=pr.duree||"";document.getElementById("bl5-pr-freq").value=pr.frequence||"Unique";document.getElementById("bl5-pr-sev").value=String(pr.severite||1);document.getElementById("bl5-pr-freq").onchange();updatePrSev();document.querySelectorAll("#bl5-pr-hours .bl5-hour").forEach(x=>x.classList.toggle("active",(pr.hours||[]).includes(x.dataset.h)));});
 
-    document.getElementById("bl5-im-add").onclick=()=>{const pt=getP();if(!pt)return;pt.imagerie.push({id:Date.now(),type:document.getElementById("bl5-im-type").value,region:document.getElementById("bl5-im-region").value,cote:document.getElementById("bl5-im-cote").value,urgence:document.getElementById("bl5-im-urg").value,iode:document.getElementById("bl5-im-iode").value,signes:document.getElementById("bl5-im-signes").value,demandeLe:nowFull(),statut:"En attente",cr:""});window.__bl5Render();};
-    document.getElementById("bl5-im-list").addEventListener("input",e=>{const pt=getP();if(!pt)return;const i=pt.imagerie.find(x=>x.id===+e.target.dataset.id);if(i)i.cr=e.target.value;});
-    document.getElementById("bl5-im-list").addEventListener("click",e=>{const pt=getP();if(!pt)return;const i=pt.imagerie.find(x=>x.id===+e.target.dataset.id);if(!i)return;if(e.target.dataset.act==="done")i.statut="Réalisé";window.__bl5Render();});
+    document.getElementById("bl5-bio-tabs").addEventListener("click",e=>{const b=e.target.closest(".bl5-subsubtab");if(!b)return;window.__bl5State.bioTab=b.dataset.bio;document.querySelectorAll("#bl5-bio-tabs .bl5-subsubtab").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".bl5-bio-pane").forEach(x=>x.classList.toggle("active",x.dataset.bio===b.dataset.bio));});
+    document.getElementById("bl5-bio-protos").addEventListener("click",e=>{const b=e.target.closest(".bl5-proto-btn");if(!b)return;const pt=getP();if(!pt)return;pt.bioSelected=pt.bioSelected||[];window.__bl5State.bioProtos[b.dataset.p]=!window.__bl5State.bioProtos[b.dataset.p];b.classList.toggle("active",!!window.__bl5State.bioProtos[b.dataset.p]);(BIO_PROTOCOLS[b.dataset.p]||[]).forEach(ex=>{if(window.__bl5State.bioProtos[b.dataset.p]){if(!(pt.bioSelected||[]).includes(ex))pt.bioSelected.push(ex);}else{pt.bioSelected=(pt.bioSelected||[]).filter(x=>x!==ex);}});window.__bl5Render();});
+    ["bl5-bio-search","bl5-bio-family","bl5-bio-tube"].forEach(idf=>{const el=document.getElementById(idf);if(el)el.oninput=()=>window.__bl5Render();if(el)el.onchange=()=>window.__bl5Render();});
+    document.getElementById("bl5-bio-catalog").addEventListener("change",e=>{const pt=getP();if(!pt)return;const c=e.target.closest("input[data-ex]");if(!c)return;pt.bioSelected=pt.bioSelected||[];if(c.checked){if(!(pt.bioSelected||[]).includes(c.dataset.ex))pt.bioSelected.push(c.dataset.ex);}else{pt.bioSelected=(pt.bioSelected||[]).filter(x=>x!==c.dataset.ex);}window.__bl5Render();});
+    document.getElementById("bl5-bio-val").onclick=()=>{const pt=getP();if(!pt)return;const exams=(pt.bioSelected||[]).slice();const protos=Object.keys(window.__bl5State.bioProtos).filter(k=>window.__bl5State.bioProtos[k]);const label=protos.length?protos.join(", "):exams.join(", ");if(!label)return;pt.biologieOrders=pt.biologieOrders||[];pt.biologieOrders.push({id:Date.now(),statut:"À faire",label,prescripteur:"GOLF Stan",prescritLe:nowFull(),faitLe:"",examens:exams});(exams||[]).forEach(ex=>{pt.bioResults=pt.bioResults||[];if(!(pt.bioResults||[]).some(r=>r.examen===ex))pt.bioResults.push({examen:ex,valeur:"",unite:"",low:"",high:""});});window.__bl5State.bioProtos={};pt.bioSelected=[];window.__bl5Render();};
+    document.getElementById("bl5-bio-comment-save").onclick=()=>{const pt=getP();if(!pt)return;pt.bioComment=document.getElementById("bl5-bio-comment").value||"";};
+    document.getElementById("bl5-bio-results-list").addEventListener("input",e=>{const pt=getP();if(!pt)return;const i=+(e.target.dataset.i||-1);if(i<0)return;const arr=pt.bioResults||[];if(!arr[i])return;arr[i].valeur=e.target.value;window.__bl5Render();});
+
+    const syncImagerieType=()=>{const t=document.getElementById("bl5-im-type").value;document.getElementById("bl5-im-radio-extra").style.display=t==="Radiographie"?"block":"none";document.getElementById("bl5-im-iode-row").style.display=(t==="Scanner"||t==="IRM")?"grid":"none";};
+    document.getElementById("bl5-im-type").onchange=syncImagerieType;
+    syncImagerieType();
+
+    document.getElementById("bl5-im-add").onclick=()=>{const pt=getP();if(!pt)return;pt.imagerie=(pt.imagerie||[]);pt.imagerie.push({id:Date.now(),type:document.getElementById("bl5-im-type").value,region:document.getElementById("bl5-im-region").value,cote:document.getElementById("bl5-im-cote").value,incidences:[document.getElementById("bl5-im-inc-face").checked?"Face":"",document.getElementById("bl5-im-inc-profil").checked?"Profil":"",document.getElementById("bl5-im-inc-oblique").checked?"Oblique":""].filter(Boolean),position:document.getElementById("bl5-im-pos").value,urgence:document.getElementById("bl5-im-urg").value,iode:document.getElementById("bl5-im-iode").value,signes:document.getElementById("bl5-im-signes").value,demandeLe:nowFull(),par:"GOLF Stan",pourLe:"",faitLe:"",statut:"En attente",cr:"",openCr:false});window.__bl5Render();};
+    document.getElementById("bl5-im-list").addEventListener("input",e=>{const pt=getP();if(!pt)return;const i=(pt.imagerie||[]).find(x=>x.id===+e.target.dataset.id);if(i)i.cr=e.target.value;});
+    document.getElementById("bl5-im-list").addEventListener("click",e=>{const pt=getP();if(!pt)return;const i=(pt.imagerie||[]).find(x=>x.id===+e.target.dataset.id);if(!i)return;if(e.target.dataset.act==="cr")i.openCr=!i.openCr;if(e.target.dataset.act==="savecr"){i.statut="Réalisé";i.faitLe=nowFull();i.openCr=false;}window.__bl5Render();});
+    document.getElementById("bl5-ecg-add").onclick=()=>{const pt=getP();if(!pt)return;const deriv=Array.from(document.querySelectorAll(".bl5-ecg-deriv:checked")).map(x=>x.dataset.d);pt.imagerie=(pt.imagerie||[]);pt.imagerie.push({id:Date.now(),type:"ECG 10 dérivations",cote:"—",demandeLe:nowFull(),par:"GOLF Stan",pourLe:"",faitLe:"",statut:"En attente",cr:document.getElementById("bl5-ecg-signes").value,signes:document.getElementById("bl5-ecg-signes").value,deriv});window.__bl5Render();};
 
     document.getElementById("bl5-evo-add").onclick=()=>{const pt=getP();if(!pt)return;const t=document.getElementById("bl5-evo-input").value.trim();if(!t)return;pt.evolution.unshift({ts:Date.now(),auteur:"GOLF Stan",texte:t});document.getElementById("bl5-evo-input").value="";window.__bl5Render();};
 
     document.getElementById("bl5-save-const").onclick=()=>{const pt=getP();if(!pt)return;pt.medical.examen={...(pt.medical.examen||{}),etat:document.getElementById("bl5-eg").value,gcs:document.getElementById("bl5-gcs").value,y:document.getElementById("bl5-gcs-y").value,v:document.getElementById("bl5-gcs-v").value,m:document.getElementById("bl5-gcs-m").value,eva:document.getElementById("bl5-eva").value,constantes:{ta:document.getElementById("bl5-c-ta").value,fc:document.getElementById("bl5-c-fc").value,spo2:document.getElementById("bl5-c-spo2").value,fr:document.getElementById("bl5-c-fr").value,temp:document.getElementById("bl5-c-t").value,gly:document.getElementById("bl5-c-gly").value},physique:document.getElementById("bl5-exam-phy").value};alert("Constantes enregistrées");};
 
-    document.getElementById("bl5-diag-save").onclick=()=>{const pt=getP();if(!pt)return;pt.ccmu=document.getElementById("bl5-diag-ccmu").value;pt.diagnostic={principal:document.getElementById("bl5-diag-main").value,associes:document.getElementById("bl5-diag-assoc").value,conduite:document.getElementById("bl5-diag-plan").value,savedAt:Date.now()};window.__bl5Render();};
-    document.getElementById("bl5-out-mode").onchange=()=>{const mode=document.getElementById("bl5-out-mode").value;document.getElementById("bl5-out-hosp-row").style.display=mode==="Hospitalisation"?"grid":"none";document.getElementById("bl5-out-trans-row").style.display=mode==="Transfert"?"grid":"none";};
+    document.getElementById("bl5-diag-tabs").addEventListener("click",e=>{const b=e.target.closest(".bl5-subsubtab");if(!b)return;window.__bl5State.diagTab=b.dataset.dsub;document.querySelectorAll("#bl5-diag-tabs .bl5-subsubtab").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll('.bl5-diag-subpane').forEach(x=>x.classList.toggle("active",x.dataset.dsub===b.dataset.dsub));});
+    ["dp","dpu","da"].forEach(k=>{const iel=document.getElementById("bl5-cim-search-"+k);if(iel)iel.oninput=()=>{const pt=getP();if(!pt)return;pt.diagnostic=pt.diagnostic||{};pt.diagnostic["cim_"+k]=iel.value.trim();window.__bl5Render();};});
+    document.getElementById("bl5-diag-save").onclick=()=>{const pt=getP();if(!pt)return;const prev=pt.ccmu||"—";const next=document.getElementById("bl5-diag-ccmu").value||"—";pt.ccmu=document.getElementById("bl5-diag-ccmu").value;pt.diagnostic=pt.diagnostic||{};pt.diagnostic.motifType=(document.querySelector('input[name="bl5-mr-type"]:checked')||{}).value||"MR";pt.diagnostic.motif=document.getElementById("bl5-diag-motif").value;pt.diagnostic.dp=document.getElementById("bl5-cim-search-dp").value;pt.diagnostic.dpu=document.getElementById("bl5-cim-search-dpu").value;pt.diagnostic.da=document.getElementById("bl5-cim-search-da").value;pt.diagnostic.conduite=document.getElementById("bl5-diag-plan").value;pt.diagnostic.protocole=document.getElementById("bl5-diag-proto").value;pt.diagnostic.historique=pt.diagnostic.historique||[];pt.diagnostic.historique.unshift({ts:Date.now(),auteur:"GOLF Stan",ancien:prev,nouveau:next});window.__bl5Render();};
+
+    document.getElementById("bl5-ori-tabs").addEventListener("click",e=>{const b=e.target.closest(".bl5-subsubtab");if(!b)return;window.__bl5State.oriTab=b.dataset.ori;document.querySelectorAll("#bl5-ori-tabs .bl5-subsubtab").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".bl5-ori-pane").forEach(x=>x.classList.toggle("active",x.dataset.ori===b.dataset.ori));});
+    const syncOutMode=()=>{const mode=((document.querySelector('input[name="bl5-out-mode"]:checked')||{}).value)||"Domicile";document.querySelectorAll(".bl5-mode-row").forEach(r=>r.style.display=r.dataset.mode===mode?"grid":"none");};
+    document.querySelectorAll('input[name="bl5-out-mode"]').forEach(r=>r.onchange=syncOutMode);
+    syncOutMode();
+    document.getElementById("bl5-out-gemsa").onchange=()=>{const g=document.getElementById("bl5-out-gemsa").value;document.getElementById("bl5-out-gemsa-desc").textContent=GEMSA_DESC[g]||"";};
     document.getElementById("bl5-close-dossier").onclick=()=>{
       const pt=getP();if(!pt)return;
-      pt.orientation={dateHeure:document.getElementById("bl5-out-dt").value,gemsa:document.getElementById("bl5-out-gemsa").value,mode:document.getElementById("bl5-out-mode").value,hosp:document.getElementById("bl5-out-hosp").value,transfert:document.getElementById("bl5-out-trans").value,transport:document.getElementById("bl5-out-transport").value,commentaire:document.getElementById("bl5-out-comment").value};
+      const mode=((document.querySelector('input[name="bl5-out-mode"]:checked')||{}).value)||"Domicile";
+      pt.orientation={dateHeure:document.getElementById("bl5-out-dt").value,gemsa:document.getElementById("bl5-out-gemsa").value,mode,rdv:document.getElementById("bl5-out-rdv").value,consultation:{specialite:document.getElementById("bl5-out-cons-spe").value,service:document.getElementById("bl5-out-cons-serv").value},hospitalisation:{specialite:document.getElementById("bl5-out-hosp-spe").value,service:document.getElementById("bl5-out-hosp-serv").value,responsable:document.getElementById("bl5-out-hosp-resp").value,requisition:document.getElementById("bl5-out-hosp-req").checked,refusLit:document.getElementById("bl5-out-hosp-refus").checked},transfert:document.getElementById("bl5-out-trans").value,flags:{medecinInforme:document.getElementById("bl5-flag-medinf").checked,contreAvis:document.getElementById("bl5-flag-cav").checked,police:document.getElementById("bl5-flag-police").checked,fugue:document.getElementById("bl5-flag-fugue").checked,partiSansAttendre:document.getElementById("bl5-flag-psa").checked,partiAvantIoa:document.getElementById("bl5-flag-paio").checked,transfert:document.getElementById("bl5-flag-trans").checked},transport:document.getElementById("bl5-out-transport").value,commentaire:document.getElementById("bl5-out-comment").value};
       pt.cloture=true;
+      pt.heureSortie=new Date().toISOString();
       patients=patients.filter(x=>x.id!==pt.id);
       modal.classList.remove("open");
       document.body.classList.remove("fiche-open");
       if(currentVue==="accueil") renderAccueil(); else renderSecteur(currentVue);
       updateCounters();
     };
+    document.getElementById("bl5-senior-save").onclick=()=>{const pt=getP();if(!pt)return;pt.orientation=pt.orientation||{};pt.orientation.validationSenior={valide:document.getElementById("bl5-senior-ok").checked,nom:document.getElementById("bl5-senior-name").value,date:document.getElementById("bl5-senior-dt").value,commentaire:document.getElementById("bl5-senior-comment").value};};
 
-    document.getElementById("bl5-pa-add").onclick=()=>{const pt=getP();if(!pt)return;pt.paramedical.push({id:Date.now(),heure:nowHm(),acte:document.getElementById("bl5-pa-acte").value,dose:document.getElementById("bl5-pa-dose").value,effet:document.getElementById("bl5-pa-effet").value,auteur:"GOLF Stan"});document.getElementById("bl5-pa-acte").value="";document.getElementById("bl5-pa-dose").value="";document.getElementById("bl5-pa-effet").value="";window.__bl5Render();};
-    document.getElementById("bl5-pa-list").addEventListener("click",e=>{const pt=getP();if(!pt)return;const idr=+(e.target.dataset.id||0);pt.paramedical=(pt.paramedical||[]).filter(x=>x.id!==idr);window.__bl5Render();});
+    const syncPaFields=()=>{const cat=document.getElementById("bl5-pa-cat").value;const vis=(cat==="Médicament"||cat==="Perfusion");document.getElementById("bl5-pa-prod-row").style.display=vis?"grid":"none";document.getElementById("bl5-pa-voie-row").style.display=vis?"grid":"none";};
+    document.getElementById("bl5-pa-cat").onchange=syncPaFields;
+    syncPaFields();
+    document.getElementById("bl5-pa-filter").onchange=()=>window.__bl5Render();
+    document.getElementById("bl5-pa-add").onclick=()=>{const pt=getP();if(!pt)return;const cat=document.getElementById("bl5-pa-cat").value;const isMed=(cat==="Médicament"||cat==="Perfusion");pt.actes=(pt.actes||[]);pt.actes.push({id:Date.now(),heure:document.getElementById("bl5-pa-heure").value||nowHm(),categorie:cat,acte:document.getElementById("bl5-pa-acte").value,produit:isMed?document.getElementById("bl5-pa-produit").value:"",voie:isMed?document.getElementById("bl5-pa-voie").value:"",effet:document.getElementById("bl5-pa-effet").value,auteur:document.getElementById("bl5-pa-auteur").value||"GOLF Stan",timestamp:Date.now()});document.getElementById("bl5-pa-acte").value="";document.getElementById("bl5-pa-produit").value="";document.getElementById("bl5-pa-effet").value="";window.__bl5Render();};
+    document.getElementById("bl5-pa-list").addEventListener("click",e=>{const pt=getP();if(!pt)return;const idr=+(e.target.dataset.id||0);if(!idr)return;pt.actes=(pt.actes||[]).filter(x=>x.id!==idr);window.__bl5Render();});
+    document.getElementById("bl5-isbar-save").onclick=()=>{const pt=getP();if(!pt)return;pt.isbar={identite:document.getElementById("bl5-isbar-i").value,situation:document.getElementById("bl5-isbar-s").value,background:document.getElementById("bl5-isbar-b").value,analyse:document.getElementById("bl5-isbar-a").value,recommandations:document.getElementById("bl5-isbar-r").value,horodatage:Date.now(),auteur:document.getElementById("bl5-pa-auteur").value||"GOLF Stan"};};
+    document.getElementById("bl5-synth-print").onclick=()=>window.print();
 
     window.__bl5Render=()=>{
       const pt=getP(); if(!pt) return;
@@ -1463,24 +2090,82 @@ function voirFiche(id){
       pt.orientation=asObject(pt.orientation);
       pt.examenClinique=asObject(pt.examenClinique);
       pt.constantes=asObject(pt.constantes);
+      pt.morpho=asObject(pt.morpho);
       pt.faits=asObject(pt.faits);
+      pt.isbar=asObject(pt.isbar);
+      pt.biologieOrders=asArray(pt.biologieOrders);
+      pt.bioResults=asArray(pt.bioResults);
+      pt.bioSelected=asArray(pt.bioSelected);
 
       const triColor=(TRI_META[pt.triIAO]||{color:"#888"}).color;
       const sec=pt.secteur?(SECTEUR_LABELS[pt.secteur]+" / "+(pt.box||"")):"Accueil IAO";
-      document.getElementById("bl5-h-name").textContent=(pt.nom||"")+" "+(pt.prenom||"");
-      document.getElementById("bl5-h-ident").textContent=`DDN : ${formatDDN(pt.ddn)} | Âge : ${calcAge(pt.ddn)} | Sexe : ${pt.sexe||"—"}`;
-      document.getElementById("bl5-h-dossier").textContent="N° dossier : "+(pt.dossier||"—");
-      document.getElementById("bl5-h-arrive").textContent="Arrivée : "+nowHm(pt.arrive)+" — il y a "+elapsed(pt.arrive);
-      document.getElementById("bl5-h-mode").textContent="Mode : "+(pt.mode||"—");
-      document.getElementById("bl5-h-secteur").innerHTML=`Secteur : <span class="bl5-badge" style="background:${pt.secteur?"#2060a0":"#7088a0"};">${escapeHtml(sec)}</span>`;
-      document.getElementById("bl5-h-tri").innerHTML=`Tri : <span class="bl5-badge" style="background:${triColor};">Tri ${pt.triIAO||"—"}</span>`;
-      document.getElementById("bl5-h-motif").textContent="Motif IAO : "+(pt.motifIAO||"—");
-      document.getElementById("bl5-h-pec").textContent=`PEC IDE : ${pt.pecIDE||"—"} | PEC MED : ${pt.pecMED||"—"}`;
-      document.getElementById("bl5-h-const").textContent=`TA:${pt.constantes?.ta||"—"} FC:${pt.constantes?.fc||"—"} SpO2:${pt.constantes?.spo2||"—"}% FR:${pt.constantes?.fr||"—"} T°:${pt.constantes?.temp||"—"}`;
+      const modeLabel=pt.mode||"NP";
+      const modeColor=(modeLabel==="A"||modeLabel==="AP")?"#cc0000":((modeLabel==="VSL"||modeLabel==="PI")?"#2060a0":"#666");
+
+      document.getElementById("bl5-h-avatar").innerHTML=avatarSvg(pt.sexe);
+      document.getElementById("bl5-h-nom").textContent=((pt.nom||"")+" "+(pt.prenom||"")).trim()||"Patient inconnu";
+      document.getElementById("bl5-h-ddnage").textContent=`${formatDDN(pt.ddn)} (${calcAge(pt.ddn)} ans)`;
+      document.getElementById("bl5-h-sexe-num").textContent=`${pt.sexe||"—"} - Dossier ${pt.dossier||"—"}`;
+      document.getElementById("bl5-h-ipp").textContent=`IPP ${pt.ipp||pt.dossier||"—"}`;
+
+      const hPoids=document.getElementById("bl5-h-poids");
+      const hTaille=document.getElementById("bl5-h-taille");
+      if(document.activeElement!==hPoids) hPoids.value=pt.morpho.poids||"";
+      if(document.activeElement!==hTaille) hTaille.value=pt.morpho.taille||"";
+      const morphCalc=morphoFrom(hPoids.value||pt.morpho.poids,hTaille.value||pt.morpho.taille);
+      document.getElementById("bl5-h-imc").value=pt.morpho.imc||morphCalc.imc||"";
+      document.getElementById("bl5-h-sc").value=pt.morpho.sc||morphCalc.sc||"";
+      const imcBadge=document.getElementById("bl5-h-imc-badge");
+      const imcLevel=pt.morpho.imc&&pt.morpho.imc!==""?morphoFrom(pt.morpho.poids,pt.morpho.taille).imcLevel:morphCalc.imcLevel;
+      imcBadge.textContent=imcLevel||"-";
+      imcBadge.style.background=imcLevel==="Normal"?"#20a020":(imcLevel==="Surpoids"?"#e07820":(imcLevel==="Obésité"?"#cc0000":(imcLevel==="Maigreur"?"#2060a0":"#777")));
+
+      document.getElementById("bl5-h-arrive-fixed").textContent=`Arrivée: ${nowHm(pt.arrive)}`;
+      const drawArrive=()=>{document.getElementById("bl5-h-arrive-live").textContent=`Il y a ${elapsedLong(pt.arrive)}`;};
+      if(window.__bl5HeaderTimer){clearInterval(window.__bl5HeaderTimer);window.__bl5HeaderTimer=null;}
+      drawArrive();
+      window.__bl5HeaderTimer=setInterval(drawArrive,1000);
+      document.getElementById("bl5-h-local").textContent=sec;
+      const modeEl=document.getElementById("bl5-h-mode");
+      modeEl.textContent=modeLabel;
+      modeEl.style.background=modeColor;
+
+      const triEl=document.getElementById("bl5-h-tri");
+      triEl.textContent=`Tri ${pt.triIAO||"—"}`;
+      triEl.style.background=triColor;
+      document.getElementById("bl5-h-pec-ide").textContent=(pt.pecIDE&&pt.pecIDE!=="Non vu")?`IDE ${pt.pecIDE}`:"IDE non vu";
+      document.getElementById("bl5-h-pec-med").textContent=(pt.pecMED&&pt.pecMED!=="Non vu")?`Médecin ${pt.pecMED}`:"Médecin non vu";
+      document.getElementById("bl5-h-spe-short").textContent=(pt.specialite||"").toUpperCase()||"";
+
+      const cs=analyseConstantes(pt.constantes||{});
+      const cState={};
+      (cs.rows||[]).forEach(r=>{cState[r.key]=r.status;});
+      const dotFor=(st)=>st==="ok"?"#20a020":(st==="high"?"#cc0000":(st==="low"?"#2060a0":"#9aa9b8"));
+      const cVals={ta:pt.constantes.ta||"-",fc:pt.constantes.fc||"-",spo2:pt.constantes.spo2||"-",fr:pt.constantes.fr||"-",temp:pt.constantes.temp||pt.constantes.temperature||"-"};
+      document.getElementById("bl5-h-const").innerHTML=[
+        ["TA","ta"],["FC","fc"],["SpO2","spo2"],["FR","fr"],["T°","temp"]
+      ].map(([lab,key])=>`<span>${lab}</span><span>${escapeHtml(String(cVals[key]||"-"))}</span><span class="bl5-dot" style="background:${dotFor(cState[key])};"></span>`).join("");
+
+      const allTxt=(pt.medical?.allergies||pt.allergie||"").trim();
+      const allBand=document.getElementById("bl5-h-all-band");
+      const allTextEl=document.getElementById("bl5-h-all-text");
+      if(allTxt){
+        allBand.className="bl5-all-band red";
+        allBand.innerHTML='<svg viewBox="0 0 16 16"><path d="M8 2l6 11H2z"/><path d="M8 5.2v4.2M8 11.8h.01"/></svg>ALLERGIES';
+        allTextEl.style.display="block";
+        allTextEl.textContent=allTxt;
+      }else{
+        allBand.className="bl5-all-band green";
+        allBand.innerHTML='<svg viewBox="0 0 16 16"><path d="M2 8l3 3 9-9"/></svg>Aucune allergie';
+        allTextEl.style.display="none";
+        allTextEl.textContent="";
+      }
 
       const cb=document.getElementById("bl5-ccmu-badge"), cbtn=document.getElementById("bl5-ccmu-btn");
-      if(pt.ccmu){cb.style.display="inline-block";cb.textContent="CCMU "+pt.ccmu;cbtn.style.display="none";} else {cb.style.display="none";cbtn.style.display="inline-block";}
+      cb.className="bl5-badge bl5-ccmu bl5-ccmu-badge";
+      if(pt.ccmu){cb.style.display="inline-block";cb.textContent="CCMU "+pt.ccmu;cb.classList.add("c"+pt.ccmu);cbtn.style.display="none";} else {cb.style.display="none";cbtn.style.display="inline-block";}
       document.getElementById("bl5-ccmu-select").value=pt.ccmu||"";
+      document.getElementById("bl5-h-muter").style.display=pt.secteur?"none":"inline-block";
 
       document.getElementById("bl5-fait").innerHTML=ACTES.map(k=>`<div class="bl5-ico ${pt.faits[k]?"done":""}" data-k="${k}" title="${k}">${acteSvg(k)}</div>`).join("");
       document.getElementById("bl5-afaire").innerHTML=ACTES.map(k=>`<div class="bl5-ico ${!pt.faits[k]?"":"done"}" data-k="${k}" title="${k}">${acteSvg(k)}</div>`).join("");
@@ -1498,23 +2183,194 @@ function voirFiche(id){
       document.getElementById("bl5-trait-list").innerHTML=(pt.medical.traitementsHab||[]).map((t,idx)=>`<tr><td><input data-k="medicament" data-i="${idx}" value="${escapeHtml(t.medicament||"")}"/></td><td><input data-k="posologie" data-i="${idx}" value="${escapeHtml(t.posologie||"")}"/></td><td><input data-k="voie" data-i="${idx}" value="${escapeHtml(t.voie||"")}"/></td><td><input data-k="frequence" data-i="${idx}" value="${escapeHtml(t.frequence||"")}"/></td><td><input data-k="commentaire" data-i="${idx}" value="${escapeHtml(t.commentaire||"")}"/></td></tr>`).join("")||'<tr><td colspan="5">Aucun traitement</td></tr>';
       document.getElementById("bl5-trait-list").oninput=e=>{const i=+e.target.dataset.i;if(Number.isNaN(i))return;const t=pt.medical.traitementsHab[i];if(t)t[e.target.dataset.k]=e.target.value;};
 
-      document.getElementById("bl5-pr-list").innerHTML=(pt.prescriptions||[]).map(pr=>{const cls=pr.statut==="Fait"?"bs-fait":(pr.statut==="Annulé"?"bs-ann":(pr.statut==="En cours"?"bs-enc":"bs-afaire"));return `<tr><td><span class="bl5-bstat ${cls}">${escapeHtml(pr.statut)}</span></td><td>${escapeHtml(pr.voie||"")}</td><td>${escapeHtml(pr.type||"")}</td><td>${escapeHtml(pr.medicament||"")}</td><td>${escapeHtml(pr.posologie||"")}</td><td>${escapeHtml(pr.prescritLe||"")}</td><td>${escapeHtml(pr.debut||"")}</td><td>${escapeHtml(pr.fin||"")}</td><td><button class="btn-action" data-id="${pr.id}" data-act="fait">Fait</button><button class="btn-action" data-id="${pr.id}" data-act="ann">Annuler</button></td></tr>`;}).join("")||'<tr><td colspan="9">Aucune prescription</td></tr>';
+      const catOrd=["Perfusion","Médicament injectable","Aérosol","Mise en condition","Médicament oral"];
+      let prRows="";
+      catOrd.forEach(cat=>{
+        const rows=(pt.prescriptions||[]).filter(x=>(x.categorie||x.type||"")===cat);
+        if(!rows.length) return;
+        prRows+=`<tr><td colspan="9" style="background:#d8e8f4;font-weight:bold;">${escapeHtml(cat.toUpperCase())}</td></tr>`;
+        prRows+=rows.map(pr=>{const cls=pr.statut==="Fait"?"bs-fait":(pr.statut==="Annulé"?"bs-ann":(pr.statut==="En cours"?"bs-enc":"bs-afaire"));return `<tr data-id="${pr.id}" style="cursor:pointer;"><td><span class="bl5-bstat ${cls}">${escapeHtml(pr.statut||"À faire")}</span></td><td>${escapeHtml(pr.voie||"")}</td><td>${escapeHtml(pr.livret||"Oui")}</td><td>${escapeHtml(pr.medicament||"")}</td><td>${escapeHtml(pr.posologie||"")}</td><td>${escapeHtml(pr.prescritPar||"GOLF Stan")}</td><td>${escapeHtml(pr.prescritLe||"")}</td><td>${escapeHtml(pr.debut||"")}</td><td>${escapeHtml(pr.fin||"")}</td></tr>`;}).join("");
+      });
+      document.getElementById("bl5-pr-list").innerHTML=prRows||'<tr><td colspan="9">Aucune prescription</td></tr>';
 
-      document.getElementById("bl5-im-list").innerHTML=(pt.imagerie||[]).map(im=>`<tr><td>${escapeHtml(im.type)}</td><td>${escapeHtml(im.region)} (${escapeHtml(im.cote||"")})</td><td>${escapeHtml(im.demandeLe)}</td><td>${escapeHtml(im.urgence)}</td><td>${escapeHtml(im.statut)}</td><td><textarea data-id="${im.id}" rows="2">${escapeHtml(im.cr||"")}</textarea><button class="btn-action" data-id="${im.id}" data-act="done">Réalisé</button></td></tr>`).join("")||'<tr><td colspan="6">Aucune demande</td></tr>';
+      document.querySelectorAll("#bl5-bio-protos .bl5-proto-btn").forEach(b=>b.classList.toggle("active",!!window.__bl5State.bioProtos[b.dataset.p]));
+      const qBio=(document.getElementById("bl5-bio-search").value||"").toLowerCase();
+      const fBio=document.getElementById("bl5-bio-family").value||"";
+      const tBio=document.getElementById("bl5-bio-tube").value||"";
+      const selectedSet=new Set(pt.bioSelected||[]);
+      const bioFiltered=BIO_EXAMS.filter(x=>(!fBio||x.f===fBio)&&(!tBio||x.t===tBio)&&(!qBio||x.n.toLowerCase().includes(qBio)));
+      let bioCatHtml="", curFam="";
+      bioFiltered.forEach(ex=>{if(ex.f!==curFam){curFam=ex.f;bioCatHtml+=`<div class="bl5-bio-family">${escapeHtml(curFam)}</div>`;}bioCatHtml+=`<label class="bl5-bio-line"><input type="checkbox" data-ex="${escapeHtml(ex.n)}" ${selectedSet.has(ex.n)?"checked":""}/><span class="bl5-tube tube-${escapeHtml(ex.t)}"></span><span>${escapeHtml(ex.n)}</span></label>`;});
+      document.getElementById("bl5-bio-catalog").innerHTML=bioCatHtml||'<div class="bl5-bio-line">Aucun examen</div>';
+      document.getElementById("bl5-bio-order-list").innerHTML=(pt.biologieOrders||[]).map(o=>{const cls=o.statut==="Fait"?"bs-fait":(o.statut==="En cours"?"bs-enc":"bs-afaire");return `<tr><td><span class="bl5-bstat ${cls}">${escapeHtml(o.statut||"À faire")}</span></td><td>${escapeHtml(o.label||"")}</td><td>${escapeHtml(o.prescripteur||"")}</td><td>${escapeHtml(o.prescritLe||"")}</td><td>${escapeHtml(o.faitLe||"")}</td></tr>`;}).join("")||'<tr><td colspan="5">Aucun bon validé</td></tr>';
+      document.getElementById("bl5-bio-comment").value=pt.bioComment||"";
+      document.getElementById("bl5-bio-results-list").innerHTML=(pt.bioResults||[]).map((r,i)=>{const v=Number(String(r.valeur||"").replace(",","."));const lo=Number(r.low),hi=Number(r.high);let stat="N",cls="";if(Number.isFinite(v)&&Number.isFinite(hi)&&v>hi){stat="↑";cls="bio-hi";}if(Number.isFinite(v)&&Number.isFinite(lo)&&v<lo){stat="↓";cls="bio-lo";}const scol=stat==="N"?"#20a020":(stat==="↑"?"#cc0000":"#2060a0");return `<tr class="${cls}"><td>${escapeHtml(r.examen||"")}</td><td><input data-i="${i}" value="${escapeHtml(r.valeur||"")}"/></td><td>${escapeHtml(r.unite||"")}</td><td>${escapeHtml(r.low||"")}</td><td>${escapeHtml(r.high||"")}</td><td style="color:${scol};font-weight:bold;">${stat}</td></tr>`;}).join("")||'<tr><td colspan="6">Aucun résultat</td></tr>';
+
+      const atcdTxt=[(pt.medical.atcdPersonnels||[]).map(a=>a.pathologie).filter(Boolean).join(", "),pt.medical.allergies||pt.allergie||""].filter(Boolean).join(" | ");
+      document.getElementById("bl5-im-atcdro").value=atcdTxt||"Aucun";
+      document.getElementById("bl5-im-list").innerHTML=(pt.imagerie||[]).map(im=>`<tr><td>${escapeHtml(im.type||"")}</td><td>${escapeHtml(im.cote||"—")}</td><td>${escapeHtml(im.demandeLe||"")}</td><td>${escapeHtml(im.par||"GOLF Stan")}</td><td>${escapeHtml(im.pourLe||"")}</td><td>${escapeHtml(im.faitLe||"")}</td><td><button class="btn-action" data-id="${im.id}" data-act="cr" type="button">CR</button>${im.openCr?`<textarea data-id="${im.id}" rows="2">${escapeHtml(im.cr||"")}</textarea><button class="btn-action" data-id="${im.id}" data-act="savecr" type="button">Enregistrer CR</button>`:escapeHtml(im.cr||"")}</td></tr>`).join("")||'<tr><td colspan="7">Aucune demande</td></tr>';
 
       document.getElementById("bl5-evo-list").innerHTML=(pt.evolution||[]).map(e=>`<div style="padding:6px 4px;border-bottom:1px solid #d8e4f0;"><b>[${nowFull(e.ts)}] [${escapeHtml(e.auteur)}]</b><br>${escapeHtml(e.texte)}</div>`).join("")||"<div>Aucune entrée</div>";
 
       document.getElementById("bl5-diag-ccmu").value=pt.ccmu||"";
       document.getElementById("bl5-diag-ccmu-desc").textContent=CCMU_DESC[pt.ccmu]||"";
-      document.getElementById("bl5-diag-main").value=pt.diagnostic.principal||"";
-      document.getElementById("bl5-diag-assoc").value=pt.diagnostic.associes||"";
+      document.getElementById("bl5-diag-motif").value=pt.diagnostic.motif||"";
+      const mrType=pt.diagnostic.motifType||"MR";
+      document.querySelectorAll('input[name="bl5-mr-type"]').forEach(r=>r.checked=r.value===mrType);
+      document.getElementById("bl5-cim-search-dp").value=pt.diagnostic.dp||"";
+      document.getElementById("bl5-cim-search-dpu").value=pt.diagnostic.dpu||"";
+      document.getElementById("bl5-cim-search-da").value=pt.diagnostic.da||"";
+      document.getElementById("bl5-cim-sel-dp").textContent=pt.diagnostic.cim_dp||"—";
+      document.getElementById("bl5-cim-sel-dpu").textContent=pt.diagnostic.cim_dpu||"—";
+      document.getElementById("bl5-cim-sel-da").textContent=pt.diagnostic.cim_da||"—";
       document.getElementById("bl5-diag-plan").value=pt.diagnostic.conduite||"";
+      document.getElementById("bl5-diag-proto").value=pt.diagnostic.protocole||"";
+      document.getElementById("bl5-diag-hist").innerHTML=(pt.diagnostic.historique||[]).map(h=>`<div>[${nowFull(h.ts)}] [${escapeHtml(h.auteur||"")}] → ${escapeHtml(h.ancien||"—")} → ${escapeHtml(h.nouveau||"—")}</div>`).join("")||"<div>Aucun historique</div>";
 
-      document.getElementById("bl5-pa-heure").value=nowHm();
-      document.getElementById("bl5-pa-list").innerHTML=(pt.paramedical||[]).map(a=>`<tr><td>${a.heure}</td><td>${escapeHtml(a.acte)}</td><td>${escapeHtml(a.dose)}</td><td>${escapeHtml(a.effet)}</td><td>${escapeHtml(a.auteur)}</td><td><button class="btn-action" data-id="${a.id}">Annuler</button></td></tr>`).join("")||'<tr><td colspan="6">Aucun acte</td></tr>';
+      document.getElementById("bl5-out-dt").value=pt.orientation.dateHeure||"";
+      document.getElementById("bl5-out-gemsa").value=pt.orientation.gemsa||"";
+      document.getElementById("bl5-out-gemsa-desc").textContent=GEMSA_DESC[pt.orientation.gemsa]||"";
+      document.querySelectorAll('input[name="bl5-out-mode"]').forEach(r=>r.checked=r.value===(pt.orientation.mode||"Domicile"));
+      document.querySelectorAll(".bl5-mode-row").forEach(r=>r.style.display=r.dataset.mode===(pt.orientation.mode||"Domicile")?"grid":"none");
+      document.getElementById("bl5-out-rdv").value=pt.orientation.rdv||"";
+      document.getElementById("bl5-out-cons-spe").value=pt.orientation.consultation?.specialite||"";
+      document.getElementById("bl5-out-cons-serv").value=pt.orientation.consultation?.service||"";
+      document.getElementById("bl5-out-hosp-spe").value=pt.orientation.hospitalisation?.specialite||"";
+      document.getElementById("bl5-out-hosp-serv").value=pt.orientation.hospitalisation?.service||"";
+      document.getElementById("bl5-out-hosp-resp").value=pt.orientation.hospitalisation?.responsable||"";
+      document.getElementById("bl5-out-hosp-req").checked=!!pt.orientation.hospitalisation?.requisition;
+      document.getElementById("bl5-out-hosp-refus").checked=!!pt.orientation.hospitalisation?.refusLit;
+      document.getElementById("bl5-out-trans").value=pt.orientation.transfert||"";
+      document.getElementById("bl5-flag-medinf").checked=!!pt.orientation.flags?.medecinInforme;
+      document.getElementById("bl5-flag-cav").checked=!!pt.orientation.flags?.contreAvis;
+      document.getElementById("bl5-flag-police").checked=!!pt.orientation.flags?.police;
+      document.getElementById("bl5-flag-fugue").checked=!!pt.orientation.flags?.fugue;
+      document.getElementById("bl5-flag-psa").checked=!!pt.orientation.flags?.partiSansAttendre;
+      document.getElementById("bl5-flag-paio").checked=!!pt.orientation.flags?.partiAvantIoa;
+      document.getElementById("bl5-flag-trans").checked=!!pt.orientation.flags?.transfert;
+      document.getElementById("bl5-out-transport").value=pt.orientation.transport||"Autonome";
+      document.getElementById("bl5-out-comment").value=pt.orientation.commentaire||"";
+      document.getElementById("bl5-senior-ok").checked=!!pt.orientation.validationSenior?.valide;
+      document.getElementById("bl5-senior-name").value=pt.orientation.validationSenior?.nom||"";
+      document.getElementById("bl5-senior-dt").value=pt.orientation.validationSenior?.date||"";
+      document.getElementById("bl5-senior-comment").value=pt.orientation.validationSenior?.commentaire||"";
 
-      const left=`<div class="bl5-title">Identité / Tri</div><div>${escapeHtml(pt.nom||"")} ${escapeHtml(pt.prenom||"")} - ${formatDDN(pt.ddn)}</div><div>Tri ${escapeHtml(pt.triIAO||"—")} | Motif ${escapeHtml(pt.motifIAO||"—")}</div><div>Constantes IAO: TA ${escapeHtml(pt.constantes?.ta||"—")}, FC ${escapeHtml(pt.constantes?.fc||"—")}, SpO2 ${escapeHtml(pt.constantes?.spo2||"—")}</div><div class="bl5-title">ATCD / Traitements</div><div>${(pt.medical.atcdPersonnels||[]).map(a=>escapeHtml(a.pathologie||"")).filter(Boolean).join(", ")||"—"}</div><div>${(pt.medical.traitementsHab||[]).map(t=>escapeHtml(t.medicament||"")).filter(Boolean).join(", ")||"—"}</div>`;
-      const right=`<div class="bl5-title">Examen / Prescriptions</div><div>Dernières constantes: ${escapeHtml(pt.medical.examen?.constantes?.ta||"—")} / ${escapeHtml(pt.medical.examen?.constantes?.fc||"—")}</div><div>Actives: ${(pt.prescriptions||[]).filter(x=>x.statut==="À faire"||x.statut==="En cours").map(x=>escapeHtml(x.medicament||"")).join(", ")||"—"}</div><div class="bl5-title">Évolution / Diagnostic</div><div>${(pt.evolution||[]).slice(0,3).map(x=>escapeHtml(x.texte)).join("<br>")||"—"}</div><div>Dx: ${escapeHtml(pt.diagnostic.principal||"—")} | CCMU ${escapeHtml(pt.ccmu||"—")}</div>`;
+      if(!document.getElementById("bl5-pa-heure").value) document.getElementById("bl5-pa-heure").value=nowHm();
+      const catColor={"Surveillance":"#2060a0","Soins":"#20a020","Médicament":"#8020c0","Perfusion":"#2090c0","Prélèvement":"#c06020","Nursing":"#20a080","Mobilisation":"#606060","Éducation":"#a08020","Transmissions":"#404040","Autre":"#888888"};
+      const pFilter=document.getElementById("bl5-pa-filter").value||"";
+      const actesSorted=(pt.actes||[]).slice().sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)).filter(a=>!pFilter||a.categorie===pFilter);
+      document.getElementById("bl5-pa-list").innerHTML=(actesSorted||[]).map(a=>`<tr><td>${escapeHtml(a.heure||"")}</td><td><span class="bl5-cat-badge" style="background:${catColor[a.categorie]||"#888888"};">${escapeHtml(a.categorie||"Autre")}</span></td><td>${escapeHtml(a.acte||"")}</td><td>${escapeHtml(a.produit||"")}</td><td>${escapeHtml(a.voie||"")}</td><td>${escapeHtml(a.effet||"")}</td><td>${escapeHtml(a.auteur||"")}</td><td><button class="btn-action" data-id="${a.id}" type="button">✕</button></td></tr>`).join("")||'<tr><td colspan="8" style="text-align:center;font-style:italic;color:#888;">Aucun acte enregistré</td></tr>';
+
+      const idTxt=`${pt.nom||""} ${pt.prenom||""}, ${calcAge(pt.ddn)||"—"}, ${pt.sexe||"—"}`.trim();
+      const arr=new Date(pt.arrive||Date.now());
+      const ad=String(arr.getDate()).padStart(2,"0")+"/"+String(arr.getMonth()+1).padStart(2,"0")+"/"+arr.getFullYear();
+      const ah=String(arr.getHours()).padStart(2,"0")+":"+String(arr.getMinutes()).padStart(2,"0");
+      const bg=(pt.atcds||[]).map(x=>escapeHtml(String(x.pathologie||x||""))).filter(Boolean).join(", ")||((pt.medical.atcdPersonnels||[]).map(x=>escapeHtml(x.pathologie||"")).filter(Boolean).join(", "))||"—";
+      const iDefault=`${idTxt}\nArrivée le ${ad} à ${ah} pour ${pt.motifIAO||"—"}`;
+      if(!pt.isbar.identite) pt.isbar.identite=iDefault;
+      if(!pt.isbar.background) pt.isbar.background=bg;
+      document.getElementById("bl5-isbar-i").value=pt.isbar.identite||iDefault;
+      document.getElementById("bl5-isbar-s").value=pt.isbar.situation||"";
+      document.getElementById("bl5-isbar-b").value=pt.isbar.background||bg;
+      document.getElementById("bl5-isbar-a").value=pt.isbar.analyse||"";
+      document.getElementById("bl5-isbar-r").value=pt.isbar.recommandations||"";
+      document.getElementById("bl5-pa-auteur").value=(pt.isbar.auteur||"GOLF Stan");
+
+      const sp=(FRENCH_SPECIALITES||[]).find(s=>s.code===pt.speIAO);
+      const spLabel=sp?sp.label:(pt.speIAO||"—");
+      const hyp=pt.hypotheseIAO||pt.hypothese||"—";
+      const douleur=pt.localDouleur||pt.douleur||"—";
+      const allergy=pt.allergie||pt.medical.allergies||"";
+      const triBg=(TRI_META[pt.triIAO]||{color:"#888"}).color;
+
+      const toDir=(txt)=>String(txt||"").includes("↑")?"↑":(String(txt||"").includes("↓")?"↓":"N");
+      const dirColor=(d)=>d==="↑"?"#cc0000":(d==="↓"?"#2060a0":"#20a020");
+      const rowBg=(lvl)=>lvl==="critique"?"#fff0f0":(lvl==="limite"?"#fff8e8":"#fff");
+      const sBadge=(d)=>`<span class="bl5-sbadge" style="background:${dirColor(d)};">${d}</span>`;
+
+      const iaoRows=((analyseConstantes(pt)||{}).rows||[]);
+      const iaoConstTable=(iaoRows||[]).map(r=>{const d=toDir(r.status?.text);return `<tr style="background:${rowBg(r.status?.level)};"><td>${escapeHtml(r.label||"")}</td><td>${escapeHtml(r.value===null?"—":String(r.value))}</td><td>${sBadge(d)}</td></tr>`;}).join("")||'<tr><td colspan="3" class="bl5-muted">Aucune constante IAO</td></tr>';
+
+      const atcdList=(pt.atcds||[]);
+      const atcdHtml=(atcdList||[]).map(a=>{const t=a.type||"Médical";const c=t==="Chirurgical"?"#e07820":(t==="Psychiatrique"?"#8020c0":"#2060a0");return `<div><span class="bl5-sbadge" style="background:${c};">${escapeHtml(t)}</span> ${escapeHtml(a.pathologie||a.nom||"")} — ${escapeHtml(a.gravite||"—")}</div>`;}).join("")||'<div class="bl5-muted">Aucun antécédent renseigné</div>';
+      const riskMap={tabac:"Tabac",alcool:"Alcool",ob:"Obésité",sed:"Sédentarité",hta:"HTA",dys:"Dyslipidémie",dia:"Diabète",cor:"ATCD coronaire familial"};
+      const risks=Object.keys(riskMap).filter(k=>!!pt.medical.facteurs?.[k]).map(k=>riskMap[k]).join(" | ")||"—";
+
+      const trt=((pt.traitements||[]).length?(pt.traitements||[]):(pt.medical.traitementsHab||[]));
+      const trtHtml=(trt||[]).map(t=>`<tr><td>${escapeHtml(t.medicament||"")}</td><td>${escapeHtml(t.posologie||"")}</td><td>${escapeHtml(t.voie||"")}</td></tr>`).join("")||'<tr><td colspan="3" class="bl5-muted">Aucun traitement renseigné</td></tr>';
+
+      const ex=pt.medical.examen||{};
+      const exC=ex.constantes||{};
+      const n=getNormesByAge(pt.ddn);
+      const ta2=parseTA(exC.ta);
+      const exRows=[
+        {label:"TA",v:ta2.tas===null?"—":`${ta2.tas}/${ta2.tad}` ,st:evalValue(ta2.tas,n.tas)},
+        {label:"FC",v:exC.fc||"—",st:evalValue(toNum(exC.fc),n.fc)},
+        {label:"SpO2",v:exC.spo2||"—",st:evalValue(toNum(exC.spo2),n.spo2)},
+        {label:"FR",v:exC.fr||"—",st:evalValue(toNum(exC.fr),n.fr)},
+        {label:"T°",v:exC.temp||exC.t||"—",st:evalValue(toNum(exC.temp||exC.t),n.temp)}
+      ];
+      const hasEx=Object.values(exC||{}).some(v=>String(v||"").trim()!=="");
+      const exTable=(exRows||[]).map(r=>{const d=toDir(r.st?.text);return `<tr style="background:${rowBg(r.st?.level)};"><td>${escapeHtml(r.label)}</td><td>${escapeHtml(String(r.v))}</td><td>${sBadge(d)}</td></tr>`;}).join("");
+
+      const activePr=(pt.prescriptions||[]).filter(x=>x.statut==="À faire"||x.statut==="En cours");
+      const prHtml=(activePr||[]).map(x=>`<tr><td><span class="bl5-sbadge" style="background:${x.statut==="À faire"?"#e07820":"#2060a0"};">${escapeHtml(x.statut||"")}</span></td><td>${escapeHtml(x.medicament||"")}</td><td>${escapeHtml(x.posologie||"")}</td><td>${escapeHtml(x.voie||"")}</td></tr>`).join("")||'<tr><td colspan="4" class="bl5-muted">Aucune prescription active</td></tr>';
+
+      const actRecent=(pt.actes||[]).slice().sort((a,b)=>(b.timestamp||0)-(a.timestamp||0)).slice(0,3);
+      const catColor={"Surveillance":"#2060a0","Soins":"#20a020","Médicament":"#8020c0","Perfusion":"#2090c0","Prélèvement":"#c06020","Nursing":"#20a080","Mobilisation":"#606060","Éducation":"#a08020","Transmissions":"#404040","Autre":"#888888"};
+      const actHtml=(actRecent||[]).map(a=>`<div>[${escapeHtml(a.heure||"")}] <span class="bl5-sbadge" style="background:${catColor[a.categorie]||"#888"};">${escapeHtml(a.categorie||"Autre")}</span> ${escapeHtml(a.acte||"")} — ${escapeHtml(a.effet||"")}</div>`).join("")||'<div class="bl5-muted">Aucun acte enregistré</div>';
+
+      const evo3=(pt.evolution||[]).slice(0,3);
+      const evoHtml=(evo3||[]).map((e,idx)=>`<div>${idx?'<div class="bl5-hr"></div>':''}<div>[${nowFull(e.ts)}] <span style="color:#2060a0;">${escapeHtml(e.auteur||"")}</span></div><div>${escapeHtml(String(e.texte||"").length>120?String(e.texte).slice(0,120)+"...":String(e.texte||""))}</div></div>`).join("")||'<div class="bl5-muted">Aucune entrée d\'évolution</div>';
+
+      const ccmuCol={"1":"#20a020","2":"#60a060","3":"#e07820","4":"#cc3030","5":"#8a0000","P":"#8020c0","D":"#777"};
+      const ccmuDescShort={"1":"État stable, pas d'acte complémentaire","2":"État stable, actes diagnostiques","3":"Pronostic pouvant s'aggraver","4":"Pronostic vital engagé, pas de réa","5":"Pronostic vital engagé, manœuvres réa","P":"Problème psychiatrique dominant","D":"Patient décédé à l'arrivée"};
+      const diagMain=pt.diagnostic.principal||pt.diagnostic.dp||"";
+
+      const secTxt=pt.secteur?(SECTEUR_LABELS[pt.secteur]+" / "+(pt.box||"")):"Accueil IAO";
+      const gemsaTxt=(pt.orientation.gemsa||"")?`${pt.orientation.gemsa} — ${GEMSA_DESC[pt.orientation.gemsa]||""}`:"—";
+
+      const left=`
+        <div class="bl5-scard"><div class="bl5-scard-title">Identité & IAO</div><div class="bl5-scard-body">
+          <div class="bl5-sname">${escapeHtml(pt.nom||"")} ${escapeHtml(pt.prenom||"")}</div>
+          <div>DDN : ${formatDDN(pt.ddn)} | Âge : ${calcAge(pt.ddn)} | Sexe : ${escapeHtml(pt.sexe||"—")}</div>
+          <div>Dossier : ${escapeHtml(String(pt.dossier||"—"))}</div>
+          <div>Arrivée : ${nowHm(pt.arrive)} — il y a ${elapsed(pt.arrive)}</div>
+          <div>Mode d'arrivée : ${escapeHtml(pt.mode||"—")}</div>
+          <div class="bl5-hr"></div>
+          <div>Motif IAO : ${escapeHtml(pt.motifIAO||"—")}</div>
+          <div>Hypothèse diag. IAO : ${escapeHtml(hyp)}</div>
+          <div class="bl5-kv"><svg class="bl5-subicon" viewBox="0 0 16 16"><path d="M2 14l4-4m2-6a3 3 0 1 1 4 4l-6 6H2v-4z"/></svg><span>Spécialité : ${escapeHtml(spLabel)}</span></div>
+          <div class="bl5-hr"></div>
+          <div>Tri FRENCH : <span class="bl5-sbadge" style="background:${triBg};">Tri ${escapeHtml(pt.triIAO||"—")}</span></div>
+          <div>PEC IDE : ${escapeHtml(pt.pecIDE||"—")} | PEC MED : ${escapeHtml(pt.pecMED||"—")}</div>
+          <div class="bl5-hr"></div>
+          <div>Localisation douleur : ${escapeHtml(douleur)}</div>
+          ${(pt.eva||"")!==""?`<div>EVA : ${escapeHtml(String(pt.eva))}/10</div>`:""}
+          <div>Allergie : ${allergy?`<span class="bl5-alert">${escapeHtml(allergy)}</span>`:"—"}</div>
+        </div></div>
+
+        <div class="bl5-scard"><div class="bl5-scard-title">Constantes IAO</div><div class="bl5-scard-body"><table class="bl5-mini-table"><thead><tr><th>Constante</th><th>Valeur</th><th>Statut</th></tr></thead><tbody>${iaoConstTable}</tbody></table></div></div>
+
+        <div class="bl5-scard"><div class="bl5-scard-title">Antécédents</div><div class="bl5-scard-body">${atcdHtml}<div class="bl5-hr"></div><div>Facteurs de risque : ${escapeHtml(risks)}</div><div class="bl5-hr"></div><div>Allergie : ${allergy?`<span class="bl5-alert">${escapeHtml(allergy)}</span>`:"—"}</div></div></div>
+
+        <div class="bl5-scard"><div class="bl5-scard-title">Traitements habituels</div><div class="bl5-scard-body"><table class="bl5-mini-table"><thead><tr><th>Médicament</th><th>Posologie</th><th>Voie</th></tr></thead><tbody>${trtHtml}</tbody></table></div></div>
+      `;
+
+      const right=`
+        <div class="bl5-scard"><div class="bl5-scard-title">Dernières constantes réévaluées</div><div class="bl5-scard-body">${hasEx?`<table class="bl5-mini-table"><thead><tr><th>Constante</th><th>Valeur</th><th>Statut</th></tr></thead><tbody>${exTable}</tbody></table><div style="margin-top:4px;">Dernière réévaluation : ${ex.savedAt?nowFull(ex.savedAt):"Non horodatée"}</div>`:'<div class="bl5-muted">Aucune réévaluation enregistrée</div>'}<div class="bl5-hr"></div><div>GCS : ${escapeHtml(ex.y||"—")}/${escapeHtml(ex.v||"—")}/${escapeHtml(ex.m||"—")} = ${escapeHtml(ex.gcs||"—")}</div><div>État général : <span class="bl5-sbadge" style="background:${ex.etat==="Bon"?"#20a020":(ex.etat==="Altéré"?"#e07820":(ex.etat==="Mauvais"?"#cc0000":"#777"))};">${escapeHtml(ex.etat||"—")}</span></div>${(ex.eva||"")!==""?`<div>EVA réévaluée : ${escapeHtml(String(ex.eva))}/10</div>`:""}</div></div>
+
+        <div class="bl5-scard"><div class="bl5-scard-title">Prescriptions actives</div><div class="bl5-scard-body"><table class="bl5-mini-table"><thead><tr><th>Statut</th><th>Médicament</th><th>Posologie</th><th>Voie</th></tr></thead><tbody>${prHtml}</tbody></table></div></div>
+
+        <div class="bl5-scard"><div class="bl5-scard-title">Actes paramédicaux récents</div><div class="bl5-scard-body">${actHtml}${pt.isbar&&((pt.isbar.identite||pt.isbar.situation||pt.isbar.background||pt.isbar.analyse||pt.isbar.recommandations))?`<div class="bl5-hr"></div><div class="bl5-band" style="background:#dff3df;color:#176017;">Transmissions ISBAR enregistrées ${pt.isbar.horodatage?`(${nowFull(pt.isbar.horodatage)})`:""}</div>`:""}</div></div>
+
+        <div class="bl5-scard"><div class="bl5-scard-title">Évolution</div><div class="bl5-scard-body">${evoHtml}</div></div>
+
+        <div class="bl5-scard"><div class="bl5-scard-title">Diagnostic & CCMU</div><div class="bl5-scard-body">${pt.ccmu?`<div>CCMU : <span class="bl5-sbadge" style="background:${ccmuCol[pt.ccmu]||"#777"};">${escapeHtml(String(pt.ccmu))}</span> ${escapeHtml(ccmuDescShort[pt.ccmu]||"")}</div><div class="bl5-hr"></div>`:""}${diagMain||pt.diagnostic.associes||pt.diagnostic.conduite?`<div><b>Diagnostic principal :</b> ${escapeHtml(diagMain||"—")}</div><div>Diagnostics associés : ${escapeHtml(pt.diagnostic.associes||"—")}</div><div>Conduite à tenir : ${escapeHtml(pt.diagnostic.conduite||"—")}</div>`:'<div class="bl5-muted">Diagnostic non encore posé</div>'}</div></div>
+
+        <div class="bl5-scard"><div class="bl5-scard-title">Orientation</div><div class="bl5-scard-body">${pt.cloture?`<div class="bl5-band red">Dossier clôturé</div><div style="margin-top:5px;">Heure de sortie : ${pt.heureSortie?nowHm(pt.heureSortie):"—"}</div><div>GEMSA : ${escapeHtml(gemsaTxt)}</div><div>Mode de sortie : ${escapeHtml(pt.orientation.mode||"—")}</div><div>Transport : ${escapeHtml(pt.orientation.transport||"—")}</div>`:`<div class="bl5-band blue">Dossier en cours</div><div style="margin-top:5px;">Secteur actuel : <span class="bl5-sbadge" style="background:${pt.secteur?"#2060a0":"#7088a0"};">${escapeHtml(secTxt)}</span></div><div>Durée de présence : ${elapsed(pt.arrive)}</div>`}</div></div>
+      `;
+
       document.getElementById("bl5-synth-left").innerHTML=left;
       document.getElementById("bl5-synth-right").innerHTML=right;
     };
@@ -1570,23 +2426,34 @@ function updateCounters(){
 function tick(){
   document.querySelectorAll(".pt-chron[data-a]").forEach(el=>{
     el.textContent=elapsed(el.dataset.a);
+    if(el.dataset.pecide!==undefined) sbChronoPaint(el);
   });
   const d=new Date(),pad=n=>String(n).padStart(2,"0");
-  document.getElementById("clock").textContent=
-    pad(d.getDate())+"/"+pad(d.getMonth()+1)+"/"+d.getFullYear()+" "+
+  const nowTxt=pad(d.getDate())+"/"+pad(d.getMonth()+1)+"/"+d.getFullYear()+" "+
     pad(d.getHours())+":"+pad(d.getMinutes())+":"+pad(d.getSeconds());
+  document.getElementById("clock").textContent=nowTxt;
+  const sbClock=document.getElementById("sb-clock");
+  if(sbClock) sbClock.textContent=nowTxt;
 }
 
 // Init
 renderSpecialites();
 tick();
 setInterval(tick,1000);
+setInterval(()=>{if(currentVue==="statusboard") renderStatusBoard();},30000);
+
+document.getElementById("nav-statusboard").onclick=()=>switchVue("statusboard");
+document.getElementById("bb-statusboard").onclick=()=>switchVue("statusboard");
+document.getElementById("nav-plan").onclick=()=>switchVue("accueil");
+document.getElementById("bb-plan").onclick=()=>switchVue("accueil");
+document.getElementById("sb-back").onclick=()=>switchVue("accueil");
 
 const q=query(patientsRef, orderBy("arrive", "asc"));
 let firstSnapshot=false;
 onSnapshot(q, (snapshot)=>{
   patients=snapshot.docs.map(d=>({ ...d.data(), _docId:d.id }));
   if(currentVue==="accueil") renderAccueil();
+  else if(currentVue==="statusboard") renderStatusBoard();
   else renderSecteur(currentVue);
   updateCounters();
   if(!firstSnapshot){
