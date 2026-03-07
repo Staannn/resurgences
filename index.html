@@ -1706,6 +1706,19 @@ function switchVue(vue){
 // Expose early for resilience even if later init code throws.
 window.setTab=setTab;
 window.setSecteur=setSecteur;
+Object.assign(window, {
+  openEntree,
+  closeModal,
+  validerEntree,
+  openMuter,
+  updateBoxes,
+  validerMutation,
+  voirFiche,
+  updateTriFromMotif,
+  toggleEva,
+  selectSpecialite,
+  toggleConstantes
+});
 
 // ══ MODAL ENTRÉE ══
 async function openEntree(){
@@ -2474,21 +2487,6 @@ onSnapshot(q, (snapshot)=>{
   alert("Erreur Firebase : "+error.message);
 });
 
-Object.assign(window, {
-  setSecteur,
-  setTab,
-  openEntree,
-  closeModal,
-  validerEntree,
-  openMuter,
-  updateBoxes,
-  validerMutation,
-  voirFiche,
-  updateTriFromMotif,
-  toggleEva,
-  selectSpecialite,
-  toggleConstantes
-});
 </script>
 </body>
 </html>
