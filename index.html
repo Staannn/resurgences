@@ -2508,17 +2508,23 @@ function voirFiche(id){
     document.querySelectorAll('input[name="bl5-out-mode"]').forEach(r=>r.onchange=syncOutMode);
     syncOutMode();
     document.getElementById("bl5-out-gemsa").onchange=()=>{const g=document.getElementById("bl5-out-gemsa").value;document.getElementById("bl5-out-gemsa-desc").textContent=GEMSA_DESC[g]||"";};
-    document.getElementById("bl5-close-dossier").onclick=()=>{
+    document.getElementById("bl5-close-dossier").onclick=async ()=>{
       const pt=getP();if(!pt)return;
       const mode=((document.querySelector('input[name="bl5-out-mode"]:checked')||{}).value)||"Domicile";
-      pt.orientation={dateHeure:document.getElementById("bl5-out-dt").value,gemsa:document.getElementById("bl5-out-gemsa").value,mode,rdv:document.getElementById("bl5-out-rdv").value,consultation:{specialite:document.getElementById("bl5-out-cons-spe").value,service:document.getElementById("bl5-out-cons-serv").value},hospitalisation:{specialite:document.getElementById("bl5-out-hosp-spe").value,service:document.getElementById("bl5-out-hosp-serv").value,responsable:document.getElementById("bl5-out-hosp-resp").value,requisition:document.getElementById("bl5-out-hosp-req").checked,refusLit:document.getElementById("bl5-out-hosp-refus").checked},transfert:document.getElementById("bl5-out-trans").value,flags:{medecinInforme:document.getElementById("bl5-flag-medinf").checked,contreAvis:document.getElementById("bl5-flag-cav").checked,police:document.getElementById("bl5-flag-police").checked,fugue:document.getElementById("bl5-flag-fugue").checked,partiSansAttendre:document.getElementById("bl5-flag-psa").checked,partiAvantIoa:document.getElementById("bl5-flag-paio").checked,transfert:document.getElementById("bl5-flag-trans").checked},transport:document.getElementById("bl5-out-transport").value,commentaire:document.getElementById("bl5-out-comment").value};
-      pt.cloture=true;
-      pt.heureSortie=new Date().toISOString();
-      patients=patients.filter(x=>x.id!==pt.id);
-      modal.classList.remove("open");
-      document.body.classList.remove("fiche-open");
-      if(currentVue==="accueil") renderAccueil(); else renderSecteur(currentVue);
-      updateCounters();
+      const orientation={dateHeure:document.getElementById("bl5-out-dt").value,gemsa:document.getElementById("bl5-out-gemsa").value,mode,rdv:document.getElementById("bl5-out-rdv").value,consultation:{specialite:document.getElementById("bl5-out-cons-spe").value,service:document.getElementById("bl5-out-cons-serv").value},hospitalisation:{specialite:document.getElementById("bl5-out-hosp-spe").value,service:document.getElementById("bl5-out-hosp-serv").value,responsable:document.getElementById("bl5-out-hosp-resp").value,requisition:document.getElementById("bl5-out-hosp-req").checked,refusLit:document.getElementById("bl5-out-hosp-refus").checked},transfert:document.getElementById("bl5-out-trans").value,flags:{medecinInforme:document.getElementById("bl5-flag-medinf").checked,contreAvis:document.getElementById("bl5-flag-cav").checked,police:document.getElementById("bl5-flag-police").checked,fugue:document.getElementById("bl5-flag-fugue").checked,partiSansAttendre:document.getElementById("bl5-flag-psa").checked,partiAvantIoa:document.getElementById("bl5-flag-paio").checked,transfert:document.getElementById("bl5-flag-trans").checked},transport:document.getElementById("bl5-out-transport").value,commentaire:document.getElementById("bl5-out-comment").value};
+      const heureSortie=new Date().toISOString();
+      try{
+        await updatePatientFirestore(pt.id,{orientation,cloture:true,heureSortie});
+        pt.orientation=orientation;
+        pt.cloture=true;
+        pt.heureSortie=heureSortie;
+        modal.classList.remove("open");
+        document.body.classList.remove("fiche-open");
+        if(currentVue==="accueil") renderAccueil(); else renderSecteur(currentVue);
+        updateCounters();
+      }catch(e){
+        alert("Impossible de clôturer le dossier : "+e.message);
+      }
     };
     document.getElementById("bl5-senior-save").onclick=()=>{const pt=getP();if(!pt)return;pt.orientation=pt.orientation||{};pt.orientation.validationSenior={valide:document.getElementById("bl5-senior-ok").checked,nom:document.getElementById("bl5-senior-name").value,date:document.getElementById("bl5-senior-dt").value,commentaire:document.getElementById("bl5-senior-comment").value};};
 
