@@ -1880,7 +1880,7 @@ function renderSecteur(secteurId){
   const boxes=SECTEURS_BOXES[secteurId]||[];
   const pts=patients.filter(p=>p.secteur===secteurId);
   const board=document.getElementById("board");
-  board.classList.toggle("cc-layout", secteurId==="cc");
+  board.classList.toggle("cc-layout", ["cc","saupa","sauv"].includes(secteurId));
   board.innerHTML="";
 
   function appendBox(col, boxName){
