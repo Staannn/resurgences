@@ -202,6 +202,8 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 .plan-grid .plan-patient-head{width:180px;min-width:180px;max-width:180px;left:0;z-index:3;position:sticky;}
 .plan-grid .plan-hour-col{width:45px;min-width:45px;max-width:45px;}
 .plan-patient-cell{position:sticky;left:0;background:#f0f4f8;border-right:1px solid #c0d0e0;padding:3px 6px;font-size:11px;z-index:1;}
+.plan-patient-cell.clickable{cursor:pointer;}
+.plan-patient-cell.clickable:hover{background:#e8f0f8;}
 .plan-patient-name{font-weight:bold;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .plan-patient-meta{display:flex;gap:4px;flex-wrap:wrap;align-items:center;}
 .plan-cell{position:relative;height:34px;background:#fff;vertical-align:top;cursor:pointer;padding:1px;}
@@ -6723,7 +6725,7 @@ function renderPlanification(){
     const triBg=planTriClass(pt.triIAO);
     const patientLabel=`${escapeHtml(String(pt.nom||"").toUpperCase())} ${escapeHtml(pt.prenom||"")}`.trim();
     return `<tr>`+
-      `<td class="plan-patient-cell"><span class="plan-patient-name">${patientLabel||"Patient"}</span><span class="plan-patient-meta"><span class="bl5-badge" style="background:${triBg};">Tri ${escapeHtml(tri)}</span><span class="sb-box">${escapeHtml(pt.box||"Accueil")}</span></span></td>`+
+      `<td class="plan-patient-cell clickable" data-plan-patient="1" data-id="${escapeHtml(String(pt.id))}"><span class="plan-patient-name">${patientLabel||"Patient"}</span><span class="plan-patient-meta"><span class="bl5-badge" style="background:${triBg};">Tri ${escapeHtml(tri)}</span><span class="sb-box">${escapeHtml(pt.box||"Accueil")}</span></span></td>`+
       hours.map(h=>{
         const list=(byHour[h]||[]);
         const items=list.map(ev=>{
@@ -6760,6 +6762,11 @@ function renderPlanification(){
   };
 
   right.onclick=(e)=>{
+    const patientCell=e.target.closest("[data-plan-patient='1']");
+    if(patientCell){
+      voirFiche(patientCell.dataset.id);
+      return;
+    }
     const add=e.target.closest("[data-plan-add='1']");
     if(add){
       openPlanModal(add.dataset.id,Number(add.dataset.hour),-1);
