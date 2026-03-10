@@ -2292,11 +2292,11 @@ async function nextDossier(){
 }
 
 function findPatientById(id){
-  return patients.find(x=>String(x.id)===String(id));
+  return patients.find(x=>String(x.id)===String(id) || (id!=null && id!=="" && String(x._docId)===String(id)));
 }
 
 async function updatePatientFirestore(patientId, patch){
-  const p=findPatientById(patientId);
+  const p=findPatientById(patientId) || patients.find(x=>String(x._docId)===String(patientId));
   if(!p||!p._docId) return;
   const ref=doc(db,"patients",p._docId);
   await updateDoc(ref, patch);
@@ -2866,7 +2866,7 @@ function renderAccueil(){
 // ══ RENDU VUE SECTEUR (boxes) ══
 function renderSecteur(secteurId){
   const boxes=SECTEURS_BOXES[secteurId]||[];
-  const pts=patients.filter(p=>p.secteur===secteurId);
+  const pts=patients.filter(p=>p.secteur===secteurId && !p.cloture);
   const board=document.getElementById("board");
   board.classList.toggle("cc-layout", ["cc","saupa","sauv"].includes(secteurId));
   board.innerHTML="";
@@ -2902,7 +2902,7 @@ function renderSecteur(secteurId){
           `<span class="pt-num">${p.dossier}</span>`+
         `</div>`+
         `${orientationBadgeHtml(p)}`;
-      d.onclick=()=>voirFiche(p.id);
+      d.onclick=()=>voirFiche(p.id??p._docId);
       col.appendChild(d);
     });
   }
@@ -6572,9 +6572,9 @@ Pas de foyer auscultatoire :
   }
 
   modal.dataset.pid=String(id);
-  window.__bl5Render();
   modal.classList.add("open");
   document.body.classList.add("fiche-open");
+  try { window.__bl5Render(); } catch(e){ console.error("Erreur rendu fiche patient:", e); }
 }
 
 function closeModal(id){document.getElementById(id).classList.remove("open");}
