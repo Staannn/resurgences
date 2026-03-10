@@ -4461,10 +4461,56 @@ Pas de foyer auscultatoire :
 
   const handleExistingParam=(key)=>{
     if(key==="antecedents"){
-      const tab=document.querySelector('#bl5-tabs .bl5-tab[data-main="medical"]');
-      const sub=document.querySelector('#bl5-med-tabs .bl5-subtab[data-pane="ant"]');
-      if(tab) tab.click();
-      if(sub) sub.click();
+      // Affichage lecture seule des antécédents dans le panneau param
+      const pt=window.__currentPatient||{};
+      const host=document.getElementById("bl5-param-content");
+      if(!host) return;
+      const atcds=(pt.atcds||[]);
+      const traits=(pt.traitements||[]);
+      const allergie=pt.allergie||"";
+      const fdr=(pt.facteursRisque||[]).join(", ")||"Aucun";
+
+      let html=`<div class="bl5-param-view active">`
+        +`<div class="bl5-param-head">Antécédents <span style="font-weight:normal;font-size:10px;color:#888;">(lecture seule)</span></div>`
+        +`<div class="bl5-param-body">`;
+
+      // Allergie
+      if(allergie)
+        html+=`<div class="bl5-param-row"><span class="bl5-label" style="color:#cc0000;font-weight:bold;">Allergie</span><span style="color:#cc0000;">${escapeHtml(allergie)}</span></div>`;
+      else
+        html+=`<div class="bl5-param-row"><span class="bl5-label">Allergie</span><span style="color:#888;font-style:italic;">Aucune renseignée</span></div>`;
+
+      // Facteurs de risque
+      html+=`<div class="bl5-param-row"><span class="bl5-label">Facteurs de risque</span><span>${escapeHtml(fdr)}</span></div>`;
+
+      // Antécédents
+      html+=`<div class="bl5-param-section"><h4>Antécédents</h4><div class="bl5-param-content">`;
+      if(atcds.length===0){
+        html+=`<div style="font-style:italic;color:#888;">Aucun antécédent renseigné</div>`;
+      } else {
+        html+=`<table class="bl5-table"><thead><tr><th>Type</th><th>Pathologie</th><th>Gravité</th></tr></thead><tbody>`;
+        atcds.forEach(a=>{
+          html+=`<tr><td>${escapeHtml(a.type||"")}</td><td>${escapeHtml(a.pathologie||"")}</td><td>${escapeHtml(a.gravite||"")}</td></tr>`;
+        });
+        html+=`</tbody></table>`;
+      }
+      html+=`</div></div>`;
+
+      // Traitements habituels
+      html+=`<div class="bl5-param-section"><h4>Traitements habituels</h4><div class="bl5-param-content">`;
+      if(traits.length===0){
+        html+=`<div style="font-style:italic;color:#888;">Aucun traitement renseigné</div>`;
+      } else {
+        html+=`<table class="bl5-table"><thead><tr><th>Médicament</th><th>Posologie</th><th>Voie</th></tr></thead><tbody>`;
+        traits.forEach(t=>{
+          html+=`<tr><td>${escapeHtml(t.medicament||t.libelle||"")}</td><td>${escapeHtml(t.posologie||"")}</td><td>${escapeHtml(t.voie||"")}</td></tr>`;
+        });
+        html+=`</tbody></table>`;
+      }
+      html+=`</div></div>`;
+
+      html+=`</div></div>`;
+      host.innerHTML=html;
       return;
     }
     if(key==="ioa"){
@@ -4473,19 +4519,20 @@ Pas de foyer auscultatoire :
       return;
     }
     if(key==="constantes"){
-      const tab=document.querySelector('#bl5-tabs .bl5-tab[data-main="medical"]');
-      const sub=document.querySelector('#bl5-med-tabs .bl5-subtab[data-pane="exam"]');
+      const tab=document.querySelector('#bl5-tabs .bl5-tab[data-main="ioa"]');
       if(tab) tab.click();
-      if(sub) sub.click();
+      window.__bl5State = window.__bl5State || {};
+      window.__bl5State.ioaScope = "main";
+      window.__bl5State.ioaMainTab = "constantes";
+      if(window.__bl5Render) window.__bl5Render();
       return;
     }
     if(key==="avc-4h30"||key==="avc-moins"){
-      const tab=document.querySelector('#bl5-tabs .bl5-tab[data-main="medical"]');
-      const sub=document.querySelector('#bl5-med-tabs .bl5-subtab[data-pane="ioa"]');
+      const tab=document.querySelector('#bl5-tabs .bl5-tab[data-main="ioa"]');
       if(tab) tab.click();
-      if(sub) sub.click();
-      window.__bl5State.ioaScope="filiere";
-      window.__bl5State.ioaFiliereTab="avcMoins";
+      window.__bl5State = window.__bl5State || {};
+      window.__bl5State.ioaScope = "filiere";
+      window.__bl5State.ioaFiliereTab = "avcMoins";
       if(window.__bl5Render) window.__bl5Render();
       return;
     }
@@ -4494,6 +4541,176 @@ Pas de foyer auscultatoire :
       if(tab) tab.click();
       return;
     }
+    if(key==="inventaire"){
+      const pt=window.__currentPatient||{};
+      const host=document.getElementById("bl5-param-content");
+      if(!host) return;
+      pt.inventaire=Array.isArray(pt.inventaire)?pt.inventaire:[];
+
+      const renderInv=()=>{
+        const items=pt.inventaire;
+        let rows=items.length===0
+          ?`<tr><td colspan="4" style="font-style:italic;color:#888;text-align:center;">Aucun objet enregistré</td></tr>`
+          :items.map((it,i)=>`<tr>
+            <td>${escapeHtml(it.categorie||"")}</td>
+            <td>${escapeHtml(it.description||"")}</td>
+            <td>${escapeHtml(it.quantite||"1")}</td>
+            <td>${escapeHtml(it.lieu||"")}</td>
+            <td><button class="btn-del-inv" data-idx="${i}" style="background:#cc2020;color:#fff;border:none;padding:1px 6px;cursor:pointer;border-radius:2px;font-size:10px;">X</button></td>
+          </tr>`).join("");
+
+        host.innerHTML=`<div class="bl5-param-view active">
+          <div class="bl5-param-head">Inventaire des effets personnels</div>
+          <div class="bl5-param-body">
+            <div class="bl5-param-section"><h4>Ajouter un objet</h4>
+              <div class="bl5-param-content">
+                <div class="bl5-param-row">
+                  <span class="bl5-label">Catégorie</span>
+                  <select id="inv-cat" style="width:auto;">
+                    <option>Pièces d'identité</option>
+                    <option>Bijoux</option>
+                    <option>Vêtements</option>
+                    <option>Titres précieux</option>
+                    <option>Téléphone / Appareil</option>
+                    <option>Médicaments</option>
+                    <option>Divers</option>
+                  </select>
+                </div>
+                <div class="bl5-param-row">
+                  <span class="bl5-label">Description</span>
+                  <input id="inv-desc" placeholder="ex: Bague or, Portefeuille..." style="max-width:280px;"/>
+                </div>
+                <div class="bl5-param-row">
+                  <span class="bl5-label">Quantité</span>
+                  <input id="inv-qty" type="number" min="1" value="1" style="max-width:70px;"/>
+                </div>
+                <div class="bl5-param-row">
+                  <span class="bl5-label">Lieu de dépôt</span>
+                  <select id="inv-lieu" style="width:auto;">
+                    <option>Avec le patient</option>
+                    <option>Vestiaire infirmier</option>
+                    <option>Coffre-fort</option>
+                    <option>Famille</option>
+                    <option>Service sécurité</option>
+                  </select>
+                </div>
+                <div class="bl5-end">
+                  <button class="btn-submit" id="inv-add" type="button">Ajouter</button>
+                </div>
+              </div>
+            </div>
+            <div class="bl5-param-section"><h4>Objets enregistrés</h4>
+              <div class="bl5-param-content">
+                <table class="bl5-table"><thead><tr>
+                  <th>Catégorie</th><th>Description</th><th>Qté</th><th>Lieu</th><th></th>
+                </tr></thead><tbody>${rows}</tbody></table>
+              </div>
+            </div>
+          </div>
+        </div>`;
+
+        document.getElementById("inv-add").onclick=()=>{
+          const cat=document.getElementById("inv-cat").value;
+          const desc=document.getElementById("inv-desc").value.trim();
+          const qty=document.getElementById("inv-qty").value||"1";
+          const lieu=document.getElementById("inv-lieu").value;
+          if(!desc){ alert("Décrivez l'objet."); return; }
+          pt.inventaire.unshift({categorie:cat,description:desc,quantite:qty,lieu:lieu,heure:nowHm(),auteur:actorName()});
+          savePt(pt);
+          renderInv();
+        };
+
+        host.querySelectorAll(".btn-del-inv").forEach(b=>b.addEventListener("click",()=>{
+          const idx=parseInt(b.dataset.idx);
+          pt.inventaire.splice(idx,1);
+          savePt(pt);
+          renderInv();
+        }));
+      };
+
+      renderInv();
+      return;
+    }
+
+    if(key==="csamp"){
+      const pt=window.__currentPatient||{};
+      const host=document.getElementById("bl5-param-content");
+      if(!host) return;
+      pt.demandeAMP=Array.isArray(pt.demandeAMP)?pt.demandeAMP:[];
+
+      const renderAMP=()=>{
+        const items=pt.demandeAMP;
+        const rows=items.length===0
+          ?`<tr><td colspan="5" style="font-style:italic;color:#888;text-align:center;">Aucune demande enregistrée</td></tr>`
+          :items.map((d,i)=>`<tr>
+            <td>${escapeHtml(d.heure||"")}</td>
+            <td>${escapeHtml(d.motif||"")}</td>
+            <td>${escapeHtml(d.urgence||"")}</td>
+            <td>${escapeHtml(d.auteur||"")}</td>
+            <td><span style="font-style:italic;color:#888;font-size:10px;">${escapeHtml(d.suite||"En attente")}</span></td>
+          </tr>`).join("");
+
+        host.innerHTML=`<div class="bl5-param-view active">
+          <div class="bl5-param-head">Demande de consultation AMP (Psychiatrie)</div>
+          <div class="bl5-param-body">
+            <div class="bl5-param-section"><h4>Nouvelle demande</h4>
+              <div class="bl5-param-content">
+                <div class="bl5-param-row">
+                  <span class="bl5-label">Motif de la demande</span>
+                  <textarea id="amp-motif" rows="3" style="height:60px;" placeholder="Décrire la situation clinique et le motif de demande AMP..."></textarea>
+                </div>
+                <div class="bl5-param-row">
+                  <span class="bl5-label">Degré d'urgence</span>
+                  <select id="amp-urgence" style="width:auto;">
+                    <option>Urgence immédiate (patient agité / danger)</option>
+                    <option>Semi-urgence (évaluation dans l'heure)</option>
+                    <option>Différée (évaluation dans la journée)</option>
+                  </select>
+                </div>
+                <div class="bl5-param-row">
+                  <span class="bl5-label">Comportement actuel</span>
+                  <div class="bl5-param-inline">
+                    <label><input id="amp-agit" type="checkbox"/> Agitation</label>
+                    <label><input id="amp-agg" type="checkbox"/> Agressivité</label>
+                    <label><input id="amp-isi" type="checkbox"/> Idées suicidaires</label>
+                    <label><input id="amp-cont" type="checkbox"/> Contention en place</label>
+                  </div>
+                </div>
+                <div class="bl5-end">
+                  <button class="btn-submit" id="amp-add" type="button">Enregistrer la demande</button>
+                </div>
+              </div>
+            </div>
+            <div class="bl5-param-section"><h4>Historique des demandes</h4>
+              <div class="bl5-param-content">
+                <table class="bl5-table"><thead><tr>
+                  <th>Heure</th><th>Motif</th><th>Urgence</th><th>Demandeur</th><th>Suite</th>
+                </tr></thead><tbody>${rows}</tbody></table>
+              </div>
+            </div>
+          </div>
+        </div>`;
+
+        document.getElementById("amp-add").onclick=()=>{
+          const motif=document.getElementById("amp-motif").value.trim();
+          const urgence=document.getElementById("amp-urgence").value;
+          const flags=[];
+          if(document.getElementById("amp-agit").checked) flags.push("Agitation");
+          if(document.getElementById("amp-agg").checked) flags.push("Agressivité");
+          if(document.getElementById("amp-isi").checked) flags.push("Idées suicidaires");
+          if(document.getElementById("amp-cont").checked) flags.push("Contention");
+          if(!motif){ alert("Indiquez le motif."); return; }
+          const full=motif+(flags.length?` [${flags.join(", ")}]`:"");
+          pt.demandeAMP.unshift({heure:nowHm(),motif:full,urgence,auteur:actorName(),suite:"En attente"});
+          savePt(pt);
+          renderAMP();
+        };
+      };
+
+      renderAMP();
+      return;
+    }
+
     alert("Module existant conservé: "+key);
   };
   const IOA_TRI_DESC={
@@ -6387,7 +6604,7 @@ Pas de foyer auscultatoire :
       if(document.getElementById("bl5-obs-time")) document.getElementById("bl5-obs-time").value=nowHm();
       if(document.getElementById("bl5-obs-author")) document.getElementById("bl5-obs-author").value=obsAuthor;
 
-      document.getElementById("bl5-evo-list").innerHTML=(pt.evolution||[]).map(e=>`<div style="padding:6px 4px;border-bottom:1px solid #d8e4f0;"><b>[${nowFull(e.ts)}] [${escapeHtml(e.auteur)}]</b><br>${escapeHtml(e.texte)}</div>`).join("")||"<div>Aucune entrée</div>";
+      document.getElementById("bl5-evo-list").innerHTML=(pt.evolution||[]).map(e=>`<div style="padding:6px 4px;border-bottom:1px solid #d8e4f0;"><b>[${nowFull(e.ts)}] [${escapeHtml(e.auteur)}]</b><br><span style="white-space:pre-wrap;">${escapeHtml(e.texte)}</span></div>`).join("")||"<div>Aucune entrée</div>";
 
       const diagCcmuSelect=document.getElementById("bl5-diag-ccmu");
       const diagCcmuDesc=document.getElementById("bl5-diag-ccmu-desc");
