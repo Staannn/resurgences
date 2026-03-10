@@ -414,55 +414,70 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 /* ══ MODAL FICHE PATIENT ══ */
 #modal-fiche{z-index:600;}
 #modal-fiche .bl5-wrap{width:95vw;height:92vh;background:#fff;border:2px solid #3a6eaa;border-radius:3px;display:flex;flex-direction:column;overflow:hidden;position:relative;}
-.bl5-header{min-height:82px;background:#fff;border-bottom:1px solid #ccc;padding:8px 12px;display:flex;align-items:center;gap:14px;font-size:12px;position:relative;overflow-x:auto;}
+.bl5-header{height:90px;min-height:90px;max-height:90px;background:linear-gradient(#f0f4f8,#e8eef4);border-bottom:2px solid #2060a0;display:flex;align-items:stretch;font-size:11px;overflow:hidden;position:sticky;top:0;z-index:5;}
 .bl5-close{position:absolute;right:8px;top:4px;border:1px solid #aab8c8;background:#e8eef4;cursor:pointer;font-size:11px;color:#334;border-radius:2px;padding:1px 6px;}
-.bl5-badge{display:inline-block;padding:2px 8px;border-radius:2px;font-size:11px;font-weight:bold;color:#fff;}
-.bl5-ccmu{cursor:pointer;}
-.bl5-h-avatar{flex:0 0 50px;width:50px;height:50px;border:1px solid #c0d0e0;border-radius:3px;background:#e8f0f8;display:flex;align-items:center;justify-content:center;}
-.bl5-h-avatar svg{width:32px;height:32px;stroke:#6090b8;fill:#d0e4f4;stroke-width:1.5;}
-.bl5-h-z2{flex:0 0 200px;color:#223;line-height:1.28;}
-.bl5-h-z2 .bl5-name{font-weight:bold;font-size:15px;color:#000;text-transform:uppercase;}
-.bl5-h-z3{flex:0 0 160px;color:#223;line-height:1.25;}
-.bl5-h-z4{flex:0 0 180px;color:#223;line-height:1.25;}
-.bl5-h-z5{flex:0 0 160px;color:#223;line-height:1.25;}
-.bl5-h-z6{flex:0 0 150px;color:#223;line-height:1.2;}
-.bl5-h-z7{flex:0 0 130px;color:#223;line-height:1.2;}
-.bl5-actions{flex:0 0 160px;display:flex;flex-direction:column;align-items:stretch;gap:6px;padding-right:26px;}
-.bl5-trombone-btn{position:relative;height:26px;border:1px solid #886000;border-radius:2px;background:linear-gradient(#f2c65a,#e0a820);display:flex;align-items:center;justify-content:center;cursor:pointer;}
-.bl5-trombone-btn svg{width:18px;height:18px;fill:#e0a820;stroke:#886000;stroke-width:1.5;}
-.bl5-trombone-badge{position:absolute;right:-4px;top:-4px;background:#cc0000;color:#fff;font-size:9px;border-radius:50%;width:14px;height:14px;display:none;align-items:center;justify-content:center;line-height:14px;font-weight:bold;}
-.bl5-h-mini{color:#666;font-size:11px;}
-.bl5-h-inline{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
-.bl5-h-input{width:52px;height:22px;border:1px solid #90b0cc;border-radius:2px;font-size:12px;text-align:center;padding:0 4px;}
+/* Zone 1 — Silhouette */
+.bl5-hz1{flex:0 0 60px;width:60px;border-right:1px solid #c0d0e0;display:flex;align-items:center;justify-content:center;background:#e8f0f8;}
+.bl5-hz1 svg{width:40px;height:60px;}
+/* Zone 2 — Identité */
+.bl5-hz2{flex:0 0 200px;width:200px;padding:4px 8px;border-right:1px solid #c0d0e0;display:flex;flex-direction:column;justify-content:center;gap:2px;overflow:hidden;}
+.bl5-hz2 .bl5-h-nom{font-size:13px;font-weight:bold;color:#1a3a60;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bl5-hz2 .bl5-h-prenom{font-size:11px;color:#444;}
+.bl5-hz2-line3{font-size:10px;color:#666;}
+.bl5-hz2-line4{font-size:10px;display:flex;align-items:center;gap:4px;}
+.bl5-h-sexe-badge{color:#fff;padding:1px 5px;border-radius:2px;font-size:10px;font-weight:bold;}
+.bl5-hz2-line5{font-size:10px;color:#888;}
+/* Zone 3 — Morphologie */
+.bl5-hz3{flex:0 0 110px;width:110px;padding:4px 8px;border-right:1px solid #c0d0e0;display:flex;flex-direction:column;justify-content:center;gap:3px;overflow:hidden;}
+.bl5-hz3-grid{display:grid;grid-template-columns:auto 1fr;gap:2px 4px;font-size:10px;align-items:center;}
+.bl5-hlbl{color:#666;font-size:10px;white-space:nowrap;}
+.bl5-hval{display:flex;align-items:center;gap:2px;}
+.bl5-h-input{width:4ch;height:18px;border:1px solid #90b0cc;border-radius:2px;font-size:10px;text-align:center;padding:0 2px;}
 .bl5-h-read{background:#f2f6fa;}
-.bl5-imc-badge{display:inline-block;border-radius:2px;padding:2px 6px;font-size:11px;color:#fff;}
-.bl5-save-mini{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border:1px solid #90b0cc;border-radius:2px;background:#f0f4f8;cursor:pointer;}
-.bl5-save-mini svg{width:12px;height:12px;stroke:#205080;fill:none;stroke-width:1.5;}
-.bl5-mode-badge{display:inline-block;border-radius:2px;padding:2px 6px;font-size:11px;color:#fff;}
-.bl5-sec-badge{display:inline-block;border-radius:2px;padding:2px 6px;font-size:11px;color:#fff;}
-.bl5-pec-ide{background:#2060a0;color:#fff;border-radius:2px;padding:2px 6px;font-size:11px;display:inline-block;}
-.bl5-pec-med{background:#8020c0;color:#fff;border-radius:2px;padding:2px 6px;font-size:11px;display:inline-block;}
-.bl5-cgrid{display:grid;grid-template-columns:auto 1fr auto;gap:3px 6px;font-size:11px;align-items:center;}
-.bl5-dot{width:8px;height:8px;border-radius:50%;display:inline-block;background:#aaa;}
-.bl5-all-band{display:flex;align-items:center;gap:4px;border-radius:2px;padding:4px 8px;font-weight:bold;font-size:12px;color:#fff;}
-.bl5-all-band svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.5;}
-.bl5-all-band.red{background:#cc0000;}
-.bl5-all-band.green{background:#20a020;font-size:11px;}
-.bl5-all-text{margin-top:3px;color:#cc0000;font-size:11px;word-break:break-word;}
+.bl5-imc-badge{display:inline-block;border-radius:2px;padding:0 4px;font-size:9px;color:#fff;white-space:nowrap;}
+/* Zone 4 — Localisation & Mode */
+.bl5-hz4{flex:0 0 120px;width:120px;padding:4px 8px;border-right:1px solid #c0d0e0;display:flex;flex-direction:column;justify-content:center;gap:3px;overflow:hidden;}
+.bl5-h-local-box{background:#fff;border:1px solid #c0d0e0;padding:2px 6px;font-size:11px;font-weight:bold;color:#2060a0;min-height:20px;text-align:center;}
+.bl5-mode-badge{display:inline-block;border-radius:10px;padding:2px 8px;font-size:10px;font-weight:bold;text-align:center;color:#fff;align-self:center;}
+.bl5-hz4-arrive{font-size:10px;color:#666;}
+.bl5-hz4-live{font-size:10px;font-weight:bold;}
+/* Zone 5 — Tri FRENCH */
+.bl5-hz5{flex:0 0 100px;width:100px;padding:4px 8px;border-right:1px solid #c0d0e0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;overflow:hidden;}
+.bl5-htri-badge{width:80px;height:24px;border-radius:3px;color:#fff;font-size:12px;font-weight:bold;text-align:center;line-height:24px;background:#888;}
+.bl5-hz5-pec{font-size:9px;color:#444;text-align:center;}
+.bl5-hspe-badge{border:1px solid #5590c8;border-radius:10px;padding:1px 6px;font-size:9px;color:#2060a0;background:#e8f0f8;text-align:center;max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:none;}
+/* Zone 6 — Constantes IAO */
+.bl5-hz6{flex:0 0 160px;width:160px;padding:4px 8px;border-right:1px solid #c0d0e0;display:flex;flex-direction:column;justify-content:center;gap:2px;overflow:hidden;}
+.bl5-hz6-title{font-size:9px;color:#888;text-transform:uppercase;margin-bottom:2px;letter-spacing:0.5px;}
+.bl5-hconst-grid{display:grid;grid-template-columns:auto 1fr;gap:1px 6px;font-size:10px;align-items:center;}
+.bl5-hconst-lbl{color:#666;}
+.bl5-hconst-val{display:flex;align-items:center;gap:2px;font-weight:bold;color:#333;}
+.bl5-hconst-alert{background:#cc0000;color:#fff;border-radius:2px;padding:0 3px;font-size:9px;}
+.bl5-hconst-none{font-style:italic;color:#999;font-size:10px;}
+/* Zone 7 — Allergie */
+.bl5-hz7{flex:0 0 100px;width:100px;padding:4px 6px;border-right:1px solid #c0d0e0;display:flex;align-items:center;justify-content:center;}
+.bl5-all-new{border-radius:3px;padding:4px;width:100%;font-size:10px;font-weight:bold;text-align:center;color:#fff;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.bl5-all-new.green{background:#20a020;}
+.bl5-all-new.red{background:#cc0000;}
+.bl5-all-new-title{font-size:10px;font-weight:bold;}
+.bl5-all-new-detail{font-size:9px;font-weight:normal;word-break:break-word;}
+/* Zone 8 — Actions */
+.bl5-hz8{flex:1;min-width:160px;padding:4px 8px;display:flex;flex-direction:column;justify-content:center;gap:4px;}
+.bl5-hact-row{display:flex;gap:4px;align-items:center;}
+.bl5-hbtn{height:26px;font-size:10px;border:none;border-radius:2px;cursor:pointer;padding:0 8px;color:#fff;flex:1;}
+.bl5-hbtn-blue{background:#2060a0;}
+.bl5-hbtn-green{background:#20a020;}
+.bl5-hbtn-grey{background:#888;}
+.bl5-trombone-btn{position:relative;width:30px;height:26px;border:none;border-radius:2px;background:#e0a820;color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:0 0 30px;}
+.bl5-trombone-badge{position:absolute;right:-4px;top:-4px;background:#cc0000;color:#fff;font-size:9px;border-radius:50%;width:14px;height:14px;display:none;align-items:center;justify-content:center;line-height:14px;font-weight:bold;}
 .bl5-ccmu-row{display:flex;gap:4px;align-items:center;}
-.bl5-ccmu-badge{max-width:300px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.bl5-ccmu-badge.c1,.bl5-ccmu-badge.c2{background:#20a020;}
-.bl5-ccmu-badge.c3{background:#e07820;}
-.bl5-ccmu-badge.c4,.bl5-ccmu-badge.c5{background:#cc0000;}
-.bl5-ccmu-badge.cP{background:#8020c0;}
-.bl5-ccmu-badge.cD{background:#777;}
-
-.bl5-yellow{height:24px;background:#fffacd;border-bottom:1px solid #e8d870;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-size:10px;}
-.bl5-icons{display:flex;align-items:center;gap:3px;}
-.bl5-ico{width:18px;height:18px;border:1px solid #ccc;background:#fff;font-size:9px;border-radius:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-.bl5-ico.done{background:#d4edda;border-color:#28a745;}
-.bl5-ico svg{width:16px;height:16px;stroke:#444;fill:none;stroke-width:1.5;}
-.bl5-ico.done svg{stroke:#28a745;}
+/* Bandeau Fait / À faire */
+.bl5-yellow{height:22px;min-height:22px;max-height:22px;background:#fffacd;border-bottom:1px solid #e0d080;display:flex;align-items:center;padding:0 8px;gap:12px;font-size:10px;overflow:hidden;position:sticky;top:90px;z-index:4;}
+.bl5-fait-part{display:flex;align-items:center;gap:4px;}
+.bl5-afaire-part{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.bl5-sep{color:#ccc;}
+.bl5-yfait-pill{background:#20a020;color:#fff;border-radius:2px;padding:0 4px;font-size:9px;}
+.bl5-yafaire-link{font-size:10px;color:#2060a0;text-decoration:underline;cursor:pointer;background:none;border:none;padding:0;}
 
 .bl5-tabs{display:flex;align-items:flex-end;flex-wrap:wrap;background:#b8cce0;border-bottom:2px solid #7090b0;padding:0 6px;min-height:30px;gap:2px;}
 .bl5-tab{padding:5px 10px;border:1px solid #c0d0e0;background:#f0f4f8;color:#5580a0;font-size:11px;cursor:pointer;border-radius:3px 3px 0 0;margin-right:2px;display:flex;align-items:center;line-height:1;}
@@ -1268,68 +1283,76 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
   <div class="bl5-wrap">
     <button id="bl5-close" class="bl5-close" type="button">Fermer</button>
     <div class="bl5-header">
-      <div class="bl5-h-avatar" id="bl5-h-avatar"></div>
+      <div class="bl5-hz1" id="bl5-h-avatar"></div>
 
-      <div class="bl5-h-z2">
-        <div class="bl5-name" id="bl5-h-nom"></div>
-        <div id="bl5-h-ddnage"></div>
-        <div id="bl5-h-sexe-num"></div>
-        <div id="bl5-h-ipp"></div>
+      <div class="bl5-hz2">
+        <div class="bl5-h-nom" id="bl5-h-nom"></div>
+        <div class="bl5-h-prenom" id="bl5-h-prenom"></div>
+        <div class="bl5-hz2-line3" id="bl5-h-ddnage"></div>
+        <div class="bl5-hz2-line4" id="bl5-h-sexe-num"></div>
+        <div class="bl5-hz2-line5" id="bl5-h-ipp"></div>
       </div>
 
-      <div class="bl5-h-z3">
-        <div class="bl5-h-inline">
-          <span class="bl5-h-mini">Poids</span><input id="bl5-h-poids" class="bl5-h-input" type="number" min="1" max="400" step="0.1"/>
-          <span class="bl5-h-mini">Taille</span><input id="bl5-h-taille" class="bl5-h-input" type="number" min="30" max="250" step="0.1"/>
-          <button id="bl5-h-save-morpho" class="bl5-save-mini" type="button" title="Enregistrer morphologie"><svg viewBox="0 0 16 16"><path d="M3.5 2.5h8l1 1v10h-9z"/><path d="M5 2.5v4h6v-4"/><path d="M5.5 11h5"/></svg></button>
+      <div class="bl5-hz3">
+        <div class="bl5-hz3-grid">
+          <span class="bl5-hlbl">Poids :</span>
+          <span class="bl5-hval"><input id="bl5-h-poids" class="bl5-h-input" type="number" min="1" max="400" step="0.1"/><span>kg</span></span>
+          <span class="bl5-hlbl">Taille :</span>
+          <span class="bl5-hval"><input id="bl5-h-taille" class="bl5-h-input" type="number" min="30" max="250" step="0.1"/><span>cm</span></span>
+          <span class="bl5-hlbl">IMC :</span>
+          <span class="bl5-hval"><input id="bl5-h-imc" class="bl5-h-input bl5-h-read" style="width:5ch;" readonly/><span id="bl5-h-imc-badge" class="bl5-imc-badge" style="background:#777;">-</span></span>
+          <span class="bl5-hlbl">SC :</span>
+          <span class="bl5-hval"><input id="bl5-h-sc" class="bl5-h-input bl5-h-read" style="width:5ch;" readonly/><span>m²</span></span>
         </div>
-        <div class="bl5-h-inline"><span class="bl5-h-mini">IMC</span><input id="bl5-h-imc" class="bl5-h-input bl5-h-read" readonly/><span id="bl5-h-imc-badge" class="bl5-imc-badge" style="background:#777;">-</span></div>
-        <div class="bl5-h-inline"><span class="bl5-h-mini">SC</span><input id="bl5-h-sc" class="bl5-h-input bl5-h-read" readonly/></div>
       </div>
 
-      <div class="bl5-h-z4">
-        <div id="bl5-h-arrive-fixed"></div>
-        <div id="bl5-h-arrive-live" class="bl5-h-mini"></div>
-        <div class="bl5-h-inline"><span class="bl5-h-mini">Localisation</span><span id="bl5-h-local"></span></div>
-        <div class="bl5-h-inline"><span class="bl5-h-mini">Mode</span><span id="bl5-h-mode" class="bl5-mode-badge"></span></div>
+      <div class="bl5-hz4">
+        <div class="bl5-h-local-box" id="bl5-h-local"></div>
+        <div id="bl5-h-mode" class="bl5-mode-badge"></div>
+        <div id="bl5-h-arrive-fixed" class="bl5-hz4-arrive"></div>
+        <div id="bl5-h-arrive-live" class="bl5-hz4-live"></div>
       </div>
 
-      <div class="bl5-h-z5">
-        <div class="bl5-h-inline"><span class="bl5-h-mini">Tri</span><span id="bl5-h-tri" class="bl5-badge"></span></div>
-        <div class="bl5-h-inline"><span class="bl5-h-mini">PEC</span><span id="bl5-h-pec-ide" class="bl5-pec-ide">IDE non vu</span><span id="bl5-h-pec-med" class="bl5-pec-med">Médecin non vu</span></div>
-        <div id="bl5-h-spe-short" class="bl5-h-mini"></div>
+      <div class="bl5-hz5">
+        <div id="bl5-h-tri" class="bl5-htri-badge">Non trié</div>
+        <div class="bl5-hz5-pec" id="bl5-h-pec-ide">PEC IDE : —</div>
+        <div class="bl5-hz5-pec" id="bl5-h-pec-med">PEC MED : —</div>
+        <div id="bl5-h-spe-short" class="bl5-hspe-badge"></div>
       </div>
 
-      <div class="bl5-h-z6">
-        <div class="bl5-h-mini" style="margin-bottom:2px;">Constantes</div>
-        <div class="bl5-cgrid" id="bl5-h-const"></div>
+      <div class="bl5-hz6">
+        <div class="bl5-hz6-title">Constantes IAO</div>
+        <div class="bl5-hconst-grid" id="bl5-h-const"></div>
       </div>
 
-      <div class="bl5-h-z7">
-        <div id="bl5-h-all-band" class="bl5-all-band green"><svg viewBox="0 0 16 16"><path d="M2 8l3 3 9-9"/></svg>Aucune allergie</div>
-        <div id="bl5-h-all-text" class="bl5-all-text" style="display:none;"></div>
+      <div class="bl5-hz7">
+        <div id="bl5-h-all-band" class="bl5-all-new green">
+          <div class="bl5-all-new-title">✓ Aucune allergie connue</div>
+        </div>
       </div>
 
-      <div class="bl5-actions">
-        <button id="bl5-ccmu-btn" class="btn-submit" type="button">Poser CCMU</button>
-        <span id="bl5-ccmu-badge" class="bl5-badge bl5-ccmu bl5-ccmu-badge" style="display:none;">CCMU</span>
+      <div class="bl5-hz8">
+        <div class="bl5-hact-row">
+          <button id="bl5-ccmu-btn" class="bl5-hbtn bl5-hbtn-blue" type="button">Poser CCMU</button>
+          <button id="bl5-h-muter" class="bl5-hbtn bl5-hbtn-green" type="button">Muter</button>
+        </div>
         <div id="bl5-ccmu-edit" class="bl5-ccmu-row" style="display:none;">
-          <select id="bl5-ccmu-select"><option value="">-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>P</option><option>D</option></select>
+          <select id="bl5-ccmu-select"><option value="">-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
           <button id="bl5-ccmu-apply" class="btn-action" type="button">Valider</button>
         </div>
-        <button id="bl5-h-muter" class="btn-action" type="button" style="display:none;">Muter</button>
-        <button id="bl5-h-trombone-btn" class="bl5-trombone-btn" type="button" title="Documents de transmission VSAV / ambulanciers">
-          <svg viewBox="0 0 40 40" aria-hidden="true">
-            <path d="M26 9c-3.2 0-5.8 2.6-5.8 5.8v12.8c0 2.3-1.9 4.2-4.2 4.2s-4.2-1.9-4.2-4.2V13.5c0-3.6 2.9-6.5 6.5-6.5s6.5 2.9 6.5 6.5v12.1c0 1.4-1.1 2.5-2.5 2.5s-2.5-1.1-2.5-2.5V15"/>
-          </svg>
-          <span id="bl5-h-trombone-badge" class="bl5-trombone-badge">0</span>
-        </button>
+        <div class="bl5-hact-row">
+          <button id="bl5-h-trombone-btn" class="bl5-trombone-btn" type="button" title="Documents de transmission">📎
+            <span id="bl5-h-trombone-badge" class="bl5-trombone-badge">0</span>
+          </button>
+          <button id="bl5-h-close-fiche" class="bl5-hbtn bl5-hbtn-grey" type="button">Fermer dossier ✕</button>
+        </div>
       </div>
     </div>
 
     <div class="bl5-yellow">
-      <div class="bl5-inline"><b>Fait</b><div class="bl5-icons" id="bl5-fait"></div></div>
-      <div class="bl5-inline"><b>À faire</b><div class="bl5-icons" id="bl5-afaire"></div><span>|</span><a href="#" onclick="return false;">Protocoles</a><a href="#" onclick="return false;">Médicaments</a></div>
+      <div class="bl5-fait-part"><b style="color:#888;">Fait</b><div id="bl5-fait-list" class="bl5-fait-part"></div></div>
+      <span class="bl5-sep">|</span>
+      <div class="bl5-afaire-part"><b style="color:#c06000;">À faire</b><div id="bl5-afaire-list" class="bl5-afaire-part"></div></div>
     </div>
 
     <div class="bl5-tabs" id="bl5-tabs">
@@ -3347,7 +3370,20 @@ async function validerEntree(){
       transfusion: [],
       planification: [],
       faits: {}
-      ,documents: []
+      ,documents: [],
+      morpho: '',
+      bioSelected: [],
+      biologieOrders: [],
+      bioResults: {},
+      bioComment: '',
+      observation: { hdm: '', examen: '', hypotheses: [], synthese: '', diag: '', time: '', author: '' },
+      gemsa: '',
+      medecin: '',
+      ide: '',
+      synthese: '',
+      isbar: { situation: '', background: '', assessment: '', recommendation: '' },
+      scores: {},
+      _docId: null,
     });
     closeModal("modal-entree");
   }catch(e){
@@ -4080,8 +4116,8 @@ Pas de foyer auscultatoire :
     return '<svg width="16" height="16" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M8 5.5v5M5.5 8h5"/></svg>';
   };
   const avatarSvg=(sexe)=>String(sexe||"").toUpperCase().startsWith("F")
-    ? '<svg viewBox="0 0 32 32"><circle cx="16" cy="9" r="5"/><path d="M16 14c-4.5 0-8 3.5-8 8v6h16v-6c0-4.5-3.5-8-8-8z"/></svg>'
-    : '<svg viewBox="0 0 32 32"><circle cx="16" cy="8.5" r="5"/><path d="M10 29v-8h12v8M16 14v15M9 17h14"/></svg>';
+    ? '<svg viewBox="0 0 40 60" aria-hidden="true"><circle cx="20" cy="10" r="7" fill="#c02060"/><path d="M9 50 L15 22 L25 22 L31 50 Z" fill="#c02060"/></svg>'
+    : '<svg viewBox="0 0 40 60" aria-hidden="true"><circle cx="20" cy="10" r="7" fill="#2060a0"/><path d="M10 50 L14 22 L26 22 L30 50 Z" fill="#2060a0"/></svg>';
   const morphoFrom=(poids,tailleCm)=>{
     const p=Number(String(poids||"").replace(",","."));
     const t=Number(String(tailleCm||"").replace(",","."));
@@ -4094,7 +4130,7 @@ Pas de foyer auscultatoire :
     else if(imc<25) imcLevel="Normal";
     else if(imc<30) imcLevel="Surpoids";
     else imcLevel="Obésité";
-    return {imc:imc.toFixed(1),sc:sc.toFixed(2),imcLevel};
+    return {imc:imc.toFixed(2),sc:sc.toFixed(2),imcLevel};
   };
   const elapsedLong=(ts)=>{
     if(!ts) return "";
@@ -4514,6 +4550,7 @@ Pas de foyer auscultatoire :
       document.body.classList.remove("fiche-open");
     };
     document.getElementById("bl5-close").onclick=close;
+    document.getElementById("bl5-h-close-fiche").onclick=close;
     modal.addEventListener("click",e=>{if(e.target===modal) close();});
 
     document.getElementById("bl5-tabs").addEventListener("click",e=>{
@@ -4529,6 +4566,7 @@ Pas de foyer auscultatoire :
       b.classList.add("active");
       document.querySelectorAll(".bl5-main").forEach(x=>x.classList.toggle("active",x.dataset.main===main));
     };
+    window.__bl5ActivateMain=activateMain;
     const activateMedPane=(pane)=>{
       activateMain("medical");
       const b=document.querySelector(`#bl5-med-tabs .bl5-subtab[data-pane="${pane}"]`);
@@ -4537,6 +4575,7 @@ Pas de foyer auscultatoire :
       b.classList.add("active");
       document.querySelectorAll(".bl5-pane").forEach(x=>x.classList.toggle("active",x.dataset.pane===pane));
     };
+    window.__bl5ActivateMedPane=activateMedPane;
     const syncIoaPaneView=()=>{
       const pane=activeIoaPane();
       document.querySelectorAll(".bl5-ioa-pane").forEach(x=>x.classList.toggle("active",x.dataset.ioaPane===pane));
@@ -4752,7 +4791,6 @@ Pas de foyer auscultatoire :
       s.style.display=s.style.display==="none"?"flex":"none";
     };
     document.getElementById("bl5-ccmu-btn").onclick=toggleCcmu;
-    document.getElementById("bl5-ccmu-badge").onclick=toggleCcmu;
     document.getElementById("bl5-ccmu-apply").onclick=()=>{
       const pt=getP();
       if(!pt) return;
@@ -4765,24 +4803,19 @@ Pas de foyer auscultatoire :
     document.getElementById("bl5-h-muter").onclick=()=>{const pt=getP();if(pt)openMuter(pt.id);};
 
     const recomputeMorpho=()=>{
+      const pt=getP();
       const calc=morphoFrom(document.getElementById("bl5-h-poids").value,document.getElementById("bl5-h-taille").value);
       document.getElementById("bl5-h-imc").value=calc.imc;
       document.getElementById("bl5-h-sc").value=calc.sc;
       const b=document.getElementById("bl5-h-imc-badge");
       b.textContent=calc.imcLevel||"-";
-      b.style.background=calc.imcLevel==="Normal"?"#20a020":(calc.imcLevel==="Surpoids"?"#e07820":(calc.imcLevel==="Obésité"?"#cc0000":"#2060a0"));
+      b.style.background=calc.imcLevel==="Maigreur"?"#87ceeb":(calc.imcLevel==="Normal"?"#90ee90":(calc.imcLevel==="Surpoids"?"#ffd700":(calc.imcLevel==="Obésité"?"#ff8c00":"#777")));
+      if(pt){
+        pt.morpho={poids:document.getElementById("bl5-h-poids").value||"",taille:document.getElementById("bl5-h-taille").value||"",imc:calc.imc||"",sc:calc.sc||"",updatedAt:Date.now()};
+      }
     };
     document.getElementById("bl5-h-poids").addEventListener("input",recomputeMorpho);
     document.getElementById("bl5-h-taille").addEventListener("input",recomputeMorpho);
-    document.getElementById("bl5-h-save-morpho").onclick=()=>{
-      const pt=getP();
-      if(!pt) return;
-      const poids=document.getElementById("bl5-h-poids").value;
-      const taille=document.getElementById("bl5-h-taille").value;
-      const calc=morphoFrom(poids,taille);
-      pt.morpho={poids:poids||"",taille:taille||"",imc:calc.imc||"",sc:calc.sc||"",updatedAt:Date.now()};
-      window.__bl5Render();
-    };
 
     document.getElementById("bl5-add-atcd").onclick=()=>{const pt=getP();if(!pt)return;pt.medical.atcdPersonnels.push({type:"Médical",pathologie:"",cim:"",commentaire:"",gravite:""});window.__bl5Render();};
     document.getElementById("bl5-add-trait").onclick=()=>{const pt=getP();if(!pt)return;pt.medical.traitementsHab.push({medicament:"",posologie:"",voie:"",frequence:"",commentaire:""});window.__bl5Render();};
@@ -5079,7 +5112,7 @@ Pas de foyer auscultatoire :
     ["bl5-bio-search","bl5-bio-family","bl5-bio-tube"].forEach(idf=>{const el=document.getElementById(idf);if(el)el.oninput=()=>window.__bl5Render();if(el)el.onchange=()=>window.__bl5Render();});
     document.getElementById("bl5-bio-catalog").addEventListener("change",e=>{const pt=getP();if(!pt)return;const c=e.target.closest("input[data-ex]");if(!c)return;pt.bioSelected=pt.bioSelected||[];if(c.checked){if(!(pt.bioSelected||[]).includes(c.dataset.ex))pt.bioSelected.push(c.dataset.ex);}else{pt.bioSelected=(pt.bioSelected||[]).filter(x=>x!==c.dataset.ex);}window.__bl5Render();});
     document.getElementById("bl5-bio-val").onclick=()=>{const pt=getP();if(!pt)return;const exams=(pt.bioSelected||[]).slice();const protos=Object.keys(window.__bl5State.bioProtos).filter(k=>window.__bl5State.bioProtos[k]);const label=protos.length?protos.join(", "):exams.join(", ");if(!label)return;pt.biologieOrders=pt.biologieOrders||[];pt.biologieOrders.push({id:Date.now(),statut:"À faire",label,prescripteur:actorName(),prescritLe:nowFull(),faitLe:"",examens:exams});(exams||[]).forEach(ex=>{pt.bioResults=pt.bioResults||[];if(!(pt.bioResults||[]).some(r=>r.examen===ex))pt.bioResults.push({examen:ex,valeur:"",unite:"",low:"",high:""});});window.__bl5State.bioProtos={};pt.bioSelected=[];window.__bl5Render();};
-    document.getElementById("bl5-bio-comment-save").onclick=()=>{const pt=getP();if(!pt)return;pt.bioComment=document.getElementById("bl5-bio-comment").value||"";};
+    document.getElementById("bl5-bio-comment-save").onclick=()=>{const pt=getP();if(!pt)return;pt.bioComment=document.getElementById("bl5-bio-comment").value||"";updatePatientFirestore(pt);if(window.__bl5Render) window.__bl5Render();};
     document.getElementById("bl5-bio-results-list").addEventListener("input",e=>{const pt=getP();if(!pt)return;const i=+(e.target.dataset.i||-1);if(i<0)return;const arr=pt.bioResults||[];if(!arr[i])return;arr[i].valeur=e.target.value;window.__bl5Render();});
 
     // CS AMP listener
@@ -5127,94 +5160,129 @@ Pas de foyer auscultatoire :
       input.focus();
       input.setSelectionRange(cursorPos,cursorPos);
     };
-    document.querySelectorAll("[data-obs-toggle]").forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        const key=btn.dataset.obsToggle;
-        const body=document.querySelector(`[data-obs-body="${key}"]`);
-        const chev=document.querySelector(`[data-obs-chevron="${key}"]`);
-        if(!body||!chev) return;
-        const isOpen=body.style.display!=="none";
-        body.style.display=isOpen?"none":"block";
-        chev.textContent=isOpen?"▲":"▼";
+    const ensureObsElement=(tag,id,attrs={})=>{
+      let el=document.getElementById(id);
+      if(el) return el;
+      const host=document.querySelector('.bl5-pane[data-pane="exam"]')||document.body;
+      const fallback=document.getElementById("bl5-obs-fallback")||(()=>{
+        const wrap=document.createElement("div");
+        wrap.id="bl5-obs-fallback";
+        wrap.style.display="none";
+        host.appendChild(wrap);
+        return wrap;
+      })();
+      el=document.createElement(tag);
+      el.id=id;
+      Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));
+      fallback.appendChild(el);
+      return el;
+    };
+    ensureObsElement("textarea","bl5-obs-hdm");
+    ensureObsElement("textarea","bl5-obs-examen");
+    ensureObsElement("textarea","bl5-obs-hyp");
+    ensureObsElement("textarea","bl5-obs-synth");
+    ensureObsElement("input","bl5-obs-diag",{type:"text"});
+    ensureObsElement("span","bl5-obs-time");
+    ensureObsElement("span","bl5-obs-author");
+    ensureObsElement("button","bl5-obs-save",{type:"button"});
+    ensureObsElement("button","bl5-obs-hdm-insert",{type:"button"});
+    ensureObsElement("span","bl5-obs-hdm-template",{style:"display:none"});
+    ensureObsElement("button","bl5-obs-ex-insert",{type:"button"});
+    ensureObsElement("span","bl5-obs-ex-template",{style:"display:none"});
+    requestAnimationFrame(()=>{
+      document.querySelectorAll("[data-obs-toggle]").forEach(btn=>{
+        btn.addEventListener("click",()=>{
+          const key=btn.dataset.obsToggle;
+          const body=document.querySelector(`[data-obs-body="${key}"]`);
+          const chev=document.querySelector(`[data-obs-chevron="${key}"]`);
+          if(!body||!chev) return;
+          const isOpen=body.style.display!=="none";
+          body.style.display=isOpen?"none":"block";
+          chev.textContent=isOpen?"▲":"▼";
+        });
       });
-    });
-    document.getElementById("bl5-obs-hdm-insert").onclick=()=>{
-      const key=document.getElementById("bl5-obs-hdm-template").value;
-      insertObsTemplate("bl5-obs-hdm",TEMPLATES_HDM[key]||"");
-    };
-    document.getElementById("bl5-obs-ex-insert").onclick=()=>{
-      const map={
-        "Examen clinique standard complet":"Examen clinique standard",
-        "Examen cardiovasculaire":"Examen cardiovasculaire complet",
-        "Examen neurologique complet":"Examen neurologique complet",
-        "Examen abdominal":"Examen abdominal",
-        "Examen pneumologique":"Examen pneumologique"
+      const _el_hdm_insert=document.getElementById("bl5-obs-hdm-insert");
+      if(_el_hdm_insert) _el_hdm_insert.onclick=()=>{
+        const key=document.getElementById("bl5-obs-hdm-template").value;
+        insertObsTemplate("bl5-obs-hdm",TEMPLATES_HDM[key]||"");
       };
-      const key=document.getElementById("bl5-obs-ex-template").value;
-      insertObsTemplate("bl5-obs-examen",TEMPLATES_OBS[map[key]]||"");
-    };
-    const obsBindings={
-      "bl5-obs-hdm":"hdm",
-      "bl5-obs-examen":"examenClinique",
-      "bl5-obs-hyp":"hypotheses",
-      "bl5-obs-synth":"synthese",
-      "bl5-obs-diag":"diagnosticRetenu"
-    };
-    Object.entries(obsBindings).forEach(([id,key])=>{
-      const el=document.getElementById(id);
-      if(!el) return;
-      el.addEventListener("input",()=>{
+      const _el_ex_insert=document.getElementById("bl5-obs-ex-insert");
+      if(_el_ex_insert) _el_ex_insert.onclick=()=>{
+        const map={
+          "Examen clinique standard complet":"Examen clinique standard",
+          "Examen cardiovasculaire":"Examen cardiovasculaire complet",
+          "Examen neurologique complet":"Examen neurologique complet",
+          "Examen abdominal":"Examen abdominal",
+          "Examen pneumologique":"Examen pneumologique"
+        };
+        const key=document.getElementById("bl5-obs-ex-template").value;
+        insertObsTemplate("bl5-obs-examen",TEMPLATES_OBS[map[key]]||"");
+      };
+      const obsBindings={
+        "bl5-obs-hdm":"hdm",
+        "bl5-obs-examen":"examenClinique",
+        "bl5-obs-hyp":"hypotheses",
+        "bl5-obs-synth":"synthese",
+        "bl5-obs-diag":"diagnosticRetenu"
+      };
+      Object.entries(obsBindings).forEach(([id,key])=>{
+        const el=document.getElementById(id);
+        if(!el) return;
+        el.addEventListener("input",()=>{
+          const pt=getP();
+          if(!pt) return;
+          pt.observation=pt.observation&&typeof pt.observation==="object"&&!Array.isArray(pt.observation)?pt.observation:{hdm:"",examenClinique:"",hypotheses:"",synthese:"",diagnosticRetenu:""};
+          pt.observation[key]=el.value||"";
+        });
+      });
+      const _el_obs_diag=document.getElementById("bl5-obs-diag");
+      if(_el_obs_diag) _el_obs_diag.addEventListener("focus",e=>{
+        const target=e.target;
+        if((target.value||"").trim()!=="") return;
+        const prefix="AU TOTAL : Patient(e) de [âge] ans, [ATCD]\nconsulte pour [motif]. Le bilan retrouve [résultats].\n[Hospitalisation pour/RAD avec]...";
+        target.value=prefix;
+        const pt=getP();
+        if(pt){
+          pt.observation=pt.observation&&typeof pt.observation==="object"&&!Array.isArray(pt.observation)?pt.observation:{hdm:"",examenClinique:"",hypotheses:"",synthese:"",diagnosticRetenu:""};
+          pt.observation.diagnosticRetenu=prefix;
+        }
+        target.setSelectionRange(prefix.length,prefix.length);
+      });
+      const _el_obs_save=document.getElementById("bl5-obs-save");
+      if(_el_obs_save) _el_obs_save.onclick=()=>{
         const pt=getP();
         if(!pt) return;
         pt.observation=pt.observation&&typeof pt.observation==="object"&&!Array.isArray(pt.observation)?pt.observation:{hdm:"",examenClinique:"",hypotheses:"",synthese:"",diagnosticRetenu:""};
-        pt.observation[key]=el.value||"";
-      });
+        pt.observation.hdm=document.getElementById("bl5-obs-hdm").value||"";
+        pt.observation.examenClinique=document.getElementById("bl5-obs-examen").value||"";
+        pt.observation.hypotheses=document.getElementById("bl5-obs-hyp").value||"";
+        pt.observation.synthese=document.getElementById("bl5-obs-synth").value||"";
+        pt.observation.diagnosticRetenu=document.getElementById("bl5-obs-diag").value||"";
+        pt.syntheseSAU=pt.syntheseSAU&&typeof pt.syntheseSAU==="object"&&!Array.isArray(pt.syntheseSAU)?pt.syntheseSAU:{journal:[]};
+        pt.syntheseSAU.journal=Array.isArray(pt.syntheseSAU.journal)?pt.syntheseSAU.journal:[];
+        const heure=nowHm();
+        const auteur=((currentUser?.prenom||"")+" "+(currentUser?.nom||"")).trim()||actorName();
+        const payload={...pt.observation};
+        pt.syntheseSAU.journal.unshift({
+          type:"observation",
+          ts:Date.now(),
+          date:new Date().toISOString(),
+          heure,
+          auteur,
+          role:currentUser?.role||"medecin",
+          observation:payload,
+          hdm:payload.hdm,
+          examenClinique:payload.examenClinique,
+          hypotheses:payload.hypotheses,
+          synthese:payload.synthese,
+          diagnosticRetenu:payload.diagnosticRetenu
+        });
+        document.getElementById("bl5-obs-time").value=heure;
+        document.getElementById("bl5-obs-author").value=auteur;
+        showBl5Snackbar("Observation enregistrée");
+        window.__bl5Render();
+      };
     });
-    document.getElementById("bl5-obs-diag").addEventListener("focus",e=>{
-      const target=e.target;
-      if((target.value||"").trim()!=="") return;
-      const prefix="AU TOTAL : Patient(e) de [âge] ans, [ATCD]\nconsulte pour [motif]. Le bilan retrouve [résultats].\n[Hospitalisation pour/RAD avec]...";
-      target.value=prefix;
-      const pt=getP();
-      if(pt){
-        pt.observation=pt.observation&&typeof pt.observation==="object"&&!Array.isArray(pt.observation)?pt.observation:{hdm:"",examenClinique:"",hypotheses:"",synthese:"",diagnosticRetenu:""};
-        pt.observation.diagnosticRetenu=prefix;
-      }
-      target.setSelectionRange(prefix.length,prefix.length);
-    });
-    document.getElementById("bl5-obs-save").onclick=()=>{
-      const pt=getP();
-      if(!pt) return;
-      pt.observation=pt.observation&&typeof pt.observation==="object"&&!Array.isArray(pt.observation)?pt.observation:{hdm:"",examenClinique:"",hypotheses:"",synthese:"",diagnosticRetenu:""};
-      pt.observation.hdm=document.getElementById("bl5-obs-hdm").value||"";
-      pt.observation.examenClinique=document.getElementById("bl5-obs-examen").value||"";
-      pt.observation.hypotheses=document.getElementById("bl5-obs-hyp").value||"";
-      pt.observation.synthese=document.getElementById("bl5-obs-synth").value||"";
-      pt.observation.diagnosticRetenu=document.getElementById("bl5-obs-diag").value||"";
-      pt.syntheseSAU=pt.syntheseSAU&&typeof pt.syntheseSAU==="object"&&!Array.isArray(pt.syntheseSAU)?pt.syntheseSAU:{journal:[]};
-      pt.syntheseSAU.journal=Array.isArray(pt.syntheseSAU.journal)?pt.syntheseSAU.journal:[];
-      const heure=nowHm();
-      const auteur=((currentUser?.prenom||"")+" "+(currentUser?.nom||"")).trim()||actorName();
-      const payload={...pt.observation};
-      pt.syntheseSAU.journal.unshift({
-        type:"observation",
-        ts:Date.now(),
-        date:new Date().toISOString(),
-        heure,
-        auteur,
-        role:currentUser?.role||"medecin",
-        observation:payload,
-        hdm:payload.hdm,
-        examenClinique:payload.examenClinique,
-        hypotheses:payload.hypotheses,
-        synthese:payload.synthese,
-        diagnosticRetenu:payload.diagnosticRetenu
-      });
-      document.getElementById("bl5-obs-time").value=heure;
-      document.getElementById("bl5-obs-author").value=auteur;
-      showBl5Snackbar("Observation enregistrée");
-      window.__bl5Render();
-    };
 
     const aeWatch=["bl5-ae-ecg-resultat","bl5-ae-bu-nitrites","bl5-ae-bu-leuco","bl5-ae-bu-hematies","bl5-ae-bu-cetones","bl5-ae-bu-glucose","bl5-ae-ho-sys-c","bl5-ae-ho-sys-d3"];
     aeWatch.forEach(id=>{
@@ -5370,7 +5438,7 @@ Pas de foyer auscultatoire :
         alert("Impossible d'enregistrer le devenir : "+e.message);
       }
     };
-    document.getElementById("bl5-senior-save").onclick=()=>{const pt=getP();if(!pt)return;pt.orientation=pt.orientation||{};pt.orientation.validationSenior={valide:document.getElementById("bl5-senior-ok").checked,nom:document.getElementById("bl5-senior-name").value,date:document.getElementById("bl5-senior-dt").value,commentaire:document.getElementById("bl5-senior-comment").value};};
+    document.getElementById("bl5-senior-save").onclick=()=>{const pt=getP();if(!pt)return;pt.orientation=pt.orientation||{};pt.orientation.validationSenior={valide:document.getElementById("bl5-senior-ok").checked,nom:document.getElementById("bl5-senior-name").value,date:document.getElementById("bl5-senior-dt").value,commentaire:document.getElementById("bl5-senior-comment").value};updatePatientFirestore(pt);if(window.__bl5Render) window.__bl5Render();};
 
     const paramRoot=document.getElementById("bl5-param-root");
     if(paramRoot && !window.__bl5ParamInit){
@@ -5406,7 +5474,9 @@ Pas de foyer auscultatoire :
         }
         if(act==="add-soins"){
           pt.soinsInfirmiers.unshift({heure:document.getElementById("pm-si-heure")?.value||nowHm(),soin:document.getElementById("pm-si-soin")?.value||"",detail:document.getElementById("pm-si-detail")?.value||"",resultat:document.getElementById("pm-si-resultat")?.value||"",auteur:actorName()});
+          updatePatientFirestore(pt);
           mountParamRoot();
+          if(window.__bl5Render) window.__bl5Render();
           return;
         }
         if(act==="add-csamp"){
@@ -5744,7 +5814,7 @@ Pas de foyer auscultatoire :
         trbList.innerHTML='<div class="trb-empty">Aucun document de transmission enregistré.</div>';
         return;
       }
-      trbList.innerHTML=pt.documents.map((d,i)=>{
+      trbList.innerHTML=(pt.documents || []).map((d,i)=>{
         const c=d.constantes||{};
         const cBits=[];
         if(c.fc) cBits.push(`FC: ${escapeHtml(c.fc)}`);
@@ -5845,6 +5915,32 @@ Pas de foyer auscultatoire :
       if(window.__bl5Render) window.__bl5Render();
     });
 
+    const renderFaitAFaire=(patient)=>{
+      const pt=patient||{};
+      const faits=[];
+      const ioaConst=(pt.ioa&&Array.isArray(pt.ioa.constantes))?pt.ioa.constantes:[];
+      if(ioaConst.length) faits.push("CONST");
+      if((pt.motifIAO||"").trim() || (pt.ioa?.motif?.motifEntree||"").trim()) faits.push("IAO");
+      const lastConst=ioaConst.slice(-1)[0]||{};
+      if((lastConst.glasgow||pt.glasgow||"")!=="") faits.push("GLCS");
+      if((pt.paramedical||[]).length || (pt.cushman||[]).length) faits.push("ALGO");
+      if((pt.observation?.synthese||"").trim() || (pt.synthese||"").trim()) faits.push("SYNTH");
+      document.getElementById("bl5-fait-list").innerHTML=faits.length?faits.map(x=>`<span class="bl5-yfait-pill">${escapeHtml(x)}</span>`).join(""):"";
+
+      const afaire=[];
+      if(!(pt.biologieOrders||[]).length) afaire.push({label:"Protocoles",action:()=>window.__bl5ActivateMain&&window.__bl5ActivateMain("protocole")});
+      if(!(pt.prescriptions||[]).length) afaire.push({label:"Médicaments",action:()=>window.__bl5ActivateMedPane&&window.__bl5ActivateMedPane("presc")});
+      if(!String(pt.orientation?.destination||"").trim()) afaire.push({label:"Devenir",action:()=>window.__bl5ActivateMedPane&&window.__bl5ActivateMedPane("ori")});
+      const host=document.getElementById("bl5-afaire-list");
+      host.innerHTML=afaire.map((x,i)=>`<button class="bl5-yafaire-link" data-afaire="${i}" type="button">${escapeHtml(x.label)}</button>`).join("");
+      host.onclick=(e)=>{
+        const b=e.target.closest("button[data-afaire]");
+        if(!b) return;
+        const i=Number(b.dataset.afaire);
+        if(Number.isFinite(i) && afaire[i] && typeof afaire[i].action==="function") afaire[i].action();
+      };
+    };
+
     window.__bl5Render=()=>{
       const pt=getP(); if(!pt) return;
       const asArray=(v)=>Array.isArray(v)?v:[];
@@ -5902,95 +5998,123 @@ Pas de foyer auscultatoire :
       pt.autresExamens.ho=asObject(pt.autresExamens.ho);
       pt.autresExamens.autres=asArray(pt.autresExamens.autres);
 
-      const triColor=(TRI_META[pt.triIAO]||{color:"#888"}).color;
-      const sec=pt.secteur?(SECTEUR_LABELS[pt.secteur]+" / "+(pt.box||"")):"Accueil IAO";
-      const modeLabel=pt.mode||"NP";
-      const modeColor=(modeLabel==="A"||modeLabel==="AP")?"#cc0000":((modeLabel==="VSL"||modeLabel==="PI")?"#2060a0":"#666");
+      renderFaitAFaire(pt);
+
+      const triPalette={"1":"#cc0000","2":"#cc4400","3A":"#8020c0","3B":"#e07820","4":"#20a020","5":"#5090d0"};
+      const modePalette={
+        "Ambulatoire":{bg:"#90ee90",fg:"#1a5a1a"},
+        "VSAV":{bg:"#ff8c00",fg:"#fff"},
+        "SMUR":{bg:"#cc0000",fg:"#fff"},
+        "Ambulance":{bg:"#ffd700",fg:"#444"},
+        "Hélicoptère":{bg:"#8020c0",fg:"#fff"},
+        "Police":{bg:"#1a3a80",fg:"#fff"},
+        "Autre":{bg:"#888",fg:"#fff"}
+      };
+      const modeNorm=(m)=>{
+        const raw=String(m||"").trim();
+        if(["A","AMB","AMBULATOIRE"].includes(raw.toUpperCase())) return "Ambulatoire";
+        if(["V","VSAV"].includes(raw.toUpperCase())) return "VSAV";
+        if(["SMUR"].includes(raw.toUpperCase())) return "SMUR";
+        if(["PI","AMBULANCE"].includes(raw.toUpperCase())) return "Ambulance";
+        if(["HELICO","HÉLICOPTÈRE","HELICOPTERE"].includes(raw.toUpperCase())) return "Hélicoptère";
+        if(["POLICE"].includes(raw.toUpperCase())) return "Police";
+        return raw||"Autre";
+      };
 
       document.getElementById("bl5-h-avatar").innerHTML=avatarSvg(pt.sexe);
-      document.getElementById("bl5-h-nom").textContent=((pt.nom||"")+" "+(pt.prenom||"")).trim()||"Patient inconnu";
-      document.getElementById("bl5-h-ddnage").textContent=`${formatDDN(pt.ddn)} (${calcAge(pt.ddn)} ans)`;
-      document.getElementById("bl5-h-sexe-num").textContent=`${pt.sexe||"—"} - Dossier ${pt.dossier||"—"}`;
-      document.getElementById("bl5-h-ipp").textContent=`IPP ${pt.ipp||pt.dossier||"—"}`;
+      document.getElementById("bl5-h-nom").textContent=String(pt.nom||"").trim()||"PATIENT INCONNU";
+      document.getElementById("bl5-h-prenom").textContent=String(pt.prenom||"").trim()||"—";
+      document.getElementById("bl5-h-ddnage").textContent=`né(e) le ${formatDDN(pt.ddn)||"—"} (${calcAge(pt.ddn)})`;
+      document.getElementById("bl5-h-sexe-num").innerHTML=`<span class="bl5-h-sexe-badge" style="background:${String(pt.sexe||"").toUpperCase().startsWith("F")?"#c02060":"#2060a0"};">${String(pt.sexe||"").toUpperCase().startsWith("F")?"F":"H"}</span><span>N° ${escapeHtml(String(pt.dossier||"—"))}</span>`;
+      const ipp=pt.ioa?.bracelet?.ipp||"";
+      document.getElementById("bl5-h-ipp").textContent=ipp?`IPP : ${ipp}`:"";
 
       const hPoids=document.getElementById("bl5-h-poids");
       const hTaille=document.getElementById("bl5-h-taille");
       if(document.activeElement!==hPoids) hPoids.value=pt.morpho.poids||"";
       if(document.activeElement!==hTaille) hTaille.value=pt.morpho.taille||"";
       const morphCalc=morphoFrom(hPoids.value||pt.morpho.poids,hTaille.value||pt.morpho.taille);
-      document.getElementById("bl5-h-imc").value=pt.morpho.imc||morphCalc.imc||"";
-      document.getElementById("bl5-h-sc").value=pt.morpho.sc||morphCalc.sc||"";
+      pt.morpho.imc=morphCalc.imc||"";
+      pt.morpho.sc=morphCalc.sc||"";
+      document.getElementById("bl5-h-imc").value=pt.morpho.imc||"";
+      document.getElementById("bl5-h-sc").value=pt.morpho.sc||"";
       const imcBadge=document.getElementById("bl5-h-imc-badge");
-      const imcLevel=pt.morpho.imc&&pt.morpho.imc!==""?morphoFrom(pt.morpho.poids,pt.morpho.taille).imcLevel:morphCalc.imcLevel;
+      const imcLevel=morphCalc.imcLevel;
       imcBadge.textContent=imcLevel||"-";
-      imcBadge.style.background=imcLevel==="Normal"?"#20a020":(imcLevel==="Surpoids"?"#e07820":(imcLevel==="Obésité"?"#cc0000":(imcLevel==="Maigreur"?"#2060a0":"#777")));
+      imcBadge.style.background=imcLevel==="Maigreur"?"#87ceeb":(imcLevel==="Normal"?"#90ee90":(imcLevel==="Surpoids"?"#ffd700":(imcLevel==="Obésité"?"#ff8c00":"#777")));
 
-      document.getElementById("bl5-h-arrive-fixed").textContent=`Arrivée: ${nowHm(pt.arrive)}`;
-      const drawArrive=()=>{document.getElementById("bl5-h-arrive-live").textContent=`Il y a ${elapsedLong(pt.arrive)}`;};
+      document.getElementById("bl5-h-local").textContent=pt.box||"Non localisé";
+      const modeLabel=modeNorm(pt.mode);
+      const modeMeta=modePalette[modeLabel]||modePalette["Autre"];
+      const modeEl=document.getElementById("bl5-h-mode");
+      modeEl.textContent=modeLabel;
+      modeEl.style.background=modeMeta.bg;
+      modeEl.style.color=modeMeta.fg;
+
+      document.getElementById("bl5-h-arrive-fixed").textContent=`Arrivée : ${nowHm(pt.arrive)}`;
+      const drawArrive=()=>{
+        const mins=Math.max(0,Math.floor((Date.now()-new Date(pt.arrive||Date.now()).getTime())/60000));
+        const h=Math.floor(mins/60),m=mins%60;
+        const lim=sbPecIdeMinutes(pt.triIAO);
+        const live=document.getElementById("bl5-h-arrive-live");
+        live.textContent=`[${h}h ${m}min]`;
+        live.style.color=(lim===null||mins<=lim)?"#20a020":"#cc0000";
+      };
       if(window.__bl5HeaderTimer){clearInterval(window.__bl5HeaderTimer);window.__bl5HeaderTimer=null;}
       drawArrive();
       window.__bl5HeaderTimer=setInterval(drawArrive,1000);
-      document.getElementById("bl5-h-local").textContent=sec;
-      const modeEl=document.getElementById("bl5-h-mode");
-      modeEl.textContent=modeLabel;
-      modeEl.style.background=modeColor;
 
       const triEl=document.getElementById("bl5-h-tri");
-      triEl.textContent=`Tri ${pt.triIAO||"—"}`;
-      triEl.style.background=triColor;
-      document.getElementById("bl5-h-pec-ide").textContent=(pt.pecIDE&&pt.pecIDE!=="Non vu")?`IDE ${pt.pecIDE}`:"IDE non vu";
-      document.getElementById("bl5-h-pec-med").textContent=(pt.pecMED&&pt.pecMED!=="Non vu")?`Médecin ${pt.pecMED}`:"Médecin non vu";
-      document.getElementById("bl5-h-spe-short").textContent=(pt.specialite||"").toUpperCase()||"";
+      triEl.textContent=pt.triIAO?`Tri ${pt.triIAO}`:"Non trié";
+      triEl.style.background=triPalette[pt.triIAO]||"#888";
+      document.getElementById("bl5-h-pec-ide").textContent=`PEC IDE : ${pt.pecIDE||"—"}`;
+      document.getElementById("bl5-h-pec-med").textContent=`PEC MED : ${pt.pecMED||"—"}`;
+      const speBadge=document.getElementById("bl5-h-spe-short");
+      const speMeta=(FRENCH_SPECIALITES||[]).find(s=>s.code===pt.speIAO);
+      if(speMeta){
+        speBadge.style.display="inline-block";
+        speBadge.textContent=`${speMeta.icon} ${speMeta.label}`;
+      }else{
+        speBadge.style.display="none";
+        speBadge.textContent="";
+      }
 
-      const cs=analyseConstantes(pt.constantes||{});
-      const cState={};
-      (cs.rows||[]).forEach(r=>{cState[r.key]=r.status;});
-      const dotFor=(st)=>st==="ok"?"#20a020":(st==="high"?"#cc0000":(st==="low"?"#2060a0":"#9aa9b8"));
-      const cVals={ta:pt.constantes.ta||"-",fc:pt.constantes.fc||"-",spo2:pt.constantes.spo2||"-",fr:pt.constantes.fr||"-",temp:pt.constantes.temp||pt.constantes.temperature||"-"};
-      document.getElementById("bl5-h-const").innerHTML=[
-        ["TA","ta"],["FC","fc"],["SpO2","spo2"],["FR","fr"],["T°","temp"]
-      ].map(([lab,key])=>`<span>${lab}</span><span>${escapeHtml(String(cVals[key]||"-"))}</span><span class="bl5-dot" style="background:${dotFor(cState[key])};"></span>`).join("");
+      const lastIoaConst=(pt.ioa?.constantes||[]).slice(-1)[0]||{};
+      const cRows=[
+        {lab:"FC",val:lastIoaConst.fc,unit:"bpm",alert:(v)=>v<50||v>120},
+        {lab:"TA",val:lastIoaConst.taD||lastIoaConst.taG,unit:"mmHg",alert:(v)=>{const n=Number(String(v||"").split(/[\/\s-]+/)[0]);return Number.isFinite(n)&&(n<90||n>180);}},
+        {lab:"T°",val:lastIoaConst.temp,unit:"°C",alert:(v)=>v<36||v>38.5},
+        {lab:"SpO2",val:lastIoaConst.sao2,unit:"%",alert:(v)=>v<94},
+        {lab:"FR",val:lastIoaConst.fr,unit:"/min",alert:(v)=>v<12||v>20},
+        {lab:"Dextro",val:lastIoaConst.dextro,unit:"",alert:(v)=>v<0.6||v>2.0},
+        {lab:"EVA",val:lastIoaConst.en10,unit:"/10",alert:()=>false},
+        {lab:"Glasgow",val:lastIoaConst.glasgow,unit:"/15",alert:(v)=>v<15}
+      ].filter(r=>String(r.val??"").trim()!=="");
+      document.getElementById("bl5-h-const").innerHTML=cRows.length?cRows.map(r=>{
+        const nv=Number(String(r.val).replace(",","."));
+        const isAlert=Number.isFinite(nv) && r.alert(nv);
+        return `<span class="bl5-hconst-lbl">${r.lab} :</span><span class="bl5-hconst-val">${escapeHtml(String(r.val))}${r.unit?` ${r.unit}`:""}${isAlert?'<span class="bl5-hconst-alert">!</span>':''}</span>`;
+      }).join(""):'<span class="bl5-hconst-none">Non renseignées</span>';
 
       const allTxt=(pt.medical?.allergies||pt.allergie||"").trim();
       const allBand=document.getElementById("bl5-h-all-band");
-      const allTextEl=document.getElementById("bl5-h-all-text");
       if(allTxt){
-        allBand.className="bl5-all-band red";
-        allBand.innerHTML='<svg viewBox="0 0 16 16"><path d="M8 2l6 11H2z"/><path d="M8 5.2v4.2M8 11.8h.01"/></svg>ALLERGIES';
-        allTextEl.style.display="block";
-        allTextEl.textContent=allTxt;
+        allBand.className="bl5-all-new red";
+        allBand.innerHTML=`<div class="bl5-all-new-title">⚠ ALLERGIE</div><div class="bl5-all-new-detail">${escapeHtml(allTxt)}</div>`;
       }else{
-        allBand.className="bl5-all-band green";
-        allBand.innerHTML='<svg viewBox="0 0 16 16"><path d="M2 8l3 3 9-9"/></svg>Aucune allergie';
-        allTextEl.style.display="none";
-        allTextEl.textContent="";
+        allBand.className="bl5-all-new green";
+        allBand.innerHTML='<div class="bl5-all-new-title">✓ Aucune allergie connue</div>';
       }
 
-      const cb=document.getElementById("bl5-ccmu-badge"), cbtn=document.getElementById("bl5-ccmu-btn");
-      cb.className="bl5-badge bl5-ccmu bl5-ccmu-badge";
-      if(pt.ccmu){
-        const ccmuDesc=CCMU_DESC[pt.ccmu]||"";
-        cb.style.display="inline-block";
-        cb.textContent=ccmuDesc?`CCMU ${pt.ccmu} - ${ccmuDesc}`:`CCMU ${pt.ccmu}`;
-        cb.title=ccmuDesc?`CCMU ${pt.ccmu} : ${ccmuDesc}`:`CCMU ${pt.ccmu}`;
-        cb.classList.add("c"+pt.ccmu);
-        cbtn.style.display="none";
-      } else {
-        cb.style.display="none";
-        cb.title="";
-        cbtn.style.display="inline-block";
-      }
+      const cbtn=document.getElementById("bl5-ccmu-btn");
+      cbtn.textContent=pt.ccmu?`CCMU ${pt.ccmu}`:"Poser CCMU";
+      cbtn.style.background=pt.ccmu?(triPalette[pt.ccmu]||"#2060a0"):"#2060a0";
       document.getElementById("bl5-ccmu-select").value=pt.ccmu||"";
-      document.getElementById("bl5-h-muter").style.display=pt.secteur?"none":"inline-block";
       const trbBadge=document.getElementById("bl5-h-trombone-badge");
       const trbCount=(pt.documents||[]).length;
       trbBadge.textContent=String(trbCount);
       trbBadge.style.display=trbCount>0?"flex":"none";
       if(document.getElementById("modal-trombone").classList.contains("open")) trbRender();
-
-      document.getElementById("bl5-fait").innerHTML=ACTES.map(k=>`<div class="bl5-ico ${pt.faits[k]?"done":""}" data-k="${k}" title="${k}">${acteSvg(k)}</div>`).join("");
-      document.getElementById("bl5-afaire").innerHTML=ACTES.map(k=>`<div class="bl5-ico ${!pt.faits[k]?"":"done"}" data-k="${k}" title="${k}">${acteSvg(k)}</div>`).join("");
-      ["bl5-fait","bl5-afaire"].forEach(idh=>{const h=document.getElementById(idh);h.onclick=e=>{const b=e.target.closest(".bl5-ico");if(!b)return;pt.faits[b.dataset.k]=!pt.faits[b.dataset.k];window.__bl5Render();};});
 
       const ioaB=pt.ioa.bracelet||{};
       const ioaM=pt.ioa.motif||{};
@@ -6032,6 +6156,8 @@ Pas de foyer auscultatoire :
         '<div class="bl5-ioa-const-row"><div class="bl5-ioa-const-label" style="font-weight:bold;">Constante</div><div class="bl5-ioa-const-value" style="font-weight:bold;">Valeur</div><div class="bl5-ioa-const-comment" style="font-weight:bold;">Commentaire</div></div>':
         "";
       const constRows=IOA_CONST_DEF.map(def=>{
+        // Note: ces deux IDs sont mutuellement exclusifs — jamais présents
+        // simultanément dans le DOM.
         const inputHtml=def.type==="select"
           ? `<select id="bl5-ioa-c-${def.key}" class="bl5-ioa-const-input">${(def.options||[]).map(o=>`<option>${o}</option>`).join("")}</select>`
           : `<input id="bl5-ioa-c-${def.key}" class="bl5-ioa-const-input" type="${def.type||"text"}" ${def.step?`step="${def.step}"`:""} ${def.min?`min="${def.min}"`:""} ${def.max?`max="${def.max}"`:""}/>`;
