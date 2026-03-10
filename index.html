@@ -1358,7 +1358,7 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
               <button class="bl5-subtab" data-pane="bio" style="--icon-bg:#fff0f0;"><svg viewBox="0 0 40 40"><rect x="15" y="6" width="10" height="4" rx="1" fill="#cfd8e5"/><path d="M17 10v18l-4 6h14l-4-6V10z" fill="#ffffff"/><path d="M15 24h10l2 4H13z" fill="#cc2020"/></svg><span>Biologie</span></button>
               <button class="bl5-subtab" data-pane="img" style="--icon-bg:#f0f0f0;"><svg viewBox="0 0 40 40"><rect x="6" y="8" width="28" height="24" rx="2" fill="#111"/><path d="M20 12c-5 1-8 7-6 12 2 3 4 5 6 6 3-1 5-3 6-6 2-5-1-11-6-12z" fill="#fff"/><circle cx="20" cy="20" r="2" fill="#111"/></svg><span>Imagerie</span></button>
               <button class="bl5-subtab" data-pane="autresExamens" style="--icon-bg:#eef6ff;"><svg viewBox="0 0 40 40"><rect x="7" y="7" width="26" height="26" rx="2" fill="#ffffff"/><line x1="12" y1="14" x2="28" y2="14"/><line x1="12" y1="20" x2="28" y2="20"/><line x1="12" y1="26" x2="22" y2="26"/><circle cx="27" cy="26" r="4" fill="#7fb2ee"/></svg><span>Autres examens</span></button>
-              <button class="bl5-subtab" data-pane="presc" style="--icon-bg:#f0fff0;"><svg viewBox="0 0 40 40"><path d="M24 8a5 5 0 0 0-5 5v8" fill="#ffffff"/><path d="M19 21c0-3 2-5 5-5 3 0 5 2 5 5v8h-4v-8c0-1-1-2-2-2-1 0-2 1-2 2v8h-4z" fill="#20a020"/><path d="M14 10c2 0 4 2 4 4 0 2-2 4-4 4s-4-2-4-4c0-2 2-4 4-4z" fill="#7fb2ee"/></svg><span>Consultations spécialisées</span></button>
+              <button class="bl5-subtab" data-pane="csamp" style="--icon-bg:#f0fff0;"><svg viewBox="0 0 40 40"><path d="M24 8a5 5 0 0 0-5 5v8" fill="#ffffff"/><path d="M19 21c0-3 2-5 5-5 3 0 5 2 5 5v8h-4v-8c0-1-1-2-2-2-1 0-2 1-2 2v8h-4z" fill="#20a020"/><path d="M14 10c2 0 4 2 4 4 0 2-2 4-4 4s-4-2-4-4c0-2 2-4 4-4z" fill="#7fb2ee"/></svg><span>Consultations spécialisées</span></button>
               <button class="bl5-subtab" data-pane="presc" style="--icon-bg:#fffaed;"><svg viewBox="0 0 40 40"><path d="M8 26l12-12 5 5-12 12H8z" fill="#e0c020"/><rect x="22" y="10" width="10" height="6" transform="rotate(45 27 13)" fill="#e07820"/><rect x="10" y="24" width="8" height="4" fill="#fff"/></svg><span>Traitement - Surveillance</span></button>
             </div>
           </div>
@@ -1486,6 +1486,22 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
             <div class="bl5-row" style="margin-top:8px;"><label class="bl5-label">Item libre</label><div class="bl5-inline"><input id="bl5-surv-free" placeholder="Nouvel item de surveillance"/><button id="bl5-surv-add" class="btn-action" type="button">Ajouter</button></div></div>
             <div class="bl5-pri-subtitle">Surveillances prescrites</div>
             <div id="bl5-surv-list"></div>
+          </div>
+        </div>
+
+        <div class="bl5-pane" data-pane="csamp" id="panel-csamp">
+          <div class="bl5-title" style="background:#e8f0f8;border-left:3px solid #2060a0;padding:4px 8px;margin-bottom:8px;">Demandes de consultation spécialisée (CS AMP)</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <div style="flex:0 0 320px;">
+              <div class="bl5-row"><label class="bl5-label">Spécialité</label><select id="bl5-cs-spe"><option>Cardiologie</option><option>Neurologie</option><option>Chirurgie orthopédique</option><option>Chirurgie viscérale</option><option>Pneumologie</option><option>Gastro-entérologie</option><option>Urologie</option><option>Gynécologie</option><option>Ophtalmologie</option><option>ORL</option><option>Psychiatrie</option><option>Médecine interne</option><option>Endocrinologie</option><option>Dermatologie</option><option>Autre</option></select></div>
+              <div class="bl5-row"><label class="bl5-label">Degré d'urgence</label><div class="bl5-inline"><label><input type="radio" name="bl5-cs-urg" value="Urgent (< 30 min)" checked/>Urgent</label><label><input type="radio" name="bl5-cs-urg" value="Rapide (< 1h)"/>Rapide</label><label><input type="radio" name="bl5-cs-urg" value="Différé (< 4h)"/>Différé</label><label><input type="radio" name="bl5-cs-urg" value="Non urgent"/>Non urgent</label></div></div>
+              <div class="bl5-row"><label class="bl5-label">Motif de la demande</label><textarea id="bl5-cs-motif" rows="4" placeholder="Motif de la consultation spécialisée..."></textarea></div>
+              <div class="bl5-end"><button id="bl5-cs-add" class="btn-submit" type="button">Enregistrer la demande</button></div>
+            </div>
+            <div style="flex:1;min-width:300px;">
+              <div class="bl5-title">Journal des demandes</div>
+              <table class="bl5-table"><thead><tr><th>Spécialité</th><th>Urgence</th><th>Demandeur</th><th>Heure</th><th>Motif</th><th>Statut</th><th></th></tr></thead><tbody id="bl5-cs-list"></tbody></table>
+            </div>
           </div>
         </div>
 
@@ -4504,7 +4520,7 @@ Pas de foyer auscultatoire :
       const b=e.target.closest(".bl5-tab"); if(!b) return;
       document.querySelectorAll(".bl5-tab").forEach(x=>x.classList.remove("active")); b.classList.add("active");
       document.querySelectorAll(".bl5-main").forEach(x=>x.classList.toggle("active",x.dataset.main===b.dataset.main));
-      if(["synth","historique","protocole","pj","ioa"].includes(b.dataset.main) && window.__bl5Render) window.__bl5Render();
+      if(["synth","historique","protocole","pj","ioa","param"].includes(b.dataset.main) && window.__bl5Render) window.__bl5Render();
     });
     const activateMain=(main)=>{
       const b=document.querySelector(`.bl5-tab[data-main="${main}"]`);
@@ -4723,6 +4739,7 @@ Pas de foyer auscultatoire :
       const b=e.target.closest(".bl5-subtab"); if(!b) return;
       document.querySelectorAll("#bl5-med-tabs .bl5-subtab").forEach(x=>x.classList.remove("active")); b.classList.add("active");
       document.querySelectorAll(".bl5-pane").forEach(x=>x.classList.toggle("active",x.dataset.pane===b.dataset.pane));
+      if(window.__bl5Render) window.__bl5Render();
     });
     document.getElementById("bl5-ant-tabs").addEventListener("click",e=>{
       const b=e.target.closest(".bl5-subsubtab"); if(!b) return;
@@ -5064,6 +5081,26 @@ Pas de foyer auscultatoire :
     document.getElementById("bl5-bio-val").onclick=()=>{const pt=getP();if(!pt)return;const exams=(pt.bioSelected||[]).slice();const protos=Object.keys(window.__bl5State.bioProtos).filter(k=>window.__bl5State.bioProtos[k]);const label=protos.length?protos.join(", "):exams.join(", ");if(!label)return;pt.biologieOrders=pt.biologieOrders||[];pt.biologieOrders.push({id:Date.now(),statut:"À faire",label,prescripteur:actorName(),prescritLe:nowFull(),faitLe:"",examens:exams});(exams||[]).forEach(ex=>{pt.bioResults=pt.bioResults||[];if(!(pt.bioResults||[]).some(r=>r.examen===ex))pt.bioResults.push({examen:ex,valeur:"",unite:"",low:"",high:""});});window.__bl5State.bioProtos={};pt.bioSelected=[];window.__bl5Render();};
     document.getElementById("bl5-bio-comment-save").onclick=()=>{const pt=getP();if(!pt)return;pt.bioComment=document.getElementById("bl5-bio-comment").value||"";};
     document.getElementById("bl5-bio-results-list").addEventListener("input",e=>{const pt=getP();if(!pt)return;const i=+(e.target.dataset.i||-1);if(i<0)return;const arr=pt.bioResults||[];if(!arr[i])return;arr[i].valeur=e.target.value;window.__bl5Render();});
+
+    // CS AMP listener
+    document.getElementById("bl5-cs-add").onclick=()=>{
+      const pt=getP(); if(!pt) return;
+      const spe=document.getElementById("bl5-cs-spe").value||"";
+      const motif=document.getElementById("bl5-cs-motif").value||"";
+      const urg=document.querySelector("input[name='bl5-cs-urg']:checked")?.value||"Non urgent";
+      if(!spe) return;
+      pt.csAmp=pt.csAmp||[];
+      pt.csAmp.unshift({id:Date.now(),specialite:spe,motif,urgence:urg,demandeur:actorName(),heure:nowHm(),statut:"En attente"});
+      document.getElementById("bl5-cs-motif").value="";
+      window.__bl5Render();
+    };
+    document.getElementById("bl5-cs-list").addEventListener("click",e=>{
+      const pt=getP(); if(!pt) return;
+      const b=e.target.closest("button[data-cs-act]"); if(!b) return;
+      const idx=+b.dataset.i;
+      if(b.dataset.csAct==="done"){ (pt.csAmp||[])[idx].statut="Réalisé"; window.__bl5Render(); }
+      if(b.dataset.csAct==="del"){ pt.csAmp=(pt.csAmp||[]).filter((_,i)=>i!==idx); window.__bl5Render(); }
+    });
 
     const syncImagerieType=()=>{const t=document.getElementById("bl5-im-type").value;document.getElementById("bl5-im-radio-extra").style.display=t==="Radiographie"?"block":"none";document.getElementById("bl5-im-iode-row").style.display=(t==="Scanner"||t==="IRM")?"grid":"none";};
     document.getElementById("bl5-im-type").onchange=syncImagerieType;
@@ -6138,6 +6175,10 @@ Pas de foyer auscultatoire :
       const atcdTxt=[(pt.medical.atcdPersonnels||[]).map(a=>a.pathologie).filter(Boolean).join(", "),pt.medical.allergies||pt.allergie||""].filter(Boolean).join(" | ");
       document.getElementById("bl5-im-atcdro").value=atcdTxt||"Aucun";
       document.getElementById("bl5-im-list").innerHTML=(pt.imagerie||[]).map(im=>`<tr><td>${escapeHtml(im.type||"")}</td><td>${escapeHtml(im.cote||"—")}</td><td>${escapeHtml(im.demandeLe||"")}</td><td>${escapeHtml(im.par||actorName())}</td><td>${escapeHtml(im.pourLe||"")}</td><td>${escapeHtml(im.faitLe||"")}</td><td><button class="btn-action" data-id="${im.id}" data-act="cr" type="button">CR</button>${im.openCr?`<textarea data-id="${im.id}" rows="2">${escapeHtml(im.cr||"")}</textarea><button class="btn-action" data-id="${im.id}" data-act="savecr" type="button">Enregistrer CR</button>`:escapeHtml(im.cr||"")}</td></tr>`).join("")||'<tr><td colspan="7">Aucune demande</td></tr>';
+
+      // Render CS AMP
+      const csEl=document.getElementById("bl5-cs-list");
+      if(csEl) csEl.innerHTML=(pt.csAmp||[]).map((r,i)=>`<tr><td>${escapeHtml(r.specialite||"")}</td><td><span class="bl5-badge" style="background:${r.urgence?.includes("30")?"#cc0000":r.urgence?.includes("1h")?"#e07820":r.urgence?.includes("4h")?"#8020c0":"#20a020"};">${escapeHtml(r.urgence||"")}</span></td><td>${escapeHtml(r.demandeur||"")}</td><td>${escapeHtml(r.heure||"")}</td><td>${escapeHtml(r.motif||"")}</td><td><span class="bl5-badge" style="background:${r.statut==="Réalisé"?"#20a020":"#5590c8"};">${escapeHtml(r.statut||"En attente")}</span></td><td>${r.statut!=="Réalisé"?`<button class="btn-action" data-cs-act="done" data-i="${i}" type="button">Réalisé</button> `:""}  <button class="bl5-param-del" data-cs-act="del" data-i="${i}" type="button">✕</button></td></tr>`).join("")||'<tr><td colspan="7" class="bl5-muted">Aucune demande de consultation</td></tr>';
 
       const ae=pt.autresExamens||{};
       const ecg=ae.ecg||{};
