@@ -1806,38 +1806,115 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
           </div>
 
           <div class="bl5-ioa-pane" data-ioa-pane="motif">
-            <div class="bl5-row"><label class="bl5-label">Motif d'entrée</label><input id="bl5-ioa-motif-entree" style="max-width:400px;"/></div>
-            <div class="bl5-row"><label class="bl5-label">Recherche</label><div class="bl5-inline"><select id="bl5-ioa-motif-rech-main" style="max-width:200px;"><option>Aucun</option></select><select id="bl5-ioa-motif-rech-prio" style="max-width:140px;"><option value="">— Priorité —</option><option>1</option><option>2</option><option>3A</option><option>3B</option><option>4</option><option>5</option></select><button class="btn-action" id="bl5-ioa-motif-filtrer" type="button">Filtrer</button></div></div>
-            <table class="bl5-table"><thead><tr><th>Priorité</th><th>Motif</th></tr></thead><tbody id="bl5-ioa-motif-results"><tr><td colspan="2">(En validant l'écran, les motifs seront effacés)</td></tr></tbody></table>
-            <div class="bl5-row"><label class="bl5-label">Détail</label><textarea id="bl5-ioa-motif-detail" rows="3" style="height:60px;"></textarea></div>
-            <div class="bl5-row"><label class="bl5-label">Observation</label><textarea id="bl5-ioa-motif-observation" rows="3" style="height:60px;"></textarea></div>
-            <div class="bl5-row"><label class="bl5-label">Prioritisation calculée</label><div class="bl5-inline"><button id="bl5-ioa-calc-tri" class="btn-submit" type="button" style="background:#5590c8;border-color:#3f78b0;">Calculer</button><input id="bl5-ioa-tri-calc" readonly/></div></div>
-            <div class="bl5-ioa-grid2">
-              <div>
-                <div class="bl5-ioa-kv"><label class="bl5-label">Priorisation</label><input id="bl5-ioa-priorisation"/></div>
-                <div class="bl5-ioa-kv"><label class="bl5-label">Reconvocation</label><input id="bl5-ioa-reconvocation"/></div>
-                <div class="bl5-ioa-kv"><label class="bl5-label">Type de circuit</label><div class="bl5-ioa-circuit"><label><input type="radio" name="bl5-ioa-circuit" value="Circuit long" checked/>Circuit long</label><label><input type="radio" name="bl5-ioa-circuit" value="Circuit court"/>Circuit court</label><label><input type="radio" name="bl5-ioa-circuit" value="Patient rouge"/>Patient rouge</label></div></div>
-                <div class="bl5-ioa-kv"><label class="bl5-label">Mode d'attente</label><select id="bl5-ioa-mode-attente"><option>Brancard</option><option>Fauteuil</option><option>Debout</option><option>Salle d'attente</option></select></div>
-                <div class="bl5-ioa-kv"><label class="bl5-label">Circonstances</label><input id="bl5-ioa-circonstances" placeholder="Envoi centre 15"/></div>
-                <div class="bl5-ioa-kv"><label class="bl5-label">Famille</label><div class="bl5-inline"><select id="bl5-ioa-famille-a" style="max-width:170px;"><option>Prévenu</option><option>Non prévenu</option><option>Sans famille</option><option>Présente</option><option>Absente</option></select><select id="bl5-ioa-famille-b" style="max-width:120px;"><option>Enfant</option><option>Adulte</option><option>Senior</option><option>—</option></select></div></div>
-              </div>
-              <div>
-                <div class="bl5-ioa-title">Handicap</div>
-                <div class="bl5-ioa-handicaps" id="bl5-ioa-handicaps">
-                  <button class="bl5-ioa-handicap" type="button" data-handicap="Déficience intellectuelle" title="Déficience intellectuelle"><svg viewBox="0 0 16 16"><circle cx="8" cy="4" r="2.5"/><path d="M8 6.5v6M5 9h6"/></svg></button>
-                  <button class="bl5-ioa-handicap" type="button" data-handicap="Déficience auditive" title="Déficience auditive"><svg viewBox="0 0 16 16"><path d="M10.5 6a2.5 2.5 0 1 0-5 0c0 2 2.2 2.2 2.2 4"/><path d="M8 13.5a1.5 1.5 0 0 0 1.5-1.5"/></svg></button>
-                  <button class="bl5-ioa-handicap" type="button" data-handicap="Déficience visuelle" title="Déficience visuelle"><svg viewBox="0 0 16 16"><path d="M1.5 8s2.3-3 6.5-3 6.5 3 6.5 3-2.3 3-6.5 3S1.5 8 1.5 8z"/><circle cx="8" cy="8" r="1.8"/></svg></button>
-                  <button class="bl5-ioa-handicap" type="button" data-handicap="Déficience psychique" title="Déficience psychique"><svg viewBox="0 0 16 16"><path d="M8 2.2A4.8 4.8 0 0 0 3.2 7c0 1.8 1 2.8 1 3.8h7.6c0-1 1-2 1-3.8A4.8 4.8 0 0 0 8 2.2z"/><path d="M6.5 13h3"/></svg></button>
-                  <button class="bl5-ioa-handicap" type="button" data-handicap="Autre handicap" title="Autre handicap"><svg viewBox="0 0 16 16"><path d="M8 2v12M2 8h12"/></svg></button>
-                </div>
-                <div class="bl5-ioa-title">Situations particulières</div>
-                <div class="bl5-row"><label class="bl5-label">Hospitalisation &gt; 24h à l'étranger</label><div class="bl5-inline"><label><input type="radio" name="bl5-ioa-hosp-etr" value="NC" checked/>NC</label><label><input type="radio" name="bl5-ioa-hosp-etr" value="Non"/>Non</label><label><input type="radio" name="bl5-ioa-hosp-etr" value="Oui"/>Oui</label></div></div>
-                <div class="bl5-row"><label class="bl5-label">Voyage récent à l'étranger</label><div class="bl5-inline"><label><input type="radio" name="bl5-ioa-voy-etr" value="NC" checked/>NC</label><label><input type="radio" name="bl5-ioa-voy-etr" value="Non"/>Non</label><label><input type="radio" name="bl5-ioa-voy-etr" value="Oui"/>Oui</label></div></div>
-                <div class="bl5-row"><label class="bl5-label">Autres</label><div class="bl5-inline"><label><input id="bl5-ioa-don-organe" type="checkbox"/>Dans le cadre du don / prélèvement d'organe</label><label><input id="bl5-ioa-terrorisme" type="checkbox"/>Terrorisme</label><label><input id="bl5-ioa-crise" type="checkbox"/>Crise sanitaire</label></div></div>
+            <div class="bl5-title">MOTIF DE VENUE — PRIORISATION IOA</div>
+
+            <div class="bl5-row">
+              <label class="bl5-label">Motif d'entrée *</label>
+              <input id="bl5-ioa-motif-entree" style="max-width:400px;" placeholder="Motif principal..."/>
+            </div>
+
+            <div class="bl5-row">
+              <label class="bl5-label">Spécialité / Motif</label>
+              <div class="bl5-inline">
+                <select id="bl5-ioa-motif-rech-main" style="max-width:200px;"><option>Aucun</option></select>
+                <select id="bl5-ioa-motif-rech-prio" style="max-width:140px;">
+                  <option value="">— Priorité —</option>
+                  <option>1</option><option>2</option><option>3A</option>
+                  <option>3B</option><option>4</option><option>5</option>
+                </select>
+                <button class="btn-action" id="bl5-ioa-motif-filtrer" type="button">Filtrer</button>
               </div>
             </div>
-            <div class="bl5-ioa-title">PRISE EN CHARGE</div>
-            <textarea id="bl5-ioa-pec" rows="2" style="height:40px;"></textarea>
+            <table class="bl5-table"><thead><tr><th>Priorité</th><th>Motif</th></tr></thead>
+              <tbody id="bl5-ioa-motif-results"><tr><td colspan="2">(Résultats de recherche)</td></tr></tbody>
+            </table>
+
+            <div class="bl5-row">
+              <label class="bl5-label">Type de circuit</label>
+              <select id="bl5-ioa-motif-circuit" style="width:auto;">
+                <option value="">— Choisir —</option>
+                <option>Circuit court</option>
+                <option>Circuit long</option>
+                <option>Circuit SAUV (vital)</option>
+                <option>Filière AVC</option>
+                <option>Filière pédiatrie</option>
+                <option>Filière psychiatrie</option>
+              </select>
+            </div>
+
+            <div class="bl5-row">
+              <label class="bl5-label">Mode d'attente</label>
+              <select id="bl5-ioa-motif-attente" style="width:auto;">
+                <option value="">— Choisir —</option>
+                <option>Salle d'attente</option>
+                <option>Brancard couloir</option>
+                <option>Box d'examen</option>
+                <option>Alité en box</option>
+                <option>Directement en SAUV</option>
+              </select>
+            </div>
+
+            <div class="bl5-row">
+              <label class="bl5-label">Circonstances</label>
+              <select id="bl5-ioa-motif-circonstances" style="width:auto;">
+                <option value="">— Choisir —</option>
+                <option>Spontané</option>
+                <option>Accident de voie publique</option>
+                <option>Accident du travail</option>
+                <option>Accident de sport</option>
+                <option>Agression</option>
+                <option>Chute</option>
+                <option>Intoxication volontaire</option>
+                <option>Intoxication accidentelle</option>
+                <option>Malaise</option>
+                <option>Morsure</option>
+                <option>Brûlure</option>
+              </select>
+            </div>
+
+            <div class="bl5-row">
+              <label class="bl5-label">Accompagné par</label>
+              <select id="bl5-ioa-motif-accomp" style="width:auto;">
+                <option value="">— Choisir —</option>
+                <option>Venu seul</option>
+                <option>Famille / Entourage</option>
+                <option>SMUR / SAMU</option>
+                <option>Sapeurs-pompiers</option>
+                <option>Ambulance privée</option>
+                <option>Police / Gendarmerie</option>
+              </select>
+            </div>
+
+            <div class="bl5-row">
+              <label class="bl5-label">Famille présente</label>
+              <div class="bl5-inline">
+                <label><input id="bl5-ioa-motif-famille" type="checkbox"/> Oui</label>
+                <input id="bl5-ioa-motif-famille-txt" placeholder="Préciser (lien, nom)..." style="max-width:200px;margin-left:8px;"/>
+              </div>
+            </div>
+
+            <div class="bl5-row">
+              <label class="bl5-label">Situations particulières</label>
+              <div class="bl5-inline" style="flex-wrap:wrap;gap:6px;">
+                <label><input id="bl5-ioa-handicap" type="checkbox"/> Handicap</label>
+                <label><input id="bl5-ioa-barriere" type="checkbox"/> Barrière de langue</label>
+                <label><input id="bl5-ioa-violence" type="checkbox"/> Violence conjugale</label>
+                <label><input id="bl5-ioa-terrorisme" type="checkbox"/> Plan ORSEC / Attentat</label>
+                <label><input id="bl5-ioa-fugue" type="checkbox"/> Fugue / Sans-abri</label>
+              </div>
+            </div>
+
+            <div class="bl5-row">
+              <label class="bl5-label">Observation IOA</label>
+              <textarea id="bl5-ioa-motif-observation" rows="3" style="height:60px;"
+                placeholder="Observation infirmière d'accueil..."></textarea>
+            </div>
+
+            <div class="bl5-row">
+              <label class="bl5-label">Hypothèse diagnostique IAO</label>
+              <input id="bl5-ioa-motif-hypothese" style="max-width:400px;"
+                placeholder="Hypothèse diagnostique initiale..."/>
+            </div>
           </div>
 
           <div class="bl5-ioa-pane" data-ioa-pane="constantes">
@@ -4355,7 +4432,53 @@ Pas de foyer auscultatoire :
     }
 
     if(panel==="algoplus"){
-      return `<div class="bl5-param-view active">${paramHeader("Score ALGOPLUS")}<div class="bl5-param-body"><div class="bl5-param-info">Évaluation de la douleur chez la personne âgée non communicante</div><div class="bl5-param-section"><h4>Items</h4><div class="bl5-param-content"><label><input id="pm-al-1" type="checkbox"/>Visage</label><label><input id="pm-al-2" type="checkbox"/>Regard</label><label><input id="pm-al-3" type="checkbox"/>Plaintes</label><label><input id="pm-al-4" type="checkbox"/>Attitude corporelle</label><label><input id="pm-al-5" type="checkbox"/>Comportement</label><div class="bl5-end"><button class="btn-submit" data-pm-act="add-algo" type="button">Enregistrer</button></div></div></div><div class="bl5-param-section"><h4>Journal</h4><div class="bl5-param-content">${renderSimpleJournal(pt.algoplus,[{k:"Heure",v:"heure"},{k:"Score",v:"score"},{k:"Interprétation",v:"interpretation"},{k:"Auteur",v:"auteur"}],"algoplus")}</div></div></div>${paramFoot()}</div>`;
+      const items=[
+        {id:"al-visage",   label:"Visage",            desc:"Froncement des sourcils, grimace, crispation, mâchoires serrées"},
+        {id:"al-regard",   label:"Regard",            desc:"Regard fixe, lointain, larmes aux yeux"},
+        {id:"al-plaintes", label:"Plaintes verbales", desc:"Gémissements, cris, demandes d'aide répétées"},
+        {id:"al-corps",    label:"Attitude corporelle",desc:"Agitation, recroquevillement, protection zone douloureuse"},
+        {id:"al-compmt",   label:"Comportement",      desc:"Agressivité inhabituelle, refus de mobilisation"}
+      ];
+      const journal=pt.algoplus||[];
+      const journalHtml=journal.length===0
+        ?`<div style="font-style:italic;color:#888;">Aucun score enregistré</div>`
+        :journal.map(e=>`<div style="padding:3px 0;border-bottom:1px solid #e0e0e0;font-size:11px;">
+            <b>${escapeHtml(e.heure)}</b> — Score : <b>${escapeHtml(String(e.score))}/5</b>
+            — ${escapeHtml(e.interpretation)}
+            <span style="color:#888;margin-left:6px;">${escapeHtml(e.auteur)}</span>
+          </div>`).join("");
+
+      return `<div class="bl5-param-view active">${paramHeader("Score ALGOPLUS")}
+        <div class="bl5-param-body">
+          <div class="bl5-param-info" style="background:#fff8e8;border:1px solid #e8c870;padding:6px 8px;font-size:11px;margin-bottom:8px;">
+            Évaluation de la douleur chez la personne âgée <b>non communicante</b>.<br>
+            Coter 1 point par item présent. <b>Seuil douleur ≥ 2/5</b>.
+          </div>
+          <div class="bl5-param-section"><h4>Évaluation</h4>
+            <div class="bl5-param-content">
+              <table class="bl5-table">
+                <thead><tr><th style="width:20px;">0/1</th><th>Item</th><th>Signes observés</th></tr></thead>
+                <tbody>${items.map(it=>`
+                  <tr>
+                    <td style="text-align:center;"><input type="checkbox" id="${it.id}" style="width:16px;height:16px;"/></td>
+                    <td style="font-weight:bold;">${it.label}</td>
+                    <td style="font-size:10px;color:#555;">${it.desc}</td>
+                  </tr>`).join("")}
+                </tbody>
+              </table>
+              <div style="margin-top:8px;padding:6px;background:#f0f4f8;font-size:12px;">
+                Score : <b id="al-score-live">0</b>/5
+                — <span id="al-interp-live" style="font-style:italic;color:#888;">Aucune douleur</span>
+              </div>
+              <div class="bl5-end">
+                <button class="btn-submit" data-pm-act="add-algo" type="button">Enregistrer</button>
+              </div>
+            </div>
+          </div>
+          <div class="bl5-param-section"><h4>Journal</h4>
+            <div class="bl5-param-content">${journalHtml}</div>
+          </div>
+        </div>${paramFoot()}</div>`;
     }
 
     if(panel==="cushman"){
@@ -4457,6 +4580,26 @@ Pas de foyer auscultatoire :
     const root=document.getElementById("bl5-param-root");
     if(!pt||!root) return;
     root.innerHTML=renderParamPanel(pt);
+    if((window.__bl5State?.paramPanel||"")==="algoplus"){
+      const alItems=["al-visage","al-regard","al-plaintes","al-corps","al-compmt"];
+      const updateAlScore=()=>{
+        const score=alItems.filter(id=>document.getElementById(id)?.checked).length;
+        const liveScore=document.getElementById("al-score-live");
+        const liveInterp=document.getElementById("al-interp-live");
+        if(liveScore) liveScore.textContent=score;
+        if(liveInterp){
+          if(score===0) liveInterp.textContent="Pas de douleur détectée";
+          else if(score===1) liveInterp.textContent="Douleur faible";
+          else if(score<=3) liveInterp.textContent="Douleur modérée — traitement recommandé";
+          else liveInterp.textContent="Douleur intense — traitement urgent";
+          liveInterp.style.color=score>=2?"#cc4400":"#888";
+        }
+      };
+      alItems.forEach(id=>{
+        const el=document.getElementById(id);
+        if(el) el.addEventListener("change",updateAlScore);
+      });
+    }
   };
 
   const handleExistingParam=(key)=>{
@@ -4814,12 +4957,16 @@ Pas de foyer auscultatoire :
       syncIoaPaneView();
     });
     document.querySelectorAll('input[name="bl5-ioa-bracelet-pose"]').forEach(r=>r.onchange=()=>{const show=getRadio("bl5-ioa-bracelet-pose")==="Non";document.getElementById("bl5-ioa-bracelet-comment-pose").style.display=show?"":"none";});
-    document.getElementById("bl5-ioa-calc-tri").onclick=()=>{
-      const pt=getP();
-      if(!pt) return;
-      const tri=String(pt.triIAO||"");
-      document.getElementById("bl5-ioa-tri-calc").value=IOA_TRI_DESC[tri]||`Tri ${tri||"—"} : ${(TRI_META[tri]||{}).help||"Non calculé"}`;
-    };
+    const calcTriBtn=document.getElementById("bl5-ioa-calc-tri");
+    if(calcTriBtn){
+      calcTriBtn.onclick=()=>{
+        const pt=getP();
+        if(!pt) return;
+        const tri=String(pt.triIAO||"");
+        const triOut=document.getElementById("bl5-ioa-tri-calc");
+        if(triOut) triOut.value=IOA_TRI_DESC[tri]||`Tri ${tri||"—"} : ${(TRI_META[tri]||{}).help||"Non calculé"}`;
+      };
+    }
     const renderIoaMotifs=(prio)=>{
       const rows=Object.entries(TRI_BY_MOTIF||{})
         .filter(([,tri])=>!prio||tri===prio)
@@ -4834,15 +4981,18 @@ Pas de foyer auscultatoire :
       window.__bl5State.ioaConstShowComments=!window.__bl5State.ioaConstShowComments;
       if(window.__bl5Render) window.__bl5Render();
     };
-    document.getElementById("bl5-ioa-handicaps").addEventListener("click",e=>{
-      const b=e.target.closest(".bl5-ioa-handicap");
-      if(!b) return;
-      const key=b.dataset.handicap;
-      const list=window.__bl5State.ioaHandicaps||[];
-      if(list.includes(key)) window.__bl5State.ioaHandicaps=list.filter(x=>x!==key);
-      else window.__bl5State.ioaHandicaps=[...list,key];
-      b.classList.toggle("active",window.__bl5State.ioaHandicaps.includes(key));
-    });
+    const handicapsWrap=document.getElementById("bl5-ioa-handicaps");
+    if(handicapsWrap){
+      handicapsWrap.addEventListener("click",e=>{
+        const b=e.target.closest(".bl5-ioa-handicap");
+        if(!b) return;
+        const key=b.dataset.handicap;
+        const list=window.__bl5State.ioaHandicaps||[];
+        if(list.includes(key)) window.__bl5State.ioaHandicaps=list.filter(x=>x!==key);
+        else window.__bl5State.ioaHandicaps=[...list,key];
+        b.classList.toggle("active",window.__bl5State.ioaHandicaps.includes(key));
+      });
+    }
 
     const trtWrapPlus=document.getElementById("bl5-ioa-avcp-trt");
     const trtWrapMoins=document.getElementById("bl5-ioa-avcm-trt");
@@ -4891,24 +5041,22 @@ Pas de foyer auscultatoire :
         };
       }
       if(pane==="motif"){
-        pt.ioa.motif={
-          motifEntree:document.getElementById("bl5-ioa-motif-entree").value||"",
-          detail:document.getElementById("bl5-ioa-motif-detail").value||"",
-          observation:document.getElementById("bl5-ioa-motif-observation").value||"",
-          prioritisation:document.getElementById("bl5-ioa-priorisation").value||"",
-          reconvocation:document.getElementById("bl5-ioa-reconvocation").value||"",
-          typeCircuit:getRadio("bl5-ioa-circuit")||"Circuit long",
-          modeAttente:document.getElementById("bl5-ioa-mode-attente").value||"",
-          circonstances:document.getElementById("bl5-ioa-circonstances").value||"",
-          famille:[document.getElementById("bl5-ioa-famille-a").value||"",document.getElementById("bl5-ioa-famille-b").value||""],
-          handicaps:[...(window.__bl5State.ioaHandicaps||[])],
-          hospitEtranger:getRadio("bl5-ioa-hosp-etr")||"NC",
-          voyageEtranger:getRadio("bl5-ioa-voy-etr")||"NC",
-          donOrgane:document.getElementById("bl5-ioa-don-organe").checked,
-          terrorisme:document.getElementById("bl5-ioa-terrorisme").checked,
-          criseSanitaire:document.getElementById("bl5-ioa-crise").checked,
-          pec:document.getElementById("bl5-ioa-pec").value||""
-        };
+        pt.ioa=pt.ioa||{};
+        pt.ioa.motif=pt.ioa.motif||{};
+        pt.ioa.motif.motifEntree=document.getElementById("bl5-ioa-motif-entree")?.value||"";
+        pt.ioa.motif.observation=document.getElementById("bl5-ioa-motif-observation")?.value||"";
+        pt.ioa.motif.hypothese=document.getElementById("bl5-ioa-motif-hypothese")?.value||"";
+        pt.ioa.motif.typeCircuit=document.getElementById("bl5-ioa-motif-circuit")?.value||"";
+        pt.ioa.motif.modeAttente=document.getElementById("bl5-ioa-motif-attente")?.value||"";
+        pt.ioa.motif.circonstances=document.getElementById("bl5-ioa-motif-circonstances")?.value||"";
+        pt.ioa.motif.accompagnePar=document.getElementById("bl5-ioa-motif-accomp")?.value||"";
+        pt.ioa.motif.famillePresente=document.getElementById("bl5-ioa-motif-famille")?.checked||false;
+        pt.ioa.motif.familleTxt=document.getElementById("bl5-ioa-motif-famille-txt")?.value||"";
+        pt.ioa.motif.handicap=document.getElementById("bl5-ioa-handicap")?.checked||false;
+        pt.ioa.motif.barriereLangue=document.getElementById("bl5-ioa-barriere")?.checked||false;
+        pt.ioa.motif.violenceConj=document.getElementById("bl5-ioa-violence")?.checked||false;
+        pt.ioa.motif.terrorisme=document.getElementById("bl5-ioa-terrorisme")?.checked||false;
+        pt.ioa.motif.fugue=document.getElementById("bl5-ioa-fugue")?.checked||false;
       }
       if(pane==="constantes"){
         pt.ioa.constantes=Array.isArray(pt.ioa.constantes)?pt.ioa.constantes:[];
@@ -5780,10 +5928,16 @@ Pas de foyer auscultatoire :
           return;
         }
         if(act==="add-algo"){
-          const score=["pm-al-1","pm-al-2","pm-al-3","pm-al-4","pm-al-5"].map(id=>document.getElementById(id)?.checked?1:0).reduce((a,b)=>a+b,0);
-          const interpretation=score===0?"Pas de douleur":(score<=2?"Douleur modérée":"Douleur intense");
+          const alItems=["al-visage","al-regard","al-plaintes","al-corps","al-compmt"];
+          const score=alItems.filter(id=>document.getElementById(id)?.checked).length;
+          let interpretation="";
+          if(score===0) interpretation="Pas de douleur détectée";
+          else if(score===1) interpretation="Douleur faible";
+          else if(score<=3) interpretation="Douleur modérée";
+          else interpretation="Douleur intense";
           pt.algoplus.unshift({heure:nowHm(),score,interpretation,auteur:actorName()});
-          mountParamRoot();
+          savePt(pt);
+          if(window.__bl5Render) window.__bl5Render();
           return;
         }
         if(act==="set-cush"){
@@ -6349,25 +6503,36 @@ Pas de foyer auscultatoire :
       document.getElementById("bl5-ioa-bracelet-comment-info").value=ioaB.commentaireInfoBien||"";
       setRadio("bl5-ioa-directives",ioaB.directivesAnticipees,"SP");
 
-      document.getElementById("bl5-ioa-motif-entree").value=ioaM.motifEntree||pt.motifIAO||"";
-      document.getElementById("bl5-ioa-motif-detail").value=ioaM.detail||"";
-      document.getElementById("bl5-ioa-motif-observation").value=ioaM.observation||pt.hypotheseIAO||"";
-      document.getElementById("bl5-ioa-priorisation").value=ioaM.prioritisation||pt.triLabel||"";
-      document.getElementById("bl5-ioa-reconvocation").value=ioaM.reconvocation||"";
-      setRadio("bl5-ioa-circuit",ioaM.typeCircuit||"Circuit long","Circuit long");
-      document.getElementById("bl5-ioa-mode-attente").value=ioaM.modeAttente||"Brancard";
-      document.getElementById("bl5-ioa-circonstances").value=ioaM.circonstances||"";
-      document.getElementById("bl5-ioa-famille-a").value=(ioaM.famille||[])[0]||"Prévenu";
-      document.getElementById("bl5-ioa-famille-b").value=(ioaM.famille||[])[1]||"Adulte";
-      window.__bl5State.ioaHandicaps=Array.isArray(ioaM.handicaps)?ioaM.handicaps:[];
-      document.querySelectorAll("#bl5-ioa-handicaps .bl5-ioa-handicap").forEach(b=>b.classList.toggle("active",window.__bl5State.ioaHandicaps.includes(b.dataset.handicap)));
-      setRadio("bl5-ioa-hosp-etr",ioaM.hospitEtranger||"NC","NC");
-      setRadio("bl5-ioa-voy-etr",ioaM.voyageEtranger||"NC","NC");
-      document.getElementById("bl5-ioa-don-organe").checked=!!ioaM.donOrgane;
-      document.getElementById("bl5-ioa-terrorisme").checked=!!ioaM.terrorisme;
-      document.getElementById("bl5-ioa-crise").checked=!!ioaM.criseSanitaire;
-      document.getElementById("bl5-ioa-pec").value=ioaM.pec||"";
-      document.getElementById("bl5-ioa-tri-calc").value=IOA_TRI_DESC[pt.triIAO]||"";
+      const ioaMotifEntree=document.getElementById("bl5-ioa-motif-entree");
+      if(ioaMotifEntree) ioaMotifEntree.value=ioaM.motifEntree||pt.motifIAO||"";
+      const ioaMotifObs=document.getElementById("bl5-ioa-motif-observation");
+      if(ioaMotifObs) ioaMotifObs.value=ioaM.observation||"";
+      const ioaMotifHyp=document.getElementById("bl5-ioa-motif-hypothese");
+      if(ioaMotifHyp) ioaMotifHyp.value=ioaM.hypothese||pt.hypotheseIAO||"";
+      const ioaMotifCircuit=document.getElementById("bl5-ioa-motif-circuit");
+      if(ioaMotifCircuit) ioaMotifCircuit.value=ioaM.typeCircuit||"";
+      const ioaMotifAttente=document.getElementById("bl5-ioa-motif-attente");
+      if(ioaMotifAttente) ioaMotifAttente.value=ioaM.modeAttente||"";
+      const ioaMotifCirc=document.getElementById("bl5-ioa-motif-circonstances");
+      if(ioaMotifCirc) ioaMotifCirc.value=ioaM.circonstances||"";
+      const ioaMotifAccomp=document.getElementById("bl5-ioa-motif-accomp");
+      if(ioaMotifAccomp) ioaMotifAccomp.value=ioaM.accompagnePar||"";
+      const ioaMotifFam=document.getElementById("bl5-ioa-motif-famille");
+      if(ioaMotifFam) ioaMotifFam.checked=!!ioaM.famillePresente;
+      const ioaMotifFamTxt=document.getElementById("bl5-ioa-motif-famille-txt");
+      if(ioaMotifFamTxt) ioaMotifFamTxt.value=ioaM.familleTxt||"";
+      const ioaMotifHandicap=document.getElementById("bl5-ioa-handicap");
+      if(ioaMotifHandicap) ioaMotifHandicap.checked=!!ioaM.handicap;
+      const ioaMotifBarriere=document.getElementById("bl5-ioa-barriere");
+      if(ioaMotifBarriere) ioaMotifBarriere.checked=!!ioaM.barriereLangue;
+      const ioaMotifViolence=document.getElementById("bl5-ioa-violence");
+      if(ioaMotifViolence) ioaMotifViolence.checked=!!ioaM.violenceConj;
+      const ioaMotifTerror=document.getElementById("bl5-ioa-terrorisme");
+      if(ioaMotifTerror) ioaMotifTerror.checked=!!ioaM.terrorisme;
+      const ioaMotifFugue=document.getElementById("bl5-ioa-fugue");
+      if(ioaMotifFugue) ioaMotifFugue.checked=!!ioaM.fugue;
+      const ioaTriCalc=document.getElementById("bl5-ioa-tri-calc");
+      if(ioaTriCalc) ioaTriCalc.value=IOA_TRI_DESC[pt.triIAO]||"";
 
       const constHeader=window.__bl5State.ioaConstShowComments?
         '<div class="bl5-ioa-const-row"><div class="bl5-ioa-const-label" style="font-weight:bold;">Constante</div><div class="bl5-ioa-const-value" style="font-weight:bold;">Valeur</div><div class="bl5-ioa-const-comment" style="font-weight:bold;">Commentaire</div></div>':
