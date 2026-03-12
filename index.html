@@ -534,6 +534,9 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 .bl5-ioa-const-comment input{height:18px;}
 .bl5-ioa-actionbar{position:absolute;right:0;bottom:0;display:flex;gap:6px;padding:4px 0;background:#fff;}
 .bl5-ioa-mini-summary{margin-bottom:6px;overflow:auto;max-width:100%;}
+.bl5-ioa-motif-row{cursor:pointer;}
+.bl5-ioa-motif-row:hover td{background:#dbeaf8 !important;}
+.bl5-ioa-motif-row.selected td{background:#cfe2f6 !important;}
 
 .bl5-title{background:#e8f0f8;color:#1a3a60;border-left:3px solid #2060a0;padding:4px 8px;font-weight:bold;font-size:11px;margin:6px 0;}
 .bl5-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
@@ -584,7 +587,9 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 .bl5-proto-btn.active{background:#2060a0;color:#fff;}
 .bl5-bio-catalog{max-height:260px;overflow:auto;border:1px solid #c8d8e8;background:#fff;}
 .bl5-bio-family{background:#d8e8f4;color:#1a3a60;font-weight:bold;padding:3px 6px;font-size:10px;border-top:1px solid #b8d0e4;}
-.bl5-bio-line{display:flex;align-items:center;gap:6px;padding:2px 6px;border-top:1px solid #eef4fc;font-size:10px;}
+.bl5-bio-line{display:grid;grid-template-columns:18px 1fr 14px;align-items:center;gap:6px;padding:3px 6px;border-top:1px solid #eef4fc;font-size:10px;}
+.bl5-bio-line input[type="checkbox"]{margin:0;justify-self:start;}
+.bl5-bio-name{text-align:center;font-weight:bold;line-height:1.2;}
 .bl5-tube{width:10px;height:10px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,0.25);}
 .tube-Rouge{background:#cc2020;}
 .tube-Violet{background:#8020c0;}
@@ -592,6 +597,12 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
 .tube-Vert{background:#20a020;}
 .tube-Jaune{background:#c8a820;}
 .tube-Noir{background:#333;}
+.tube-text-Rouge{color:#a01818;}
+.tube-text-Violet{color:#6a1aa8;}
+.tube-text-Bleu{color:#1a4fa8;}
+.tube-text-Vert{color:#1a7f1a;}
+.tube-text-Jaune{color:#7a6400;}
+.tube-text-Noir{color:#222;}
 .bl5-bio-pane{display:none;}
 .bl5-bio-pane.active{display:block;}
 .bio-hi td{background:#fff0f0 !important;}
@@ -1694,7 +1705,7 @@ body{font-family:Arial,sans-serif;font-size:11px;background:#fff;min-width:900px
         </div>
 
         <div class="bl5-pane" data-pane="diag">
-          <div class="bl5-row"><label class="bl5-label">CCMU</label><div class="bl5-inline"><select id="bl5-diag-ccmu"><option value="">—</option><option value="1">I</option><option value="2">II</option><option value="3">III</option><option value="4">IV</option><option value="5">V</option><option value="P">P</option><option value="D">D</option></select><span id="bl5-diag-ccmu-desc"></span></div></div>
+          <div class="bl5-row"><label class="bl5-label">CCMU</label><div class="bl5-inline"><select id="bl5-diag-ccmu"><option value="">—</option><option value="1">I - Etat stable, pas d'acte complémentaire</option><option value="2">II - Etat stable, actes diagnostics/thérapeutiques</option><option value="3">III - Pronostic pouvant s'aggraver</option><option value="4">IV - Pronostic vital engagé sans réa</option><option value="5">V - Pronostic vital engagé avec réa</option><option value="P">P - Problème psychiatrique dominant</option><option value="D">D - Patient décédé</option></select><span id="bl5-diag-ccmu-desc"></span></div></div>
           <div class="bl5-row"><label class="bl5-label">Motif de recours</label><div class="bl5-inline"><label><input type="radio" name="bl5-mr-type" value="MR" checked/>MR</label><label><input type="radio" name="bl5-mr-type" value="MA"/>MA</label><input id="bl5-diag-motif" placeholder="Motif"/></div></div>
           <div class="bl5-subsubtabs" id="bl5-diag-tabs"><button class="bl5-subsubtab active" data-dsub="dp" type="button">DP SAU</button><button class="bl5-subsubtab" data-dsub="dpu" type="button">DPU UHCD</button><button class="bl5-subsubtab" data-dsub="da" type="button">DA</button></div>
           <div class="bl5-diag-subpane active" data-dsub="dp"><div class="bl5-row"><label class="bl5-label">Recherche CIM-10</label><input id="bl5-cim-search-dp" placeholder="Ex: I21.9"/></div><div class="bl5-row"><label class="bl5-label">Sélection</label><span id="bl5-cim-sel-dp" class="bl5-badge" style="background:#2060a0;">—</span></div></div>
@@ -3427,6 +3438,7 @@ async function validerEntree(){
       // Existing app extensions
       sortie: {},
       paramedical: [],
+      paramConstantes: [],
       soinsInfirmiers: [],
       csAmp: [],
       diagramme: [],
@@ -4181,7 +4193,9 @@ Pas de foyer auscultatoire :
     ioaMainTab:"bracelet",
     ioaFiliereTab:"avcPlus",
     ioaConstShowComments:false,
+    paramConstShowComments:false,
     ioaHandicaps:[],
+    ioaSelectedMotif:"",
     paramPanel:null
   };
   const acteSvg=(k)=>{
@@ -4319,7 +4333,7 @@ Pas de foyer auscultatoire :
   const PARAM_ICONS=[
     {key:"antecedents",label:"Antécédents",kind:"existing",bg:"#e8f0ff",svg:'<svg viewBox="0 0 40 40"><rect x="6" y="6" width="12" height="28" rx="2" fill="#4f8bd8"/><rect x="19" y="6" width="15" height="28" rx="2" fill="#7fb2ee"/><line x1="11" y1="12" x2="16" y2="12"/><line x1="11" y1="17" x2="16" y2="17"/><line x1="11" y1="22" x2="16" y2="22"/><line x1="23" y1="12" x2="31" y2="12"/><line x1="23" y1="17" x2="31" y2="17"/><line x1="23" y1="22" x2="31" y2="22"/></svg>'},
     {key:"ioa",label:"IOA",kind:"existing",bg:"#fff0f0",svg:'<svg viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="2" fill="#fff"/><rect x="17" y="12" width="6" height="16" fill="#cc2020"/><rect x="12" y="17" width="16" height="6" fill="#cc2020"/></svg>'},
-    {key:"constantes",label:"Constantes",kind:"existing",bg:"#f0fff0",svg:'<svg viewBox="0 0 40 40"><rect x="6" y="8" width="28" height="24" rx="2" fill="#101010"/><polyline points="8,22 12,22 14,16 17,26 20,18 23,21 27,14 32,14" fill="#40d060"/></svg>'},
+    {key:"constantes",label:"Constantes",kind:"panel",bg:"#f0fff0",svg:'<svg viewBox="0 0 40 40"><rect x="6" y="8" width="28" height="24" rx="2" fill="#101010"/><polyline points="8,22 12,22 14,16 17,26 20,18 23,21 27,14 32,14" fill="#40d060"/></svg>'},
     {key:"soins-infirmiers",label:"Soins infirmiers",kind:"panel",bg:"#e8f0ff",svg:'<svg viewBox="0 0 40 40"><path d="M8 26l12-12 5 5-12 12H8z" fill="#4f8bd8"/><rect x="22" y="10" width="10" height="6" transform="rotate(45 27 13)" fill="#2060c0"/><rect x="10" y="24" width="8" height="4" fill="#fff"/></svg>'},
     {key:"inventaire",label:"Inventaire",kind:"existing",bg:"#fff8e8",svg:'<svg viewBox="0 0 40 40"><rect x="8" y="13" width="24" height="18" rx="2" fill="#9a6438"/><rect x="15" y="9" width="10" height="5" rx="1" fill="#c08a5c"/><rect x="18" y="20" width="4" height="4" fill="#e8c8a0"/></svg>'},
     {key:"avc-4h30",label:"AVC moins de 4h30",kind:"existing",bg:"#fff0f8",svg:'<svg viewBox="0 0 40 40"><path d="M14 12c-3 1-5 4-5 7 0 5 4 9 9 9h4c5 0 9-4 9-9 0-4-3-7-7-8-1-2-3-3-5-3-2 0-4 1-5 4z" fill="#8020c0"/><path d="M22 10l-4 8h4l-2 8 7-10h-4l3-6z" fill="#cc2020"/></svg>'},
@@ -4344,6 +4358,7 @@ Pas de foyer auscultatoire :
 
   const ensureParamStores=(pt)=>{
     pt.soinsInfirmiers=Array.isArray(pt.soinsInfirmiers)?pt.soinsInfirmiers:[];
+    pt.paramConstantes=Array.isArray(pt.paramConstantes)?pt.paramConstantes:[];
     pt.csAmp=Array.isArray(pt.csAmp)?pt.csAmp:[];
     pt.diagramme=Array.isArray(pt.diagramme)?pt.diagramme:[];
     pt.ficheTransport=(pt.ficheTransport&&typeof pt.ficheTransport==="object"&&!Array.isArray(pt.ficheTransport))?pt.ficheTransport:{};
@@ -4378,6 +4393,31 @@ Pas de foyer auscultatoire :
     ensureParamStores(pt);
     const panel=paramState().paramPanel||"";
     if(!panel) return renderParamGrid();
+
+    if(panel==="constantes"){
+      const constArr=Array.isArray(pt.paramConstantes)?pt.paramConstantes:[];
+      const latestConst=constArr.slice(-1)[0]||{};
+      const showComments=!!window.__bl5State.paramConstShowComments;
+      const constHeader=showComments
+        ? '<div class="bl5-ioa-const-row"><div class="bl5-ioa-const-label" style="font-weight:bold;">Constante</div><div class="bl5-ioa-const-value" style="font-weight:bold;">Valeur</div><div class="bl5-ioa-const-comment" style="font-weight:bold;">Commentaire</div></div>'
+        : "";
+      const constRows=IOA_CONST_DEF.map(def=>{
+        const value=(latestConst[def.key]===undefined||latestConst[def.key]===null)?"":latestConst[def.key];
+        const comment=latestConst[`${def.key}Comment`]||"";
+        const inputHtml=def.type==="select"
+          ? `<select id="pm-const-${def.key}" class="bl5-ioa-const-input">${(def.options||[]).map(o=>`<option ${String(value)===String(o)?"selected":""}>${escapeHtml(o)}</option>`).join("")}</select>`
+          : `<input id="pm-const-${def.key}" class="bl5-ioa-const-input" type="${def.type||"text"}" value="${escapeHtml(String(value))}" ${def.step?`step="${def.step}"`:""} ${def.min?`min="${def.min}"`:""} ${def.max?`max="${def.max}"`:""}/>`;
+        return `<div class="bl5-ioa-const-row"><div class="bl5-ioa-const-label">${escapeHtml(def.label)}</div><div class="bl5-ioa-const-value">${inputHtml}</div><div class="bl5-ioa-const-comment" style="display:${showComments?"block":"none"};"><input id="pm-const-cm-${def.key}" value="${escapeHtml(comment)}" placeholder="Commentaire"/></div></div>`;
+      }).join("");
+      const histRows=constArr.slice(-3).reverse().map((row,idx)=>{
+        const sourceIndex=constArr.length-1-idx;
+        return `<tr><td>${escapeHtml(nowFull(row.date))}</td>${IOA_CONST_DEF.map(d=>`<td>${escapeHtml(String(row[d.key]||""))}</td>`).join("")}<td><button class="bl5-param-del" data-pm-act="del" data-store="paramConstantes" data-i="${sourceIndex}" type="button">✕</button></td></tr>`;
+      }).join("");
+      const histTable=constArr.length
+        ? `<table class="bl5-mini-table"><thead><tr><th>Horodatage</th>${IOA_CONST_DEF.map(d=>`<th>${escapeHtml(d.key)}</th>`).join("")}<th></th></tr></thead><tbody>${histRows}</tbody></table>`
+        : '<div class="bl5-muted">Aucune constante paramédicale enregistrée.</div>';
+      return `<div class="bl5-param-view active">${paramHeader("Constantes")}<div class="bl5-param-body"><div class="bl5-param-info">Saisie paramédicale dédiée. Ce tableau est indépendant des constantes IOA.</div><div class="bl5-param-section"><h4>Saisie</h4><div class="bl5-param-content"><div class="bl5-ioa-const-toolbar"><button class="btn-action" data-pm-act="toggle-const-comments" type="button">${showComments?"Masquer les commentaires":"Afficher les commentaires"}</button></div>${constHeader}${constRows}<div class="bl5-param-row"><span class="bl5-label">Poids enregistré</span>${ro(pt.morpho?.poids||"")}</div><div class="bl5-param-row"><span class="bl5-label">Taille enregistrée</span>${ro(pt.morpho?.taille||"")}</div><div class="bl5-end"><button class="btn-submit" data-pm-act="save-param-const" type="button">Enregistrer les constantes</button></div></div></div><div class="bl5-param-section"><h4>Historique récent</h4><div class="bl5-param-content">${histTable}</div></div></div>${paramFoot()}</div>`;
+    }
 
     if(panel==="soins-infirmiers"){
       return `<div class="bl5-param-view active">${paramHeader("Soins infirmiers")}<div class="bl5-param-body"><div class="bl5-param-section"><h4>Ajout acte infirmier</h4><div class="bl5-param-content"><div class="bl5-param-row"><span class="bl5-label">Heure</span><input id="pm-si-heure" type="time" value="${nowHm()}"/></div><div class="bl5-param-row"><span class="bl5-label">Soin</span><select id="pm-si-soin">${PARAM_SOINS.map(s=>`<option>${escapeHtml(s)}</option>`).join("")}</select></div><div class="bl5-param-row"><span class="bl5-label">Détail</span><input id="pm-si-detail"/></div><div class="bl5-param-row"><span class="bl5-label">Résultat / Observation</span><input id="pm-si-resultat"/></div><div class="bl5-param-row"><span class="bl5-label">Auteur</span>${ro(actorName())}</div><div class="bl5-end"><button class="btn-submit" data-pm-act="add-soins" type="button">Ajouter</button></div></div></div><div class="bl5-param-section"><h4>Journal</h4><div class="bl5-param-content">${renderSimpleJournal((pt.soinsInfirmiers||[]).slice().sort((a,b)=>String(b.heure||"").localeCompare(String(a.heure||""))),[{k:"Heure",v:"heure"},{k:"Soin",v:"soin"},{k:"Détail",v:"detail"},{k:"Résultat",v:"resultat"},{k:"Auteur",v:"auteur"}],"soinsInfirmiers")}</div></div></div>${paramFoot()}</div>`;
@@ -4603,6 +4643,11 @@ Pas de foyer auscultatoire :
   };
 
   const handleExistingParam=(key)=>{
+    if(key==="constantes"){
+      window.__bl5State.paramPanel="constantes";
+      mountParamRoot();
+      return;
+    }
     if(key==="antecedents"){
       // Affichage lecture seule des antécédents dans le panneau param
       const pt=window.__currentPatient||{};
@@ -4971,12 +5016,28 @@ Pas de foyer auscultatoire :
       const rows=Object.entries(TRI_BY_MOTIF||{})
         .filter(([,tri])=>!prio||tri===prio)
         .slice(0,40)
-        .map(([motif,tri])=>`<tr><td>${escapeHtml(tri)}</td><td>${escapeHtml(motif)}</td></tr>`)
+        .map(([motif,tri])=>`<tr class="bl5-ioa-motif-row ${window.__bl5State.ioaSelectedMotif===motif?"selected":""}" data-motif="${escapeHtml(motif)}" data-tri="${escapeHtml(tri)}"><td>${escapeHtml(tri)}</td><td>${escapeHtml(motif)}</td></tr>`)
         .join("");
       document.getElementById("bl5-ioa-motif-results").innerHTML=rows||'<tr><td colspan="2">Aucun motif</td></tr>';
     };
     renderIoaMotifs("");
     document.getElementById("bl5-ioa-motif-filtrer").onclick=()=>renderIoaMotifs(document.getElementById("bl5-ioa-motif-rech-prio").value||"");
+    document.getElementById("bl5-ioa-motif-results").addEventListener("click",e=>{
+      const row=e.target.closest(".bl5-ioa-motif-row");
+      if(!row) return;
+      const motif=row.dataset.motif||"";
+      const tri=row.dataset.tri||"";
+      window.__bl5State.ioaSelectedMotif=motif;
+      const motifInput=document.getElementById("bl5-ioa-motif-entree");
+      const priorInput=document.getElementById("bl5-ioa-priorisation");
+      const triOut=document.getElementById("bl5-ioa-tri-calc");
+      const prioSelect=document.getElementById("bl5-ioa-motif-rech-prio");
+      if(motifInput) motifInput.value=motif;
+      if(priorInput) priorInput.value=(TRI_META[tri]||{}).help||"";
+      if(prioSelect) prioSelect.value=tri;
+      if(triOut) triOut.value=IOA_TRI_DESC[tri]||`Tri ${tri||"—"} : ${(TRI_META[tri]||{}).help||"Non calculé"}`;
+      document.querySelectorAll("#bl5-ioa-motif-results .bl5-ioa-motif-row").forEach(x=>x.classList.toggle("selected",x===row));
+    });
     document.getElementById("bl5-ioa-toggle-comments").onclick=()=>{
       window.__bl5State.ioaConstShowComments=!window.__bl5State.ioaConstShowComments;
       if(window.__bl5Render) window.__bl5Render();
@@ -5472,8 +5533,15 @@ Pas de foyer auscultatoire :
     document.getElementById("bl5-pr-save").onclick=()=>{const pt=getP();if(!pt)return;const idp=window.__bl5State.prEditId||Date.now();const row={id:idp,categorie:document.getElementById("bl5-pr-type").value,type:document.getElementById("bl5-pr-type").value,statut:document.getElementById("bl5-pr-statut").value,urgence:document.getElementById("bl5-pr-urg").value,voie:document.getElementById("bl5-pr-voie").value,livret:"Oui",medicament:document.getElementById("bl5-pr-med").value,posologie:document.getElementById("bl5-pr-poso").value,duree:document.getElementById("bl5-pr-duree").value,frequence:document.getElementById("bl5-pr-freq").value,hours:Array.from(document.querySelectorAll("#bl5-pr-hours .bl5-hour.active")).map(x=>x.dataset.h),prescritPar:actorName(),prescritLe:nowFull(),debut:nowFull(),fin:"",severite:document.getElementById("bl5-pr-sev").value};const arr=pt.prescriptions||[];const i=arr.findIndex(x=>x.id===idp);if(i>=0)arr[i]={...arr[i],...row};else arr.push(row);pt.prescriptions=arr;document.getElementById("bl5-pr-editor").style.display="none";window.__bl5State.prEditId=null;window.__bl5Render();};
     document.getElementById("bl5-pr-list").addEventListener("click",e=>{const pt=getP();if(!pt)return;const tr=e.target.closest("tr[data-id]");if(!tr)return;const idp=+tr.dataset.id;const pr=(pt.prescriptions||[]).find(x=>x.id===idp);if(!pr)return;setPrescInnerTab("medicaments");window.__bl5State.prEditId=idp;document.getElementById("bl5-pr-editor").style.display="block";document.getElementById("bl5-pr-type").value=pr.type||"Perfusion";document.getElementById("bl5-pr-statut").value=pr.statut||"À faire";document.getElementById("bl5-pr-urg").value=pr.urgence||"Non";document.getElementById("bl5-pr-voie").value=pr.voie||"IV";document.getElementById("bl5-pr-med").value=pr.medicament||"";document.getElementById("bl5-pr-poso").value=pr.posologie||"";document.getElementById("bl5-pr-duree").value=pr.duree||"";document.getElementById("bl5-pr-freq").value=pr.frequence||"Unique";document.getElementById("bl5-pr-sev").value=String(pr.severite||1);document.getElementById("bl5-pr-freq").onchange();updatePrSev();document.querySelectorAll("#bl5-pr-hours .bl5-hour").forEach(x=>x.classList.toggle("active",(pr.hours||[]).includes(x.dataset.h)));});
 
+    const syncBioProtocolState=(pt)=>{
+      const selected=new Set(pt?.bioSelected||[]);
+      window.__bl5State.bioProtos={};
+      Object.entries(BIO_PROTOCOLS).forEach(([name,exams])=>{
+        if((exams||[]).length && exams.every(ex=>selected.has(ex))) window.__bl5State.bioProtos[name]=true;
+      });
+    };
     document.getElementById("bl5-bio-tabs").addEventListener("click",e=>{const b=e.target.closest(".bl5-subsubtab");if(!b)return;window.__bl5State.bioTab=b.dataset.bio;document.querySelectorAll("#bl5-bio-tabs .bl5-subsubtab").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".bl5-bio-pane").forEach(x=>x.classList.toggle("active",x.dataset.bio===b.dataset.bio));});
-    document.getElementById("bl5-bio-protos").addEventListener("click",e=>{const b=e.target.closest(".bl5-proto-btn");if(!b)return;const pt=getP();if(!pt)return;pt.bioSelected=pt.bioSelected||[];window.__bl5State.bioProtos[b.dataset.p]=!window.__bl5State.bioProtos[b.dataset.p];b.classList.toggle("active",!!window.__bl5State.bioProtos[b.dataset.p]);(BIO_PROTOCOLS[b.dataset.p]||[]).forEach(ex=>{if(window.__bl5State.bioProtos[b.dataset.p]){if(!(pt.bioSelected||[]).includes(ex))pt.bioSelected.push(ex);}else{pt.bioSelected=(pt.bioSelected||[]).filter(x=>x!==ex);}});window.__bl5Render();});
+    document.getElementById("bl5-bio-protos").addEventListener("click",e=>{const b=e.target.closest(".bl5-proto-btn");if(!b)return;const pt=getP();if(!pt)return;pt.bioSelected=pt.bioSelected||[];const exams=BIO_PROTOCOLS[b.dataset.p]||[];const selected=new Set(pt.bioSelected);const isActive=(exams||[]).length && exams.every(ex=>selected.has(ex));if(isActive){pt.bioSelected=(pt.bioSelected||[]).filter(x=>!exams.includes(x));}else{exams.forEach(ex=>{if(!selected.has(ex)){pt.bioSelected.push(ex);selected.add(ex);}});}syncBioProtocolState(pt);window.__bl5Render();});
     ["bl5-bio-search","bl5-bio-family","bl5-bio-tube"].forEach(idf=>{const el=document.getElementById(idf);if(el)el.oninput=()=>window.__bl5Render();if(el)el.onchange=()=>window.__bl5Render();});
     document.getElementById("bl5-bio-catalog").addEventListener("change",e=>{const pt=getP();if(!pt)return;const c=e.target.closest("input[data-ex]");if(!c)return;pt.bioSelected=pt.bioSelected||[];if(c.checked){if(!(pt.bioSelected||[]).includes(c.dataset.ex))pt.bioSelected.push(c.dataset.ex);}else{pt.bioSelected=(pt.bioSelected||[]).filter(x=>x!==c.dataset.ex);}window.__bl5Render();});
     document.getElementById("bl5-bio-val").onclick=()=>{const pt=getP();if(!pt)return;const exams=(pt.bioSelected||[]).slice();const protos=Object.keys(window.__bl5State.bioProtos).filter(k=>window.__bl5State.bioProtos[k]);const label=protos.length?protos.join(", "):exams.join(", ");if(!label)return;pt.biologieOrders=pt.biologieOrders||[];pt.biologieOrders.push({id:Date.now(),statut:"À faire",label,prescripteur:actorName(),prescritLe:nowFull(),faitLe:"",examens:exams});(exams||[]).forEach(ex=>{pt.bioResults=pt.bioResults||[];if(!(pt.bioResults||[]).some(r=>r.examen===ex))pt.bioResults.push({examen:ex,valeur:"",unite:"",low:"",high:""});});window.__bl5State.bioProtos={};pt.bioSelected=[];window.__bl5Render();};
@@ -5833,8 +5901,30 @@ Pas de foyer auscultatoire :
           const i=Number(t.dataset.i);
           if(Array.isArray(pt[store]) && Number.isFinite(i)){
             pt[store]=pt[store].filter((_,idx)=>idx!==i);
+            if(store==="paramConstantes"){
+              updatePatientFirestore(pt);
+              if(window.__bl5Render) window.__bl5Render();
+            }
             mountParamRoot();
           }
+          return;
+        }
+        if(act==="toggle-const-comments"){
+          window.__bl5State.paramConstShowComments=!window.__bl5State.paramConstShowComments;
+          mountParamRoot();
+          return;
+        }
+        if(act==="save-param-const"){
+          const entry={date:Date.now(),auteur:actorName()};
+          IOA_CONST_DEF.forEach(def=>{
+            entry[def.key]=document.getElementById(`pm-const-${def.key}`)?.value||"";
+            entry[`${def.key}Comment`]=document.getElementById(`pm-const-cm-${def.key}`)?.value||"";
+          });
+          pt.paramConstantes=Array.isArray(pt.paramConstantes)?pt.paramConstantes:[];
+          pt.paramConstantes.push(entry);
+          updatePatientFirestore(pt);
+          mountParamRoot();
+          if(window.__bl5Render) window.__bl5Render();
           return;
         }
         if(act==="add-soins"){
@@ -6334,6 +6424,7 @@ Pas de foyer auscultatoire :
       pt.traitements=asArray(pt.traitements);
       pt.actes=asArray(pt.actes);
       pt.paramedical=asArray(pt.paramedical);
+      pt.paramConstantes=asArray(pt.paramConstantes);
       pt.diagnostic=asObject(pt.diagnostic);
       pt.orientation=asObject(pt.orientation);
       pt.examenClinique=asObject(pt.examenClinique);
@@ -6505,6 +6596,9 @@ Pas de foyer auscultatoire :
 
       const ioaMotifEntree=document.getElementById("bl5-ioa-motif-entree");
       if(ioaMotifEntree) ioaMotifEntree.value=ioaM.motifEntree||pt.motifIAO||"";
+      window.__bl5State.ioaSelectedMotif=(ioaM.motifEntree||pt.motifIAO||"");
+      const ioaMotifPrio=document.getElementById("bl5-ioa-motif-rech-prio");
+      if(ioaMotifPrio && typeof renderIoaMotifs==="function") renderIoaMotifs(ioaMotifPrio.value||"");
       const ioaMotifObs=document.getElementById("bl5-ioa-motif-observation");
       if(ioaMotifObs) ioaMotifObs.value=ioaM.observation||"";
       const ioaMotifHyp=document.getElementById("bl5-ioa-motif-hypothese");
@@ -6667,6 +6761,7 @@ Pas de foyer auscultatoire :
       document.getElementById("bl5-surv-toggles").innerHTML=survCatalog.map(label=>`<button class="bl5-pri-toggle ${survSet.has(label)?"active":""}" data-label="${escapeHtml(label)}" type="button">${escapeHtml(label)}</button>`).join("");
       document.getElementById("bl5-surv-list").innerHTML=survActive.map(s=>`<div class="bl5-inline" style="justify-content:space-between;border-bottom:1px solid #d8e4f0;padding:3px 0;"><span>${escapeHtml(s.surveillanceItem||s.libelle||"")}</span><button class="btn-cancel" data-act="del-surv" data-id="${s.id}" type="button">✕</button></div>`).join("")||'<div class="bl5-muted">Aucune surveillance prescrite</div>';
 
+      syncBioProtocolState(pt);
       document.querySelectorAll("#bl5-bio-protos .bl5-proto-btn").forEach(b=>b.classList.toggle("active",!!window.__bl5State.bioProtos[b.dataset.p]));
       const qBio=(document.getElementById("bl5-bio-search").value||"").toLowerCase();
       const fBio=document.getElementById("bl5-bio-family").value||"";
@@ -6674,7 +6769,7 @@ Pas de foyer auscultatoire :
       const selectedSet=new Set(pt.bioSelected||[]);
       const bioFiltered=BIO_EXAMS.filter(x=>(!fBio||x.f===fBio)&&(!tBio||x.t===tBio)&&(!qBio||x.n.toLowerCase().includes(qBio)));
       let bioCatHtml="", curFam="";
-      bioFiltered.forEach(ex=>{if(ex.f!==curFam){curFam=ex.f;bioCatHtml+=`<div class="bl5-bio-family">${escapeHtml(curFam)}</div>`;}bioCatHtml+=`<label class="bl5-bio-line"><input type="checkbox" data-ex="${escapeHtml(ex.n)}" ${selectedSet.has(ex.n)?"checked":""}/><span class="bl5-tube tube-${escapeHtml(ex.t)}"></span><span>${escapeHtml(ex.n)}</span></label>`;});
+      bioFiltered.forEach(ex=>{if(ex.f!==curFam){curFam=ex.f;bioCatHtml+=`<div class="bl5-bio-family">${escapeHtml(curFam)}</div>`;}bioCatHtml+=`<label class="bl5-bio-line"><input type="checkbox" data-ex="${escapeHtml(ex.n)}" ${selectedSet.has(ex.n)?"checked":""}/><span class="bl5-bio-name tube-text-${escapeHtml(ex.t)}">${escapeHtml(ex.n)}</span><span class="bl5-tube tube-${escapeHtml(ex.t)}" title="Tube ${escapeHtml(ex.t)}"></span></label>`;});
       document.getElementById("bl5-bio-catalog").innerHTML=bioCatHtml||'<div class="bl5-bio-line">Aucun examen</div>';
       document.getElementById("bl5-bio-order-list").innerHTML=(pt.biologieOrders||[]).map(o=>{const cls=o.statut==="Fait"?"bs-fait":(o.statut==="En cours"?"bs-enc":"bs-afaire");return `<tr><td><span class="bl5-bstat ${cls}">${escapeHtml(o.statut||"À faire")}</span></td><td>${escapeHtml(o.label||"")}</td><td>${escapeHtml(o.prescripteur||"")}</td><td>${escapeHtml(o.prescritLe||"")}</td><td>${escapeHtml(o.faitLe||"")}</td></tr>`;}).join("")||'<tr><td colspan="5">Aucun bon validé</td></tr>';
       document.getElementById("bl5-bio-comment").value=pt.bioComment||"";
@@ -6839,7 +6934,7 @@ Pas de foyer auscultatoire :
       const ioaMotif=pt.ioa?.motif||{};
       const typeCircuit=safe(ioaMotif.typeCircuit||typeCircuitByTri(pt.triIAO));
       const circonstances=safe(ioaMotif.circonstances);
-      const famille=safe(ioaMotif.famille, "Non");
+      const famille=safe(ioaMotif.familleTxt||(ioaMotif.famillePresente?"Présente":"Non"), "Non");
       const canEditTeam=["medecin","admin"].includes(String(currentUser?.role||""));
 
       const dossierBlock=`
@@ -6892,6 +6987,133 @@ Pas de foyer auscultatoire :
           </div>
         </div>`;
 
+      const synthText=(v)=>escapeHtml(String(v||"")).replace(/\r?\n/g,"<br>");
+      const lineIf=(label,value)=>String(value||"").trim()!==""?`<div class="synth-r5-line"><span class="synth-r5-k">${escapeHtml(label)}</span> ${escapeHtml(String(value))}</div>`:"";
+      const sectionIf=(label,value)=>String(value||"").trim()!==""?`<div class="synth-r5-line"><span class="synth-r5-k">${escapeHtml(label)}</span><br>${synthText(value)}</div>`:"";
+      const renderListBlock=(title,items)=>`<div class="synth-r5-block"><div class="synth-r5-title">${title}</div><div class="synth-r5-content">${items.length?items.map(x=>`<div class="synth-r5-line">${x}</div>`).join(""):'<div class="synth-r5-empty">Aucune donnée</div>'}</div></div>`;
+      const ioaConstLatest=(pt.ioa?.constantes||[]).slice(-1)[0]||{};
+      const paramConstLatest=(pt.paramConstantes||[]).slice(-1)[0]||{};
+      const latestSau=(pt.syntheseSAU?.journal||[])[0]||{};
+      const latestQuicktest=pt.quicktest||{};
+      const orientation=pt.orientation||{};
+      const observation=pt.observation||{};
+      const diagnostic=pt.diagnostic||{};
+      const latestConstBits=(entry)=>IOA_CONST_DEF.map(def=>String(entry?.[def.key]||"").trim()!==""?`${def.label}: ${entry[def.key]}`:"").filter(Boolean);
+      const latestIoaConstBits=latestConstBits(ioaConstLatest);
+      const latestParamConstBits=latestConstBits(paramConstLatest);
+      const scoreBits=[];
+      if(String(ioaConstLatest.glasgow||pt.medical?.examen?.gcs||"").trim()!=="") scoreBits.push(`Glasgow : ${ioaConstLatest.glasgow||pt.medical?.examen?.gcs}/15`);
+      if(String(ioaConstLatest.en10||pt.medical?.examen?.eva||pt.eva||"").trim()!=="") scoreBits.push(`EVA / EN : ${ioaConstLatest.en10||pt.medical?.examen?.eva||pt.eva}/10`);
+      if((pt.algoplus||[]).length){ const a=pt.algoplus[0]||{}; scoreBits.push(`ALGOPLUS : ${a.score||"0"}/5${a.interpretation?` (${a.interpretation})`:""}`); }
+      if((pt.cushman||[]).length){ const a=pt.cushman[0]||{}; scoreBits.push(`Cushman : ${a.score||a.valeur||""}`); }
+      if((pt.evendol||[]).length){ const a=pt.evendol[0]||{}; scoreBits.push(`EVENDOL : ${a.score||a.valeur||""}`); }
+      if((pt.glasgow||[]).length){ const a=pt.glasgow[0]||{}; scoreBits.push(`Glasgow suivi : ${a.score||a.valeur||""}`); }
+
+      const situationBlock=`
+        <div class="synth-r5-block">
+          <div class="synth-r5-title">PRISE EN CHARGE</div>
+          <div class="synth-r5-content">
+            ${lineIf("Motif :", ioaMotif.motifEntree||pt.motifIAO)}
+            ${lineIf("Hypothèse :", ioaMotif.hypothese||pt.hypotheseIAO||pt.hypothese)}
+            ${lineIf("Priorisation :", pt.triLabel||pt.triIAO)}
+            ${lineIf("Type de circuit :", typeCircuit)}
+            ${lineIf("Mode d'attente :", ioaMotif.modeAttente)}
+            ${lineIf("Circonstances :", circonstances)}
+            ${lineIf("Accompagné par :", ioaMotif.accompagnePar)}
+            ${lineIf("Famille :", famille)}
+            ${lineIf("Mode d'arrivée :", modeNorm(pt.mode))}
+            ${lineIf("Box / localisation :", pt.box)}
+            ${lineIf("Allergies :", pt.medical?.allergies||pt.allergie)}
+          </div>
+        </div>`;
+
+      const cliniqueBlock=`
+        <div class="synth-r5-block">
+          <div class="synth-r5-title">CLINIQUE ET SYNTHÈSE MÉDICALE</div>
+          <div class="synth-r5-content">
+            ${sectionIf("Histoire de la maladie", observation.hdm)}
+            ${sectionIf("Examen clinique", observation.examenClinique)}
+            ${sectionIf("Hypothèses", observation.hypotheses)}
+            ${sectionIf("Synthèse", observation.synthese)}
+            ${sectionIf("Diagnostic retenu", observation.diagnosticRetenu)}
+            ${sectionIf("Conduite à tenir", diagnostic.conduite)}
+            ${lineIf("CCMU :", pt.ccmu)}
+            ${lineIf("GEMSA :", pt.gemsa)}
+            ${scoreBits.length?`<div class="synth-r5-line"><span class="synth-r5-k">Scores :</span> ${escapeHtml(scoreBits.join(" | "))}</div>`:""}
+            ${latestIoaConstBits.length?`<div class="synth-r5-line"><span class="synth-r5-k">Dernières constantes IOA :</span> ${escapeHtml(latestIoaConstBits.join(" | "))}</div>`:""}
+            ${latestParamConstBits.length?`<div class="synth-r5-line"><span class="synth-r5-k">Dernières constantes paramédicales :</span> ${escapeHtml(latestParamConstBits.join(" | "))}</div>`:""}
+          </div>
+        </div>`;
+
+      const prescriptionsItems=(pt.prescriptions||[])
+        .filter(pr=>String(pr.statut||"")!=="Annulé")
+        .slice(0,10)
+        .map(pr=>`${escapeHtml(safe(pr.statut,"Actif"))} - ${escapeHtml(safe(pr.medicament||pr.libelle||pr.solute))}${String(pr.posologie||pr.dose||pr.debit||"").trim()!==""?` : ${escapeHtml(String(pr.posologie||pr.dose||pr.debit))}`:""}${String(pr.voie||"").trim()!==""?` (${escapeHtml(String(pr.voie))})`:""}`);
+      const soinsItems=(pt.soinsInfirmiers||[]).slice(0,8).map(r=>`${escapeHtml(safe(r.heure,"—"))} - ${escapeHtml(safe(r.soin))}${String(r.detail||"").trim()!==""?` (${escapeHtml(String(r.detail))})`:""}${String(r.resultat||"").trim()!==""?` : ${escapeHtml(String(r.resultat))}`:""}`);
+      const actesItems=(pt.actes||[]).slice(0,8).map(ac=>`${escapeHtml(safe(ac.categorie,"Acte"))} - ${escapeHtml(safe(ac.acte))}${String(ac.effet||"").trim()!==""?` : ${escapeHtml(String(ac.effet))}`:""}`);
+      const latestSauSections=[];
+      if(String(latestSau.administres||"").trim()!=="") latestSauSections.push(`Traitements administrés : ${escapeHtml(String(latestSau.administres))}`);
+      if(String(latestSau.soinsInfirmiers||"").trim()!=="") latestSauSections.push(`Soins infirmiers spécifiques : ${escapeHtml(String(latestSau.soinsInfirmiers))}`);
+      if(String(latestSau.examensAttente||"").trim()!=="") latestSauSections.push(`Examens en attente : ${escapeHtml(String(latestSau.examensAttente))}`);
+      if(String(latestSau.avisAttente||"").trim()!=="") latestSauSections.push(`Avis en attente : ${escapeHtml(String(latestSau.avisAttente))}`);
+      const therapiesBlock=`
+        <div class="synth-r5-block">
+          <div class="synth-r5-title">TRAITEMENTS, SOINS ET ACTES</div>
+          <div class="synth-r5-content">
+            ${prescriptionsItems.length?`<div class="synth-r5-line"><span class="synth-r5-k">Prescriptions :</span></div>${prescriptionsItems.map(x=>`<div class="synth-r5-line">${x}</div>`).join("")}`:""}
+            ${soinsItems.length?`<div class="synth-r5-line"><span class="synth-r5-k">Soins infirmiers :</span></div>${soinsItems.map(x=>`<div class="synth-r5-line">${x}</div>`).join("")}`:""}
+            ${actesItems.length?`<div class="synth-r5-line"><span class="synth-r5-k">Actes :</span></div>${actesItems.map(x=>`<div class="synth-r5-line">${x}</div>`).join("")}`:""}
+            ${latestSauSections.length?`<div class="synth-r5-line"><span class="synth-r5-k">Dernière synthèse SAU :</span></div>${latestSauSections.map(x=>`<div class="synth-r5-line">${x}</div>`).join("")}`:""}
+            ${(!prescriptionsItems.length&&!soinsItems.length&&!actesItems.length&&!latestSauSections.length)?'<div class="synth-r5-empty">Aucune donnée</div>':""}
+          </div>
+        </div>`;
+
+      const examensItems=[];
+      (pt.biologieOrders||[]).slice(0,6).forEach(b=>examensItems.push(`Biologie - ${escapeHtml(safe(b.label))}${String(b.statut||"").trim()!==""?` (${escapeHtml(String(b.statut))})`:""}`));
+      (pt.imagerie||[]).slice(0,6).forEach(im=>examensItems.push(`Imagerie - ${escapeHtml(safe(im.type))}${String(im.region||"").trim()!==""?` ${escapeHtml(String(im.region))}`:""}${String(im.statut||"").trim()!==""?` (${escapeHtml(String(im.statut))})`:""}`));
+      (pt.csAmp||[]).slice(0,4).forEach(cs=>examensItems.push(`CS spécialisée - ${escapeHtml(safe(cs.specialite))}${String(cs.statut||"").trim()!==""?` (${escapeHtml(String(cs.statut))})`:""}`));
+      (pt.documents||[]).slice(0,4).forEach(doc=>examensItems.push(`Transmission - ${escapeHtml(safe(doc.type))}${String(doc.equipe||"").trim()!==""?` [${escapeHtml(String(doc.equipe))}]`:""}`));
+      const autresExam=pt.autresExamens||{};
+      if(String(autresExam.ecg?.resultat||"").trim()!=="") examensItems.push(`ECG - ${escapeHtml(String(autresExam.ecg.resultat))}`);
+      if(String(autresExam.bladder?.volume||"").trim()!=="") examensItems.push(`Bladder - ${escapeHtml(String(autresExam.bladder.volume))} ml`);
+      if((autresExam.autres||[]).length) (autresExam.autres||[]).slice(0,4).forEach(ex=>examensItems.push(`Autre examen - ${escapeHtml(safe(ex.type))}${String(ex.resultat||"").trim()!==""?` : ${escapeHtml(String(ex.resultat))}`:""}`));
+      const examensBlock=renderListBlock("EXAMENS, AVIS ET DOCUMENTS", examensItems);
+
+      const paramItems=[];
+      (pt.paramConstantes||[]).slice(-3).reverse().forEach((co,idx)=>{ const bits=latestConstBits(co); if(bits.length) paramItems.push(`Constantes paramédicales ${idx===0?"récentes":""} - ${escapeHtml(bits.join(" | "))}`); });
+      (pt.hospipharm||[]).slice(0,3).forEach(r=>paramItems.push(`Hospipharm - ${escapeHtml(safe(r.medicament))}${String(r.dosage||"").trim()!==""?` ${escapeHtml(String(r.dosage))}`:""}${String(r.statut||"").trim()!==""?` (${escapeHtml(String(r.statut))})`:""}`));
+      (pt.lavageVesical||[]).slice(0,3).forEach(r=>paramItems.push(`Lavage vésical - ${escapeHtml(safe(r.type))}${String(r.aspect||"").trim()!==""?` / ${escapeHtml(String(r.aspect))}`:""}`));
+      (pt.contentions||[]).slice(0,3).forEach(r=>paramItems.push(`Contention - ${escapeHtml(safe(r.type))}${String(r.motif||"").trim()!==""?` (${escapeHtml(String(r.motif))})`:""}`));
+      (pt.pansements||[]).slice(0,3).forEach(r=>paramItems.push(`Pansement - ${escapeHtml(safe(r.localisation))}${String(r.type||"").trim()!==""?` / ${escapeHtml(String(r.type))}`:""}`));
+      (pt.repas||[]).slice(0,3).forEach(r=>paramItems.push(`Repas - ${escapeHtml(safe(r.type))}${String(r.quantite||"").trim()!==""?` (${escapeHtml(String(r.quantite))})`:""}`));
+      if(String(latestQuicktest.resultat||"").trim()!=="") paramItems.push(`Quicktest tétanos - ${escapeHtml(String(latestQuicktest.resultat))}`);
+      if(Object.values(pt.precautions||{}).some(v=>typeof v==="boolean"?v:String(v||"").trim()!=="")){
+        const prec=[];
+        if(pt.precautions.contact) prec.push("contact");
+        if(pt.precautions.gouttelettes) prec.push("gouttelettes");
+        if(pt.precautions.air) prec.push("air");
+        if(pt.precautions.protecteur) prec.push("protecteur");
+        if(pt.precautions.bmr) prec.push("BMR/BHRe");
+        if(pt.precautions.preciser) prec.push(String(pt.precautions.preciser));
+        if(prec.length) paramItems.push(`Précautions - ${escapeHtml(prec.join(" | "))}`);
+      }
+      if(pt.ficheTransport && Object.values(pt.ficheTransport).some(v=>typeof v==="boolean"?v:String(v||"").trim()!=="")){
+        paramItems.push(`Transport intra-hospitalier - ${escapeHtml(safe(pt.ficheTransport.serviceDemandeur))} vers ${escapeHtml(safe(pt.ficheTransport.serviceDestinataire))}`);
+      }
+      if((pt.diagramme||[]).length && String(pt.diagramme[0]?.observations||"").trim()!=="") paramItems.push(`Diagramme de soins - ${escapeHtml(String(pt.diagramme[0].observations))}`);
+      const paramBlock=renderListBlock("PARAMÉDICAL", paramItems);
+
+      const orientationItems=[];
+      if(String(orientation.destination||"").trim()!=="") orientationItems.push(`Destination - ${escapeHtml(String(orientation.destination))}`);
+      if((orientation.servicesCibles||[]).length) orientationItems.push(`Services cibles - ${escapeHtml((orientation.servicesCibles||[]).join(", "))}`);
+      if(String(orientation.avancement||"").trim()!=="") orientationItems.push(`Avancement - ${escapeHtml(String(orientation.avancement))}`);
+      if(String(orientation.conclusion||"").trim()!=="") orientationItems.push(`Conclusion - ${escapeHtml(String(orientation.conclusion))}`);
+      if(String(orientation.commentaireSortie||"").trim()!=="") orientationItems.push(`Commentaire sortie - ${escapeHtml(String(orientation.commentaireSortie))}`);
+      if(String(orientation.transport?.modeSortie||"").trim()!=="") orientationItems.push(`Transport sortie - ${escapeHtml(String(orientation.transport.modeSortie))}`);
+      if(String(orientation.transport?.destination||"").trim()!=="") orientationItems.push(`Destination transport - ${escapeHtml(String(orientation.transport.destination))}`);
+      if(String(orientation.validationSenior?.nom||"").trim()!=="" || orientation.validationSenior?.valide) orientationItems.push(`Validation senior - ${orientation.validationSenior?.valide?"validé":"non validé"}${String(orientation.validationSenior?.nom||"").trim()!==""?` par ${escapeHtml(String(orientation.validationSenior.nom))}`:""}`);
+      const orientationBlock=renderListBlock("ORIENTATION ET DEVENIR", orientationItems);
+
       const entries=[];
       entries.push({
         type:"ioa",
@@ -6900,9 +7122,8 @@ Pas de foyer auscultatoire :
         auteur:pt.ide||"—",
         role:"paramedical",
         dark:false,
-        body:`<div class="synth-r5-line"><span class="synth-r5-k">Motif :</span> ${escapeHtml(safe(pt.motifIAO))}</div><div class="synth-r5-line"><span class="synth-r5-k">Hypothèse :</span> ${escapeHtml(safe(pt.hypotheseIAO||pt.hypothese))}</div><div class="synth-r5-line"><span class="synth-r5-k">Priorisation :</span> ${escapeHtml(safe(pt.triLabel))}</div><div class="synth-r5-line"><span class="synth-r5-k">Type de circuit :</span> ${escapeHtml(typeCircuit)}</div><div class="synth-r5-line"><span class="synth-r5-k">Circonstances :</span> ${escapeHtml(circonstances)}</div><div class="synth-r5-line"><span class="synth-r5-k">Famille :</span> ${escapeHtml(famille)}</div>`
+        body:`<div class="synth-r5-line"><span class="synth-r5-k">IOA :</span> ${escapeHtml(safe(ioaMotif.motifEntree||pt.motifIAO))}</div><div class="synth-r5-line">${escapeHtml(safe(pt.triLabel||pt.triIAO))} | ${escapeHtml(typeCircuit)}</div>`
       });
-
       (pt.evolution||[]).forEach(ev=>{
         entries.push({
           type:"evolution",
@@ -6911,145 +7132,54 @@ Pas de foyer auscultatoire :
           auteur:ev.auteur||"—",
           role:ev.role||"infirmier",
           dark:true,
-          body:`<div class="synth-r5-line"><span class="synth-r5-k">ÉVOLUTION :</span></div><div>${escapeHtml(ev.texte||"")}</div>`
+          body:`<div>${synthText(ev.texte||"")}</div>`
         });
       });
-
       (pt.syntheseSAU?.journal||[]).forEach((sj,idx)=>{
         const sections=[];
-        const keys={
-          traitementsAdministres:"TRAITEMENTS ADMINISTRÉS",
-          soinsInfirmiersSpecifiques:"SOINS INFIRMIERS SPÉCIFIQUES",
-          devenirSocialFamille:"DEVENIR / SOCIAL / FAMILLE",
-          ventilation:"VENTILATION",
-          etatNeurologique:"ÉTAT NEUROLOGIQUE"
-        };
-        Object.keys(keys).forEach(k=>{
-          const v=sj?.[k];
-          if(v && typeof v==="object" && !Array.isArray(v)){
-            const txt=Object.entries(v).filter(([,vv])=>String(vv||"").trim()!=="").map(([kk,vv])=>`${kk}: ${vv}`).join(" | ");
-            if(txt) sections.push(`<div class="synth-r5-line"><span class="synth-r5-k">${keys[k]}</span><br>${escapeHtml(txt)}</div>`);
-            return;
-          }
-          if(String(v||"").trim()!=="") sections.push(`<div class="synth-r5-line"><span class="synth-r5-k">${keys[k]}</span><br>${escapeHtml(String(v))}</div>`);
-        });
-        Object.keys(sj||{}).forEach(k=>{
-          if(keys[k]) return;
-          const v=sj[k];
-          if(String(v||"").trim()!=="") sections.push(`<div class="synth-r5-line"><span class="synth-r5-k">${escapeHtml(String(k).replace(/_/g," ").toUpperCase())}</span><br>${escapeHtml(String(v))}</div>`);
-        });
+        [
+          ["Localisation",sj.localisation],
+          ["Précautions",sj.precautions],
+          ["Traitements administrés",sj.administres],
+          ["Soins infirmiers",sj.soinsInfirmiers],
+          ["Examens réalisés",sj.examensRealises],
+          ["Examens en attente",sj.examensAttente],
+          ["Avis réalisés",sj.avisRealises],
+          ["Avis en attente",sj.avisAttente],
+          ["Informations / évènements",sj.infosEvenements],
+          ["Ventilation",sj.textVentilation],
+          ["Neurologique",sj.texteNeuro],
+          ["État cutané",sj.etatCutane],
+          ["Devenir / social",sj.devenirSocial]
+        ].forEach(([label,value])=>{ if(String(value||"").trim()!=="") sections.push(`<div class="synth-r5-line"><span class="synth-r5-k">${escapeHtml(label)}</span><br>${synthText(value)}</div>`); });
         if(!sections.length) return;
-        entries.push({
-          type:"syntheseSAU",
-          id:`sau-${idx}`,
-          ts:Number(sj.ts||sj.timestamp||Date.now())||0,
-          auteur:sj.auteur||"—",
-          role:sj.role||"medecin",
-          dark:true,
-          body:sections.join("")
-        });
+        entries.push({type:"syntheseSAU",id:`sau-${idx}`,ts:Number(sj.ts||sj.timestamp||Date.now())||0,auteur:sj.auteur||"—",role:sj.role||"medecin",dark:true,body:sections.join("")});
       });
-
       (pt.actes||[]).forEach(ac=>{
-        entries.push({
-          type:"acte",
-          id:String(ac.id||""),
-          ts:Number(ac.timestamp||Date.now())||0,
-          auteur:ac.auteur||"—",
-          role:ac.role||"infirmier",
-          dark:false,
-          body:`<div><span class="synth-r5-k">${escapeHtml(safe(ac.categorie,"Autre"))}</span> : ${escapeHtml(safe(ac.acte))} — ${escapeHtml(safe(ac.effet))}</div>`
-        });
+        entries.push({type:"acte",id:String(ac.id||""),ts:Number(ac.timestamp||Date.now())||0,auteur:ac.auteur||"—",role:ac.role||"infirmier",dark:false,body:`<div>${escapeHtml(safe(ac.categorie,"Acte"))} - ${escapeHtml(safe(ac.acte))}${String(ac.effet||"").trim()!==""?` : ${escapeHtml(String(ac.effet))}`:""}</div>`});
       });
-
-      const scoreRows=[];
-      (pt.scores||[]).forEach((sc,idx)=>{
-        const nom=safe(sc.nom||sc.name||`Score ${idx+1}`,`Score ${idx+1}`);
-        const val=safe(sc.valeur||sc.value,"0");
-        const max=safe(sc.max||sc.maxValue,"?");
-        const interp=safe(sc.interpretation||sc.interpretationLabel||"");
-        scoreRows.push({
-          type:"score",
-          id:`score-${idx}`,
-          ts:Number(sc.ts||sc.timestamp||Date.now())||0,
-          auteur:sc.auteur||"—",
-          role:sc.role||"infirmier",
-          dark:false,
-          body:`<div>${escapeHtml(nom)} : ${escapeHtml(val)}/${escapeHtml(max)}${interp!=="—"?` — ${escapeHtml(interp)}`:""}</div>`
-        });
-      });
-      const exa=pt.medical?.examen||{};
-      if(!scoreRows.length && (String(exa.gcs||"").trim()!=="" || String(pt.eva||"").trim()!=="" || String(exa.eva||"").trim()!=="")){
-        if(String(exa.gcs||"").trim()!=="") scoreRows.push({type:"score",id:"score-gcs",ts:Number(exa.savedAt||Date.now())||0,auteur:actorName(),role:currentUser?.role||"infirmier",dark:false,body:`<div>Glasgow : ${escapeHtml(String(exa.gcs||"0"))}/15</div>`});
-        const evaVal=String(exa.eva||pt.eva||"").trim();
-        if(evaVal!=="") scoreRows.push({type:"score",id:"score-eva",ts:Number(exa.savedAt||Date.now())||0,auteur:actorName(),role:currentUser?.role||"infirmier",dark:false,body:`<div>EVA : ${escapeHtml(evaVal)}/10</div>`});
-      }
-      scoreRows.forEach(s=>entries.push(s));
-
-      const ioaConstEntries=(pt.ioa?.constantes||[]).slice();
-      if(!ioaConstEntries.length){
-        const c0=pt.constantes||{};
-        if([c0.fc,c0.ta,c0.temp,c0.temperature,c0.spo2,c0.fr].some(v=>String(v||"").trim()!=="")){
-          ioaConstEntries.push({ts:pt.arrive||Date.now(),auteur:pt.ide||"—",role:"infirmier",fc:c0.fc,ta:c0.ta,temp:c0.temp||c0.temperature,spo2:c0.spo2,fr:c0.fr});
-        }
-      }
-      ioaConstEntries.forEach((co,idx)=>{
-        const values=[];
-        if(String(co.fc||"").trim()!=="") values.push(`FC: ${co.fc}`);
-        if(String(co.ta||"").trim()!=="") values.push(`TA: ${co.ta}`);
-        if(String(co.temp||co.temperature||"").trim()!=="") values.push(`T°: ${co.temp||co.temperature}`);
-        if(String(co.spo2||"").trim()!=="") values.push(`SpO2: ${co.spo2}`);
-        if(String(co.fr||"").trim()!=="") values.push(`FR: ${co.fr}`);
-        if(!values.length) return;
-        entries.push({
-          type:"constantes",
-          id:`const-${idx}`,
-          ts:Number(co.ts||co.timestamp||Date.now())||0,
-          auteur:co.auteur||"—",
-          role:co.role||"infirmier",
-          dark:false,
-          body:`<div>${escapeHtml(values.join(" | "))}</div>`
-        });
-      });
-
       (pt.prescriptions||[]).filter(pr=>String(pr.statut||"")!=="Annulé").forEach(pr=>{
         const badgeColor=(pr.statut==="À faire")?"#e07820":(pr.statut==="En cours"?"#2060a0":"#20a020");
-        entries.push({
-          type:"prescription",
-          id:String(pr.id||""),
-          ts:Number(pr.id||Date.now())||0,
-          auteur:pr.prescritPar||"—",
-          role:"medecin",
-          dark:true,
-          body:`<div><span class="bl5-sbadge" style="background:${badgeColor};">${escapeHtml(safe(pr.statut))}</span> ${escapeHtml(safe(pr.voie))} ${escapeHtml(safe(pr.medicament||pr.libelle))} — ${escapeHtml(safe(pr.posologie))}</div><div class="synth-r5-line">Prescrit par : ${escapeHtml(safe(pr.prescritPar))}</div>`
-        });
+        entries.push({type:"prescription",id:String(pr.id||""),ts:Number(pr.id||Date.now())||0,auteur:pr.prescritPar||"—",role:"medecin",dark:true,body:`<div><span class="bl5-sbadge" style="background:${badgeColor};">${escapeHtml(safe(pr.statut))}</span> ${escapeHtml(safe(pr.medicament||pr.libelle||pr.solute))}${String(pr.posologie||pr.dose||pr.debit||"").trim()!==""?` — ${escapeHtml(String(pr.posologie||pr.dose||pr.debit))}`:""}</div>`});
       });
-
       entries.sort((a,b)=>(b.ts||0)-(a.ts||0));
-      const entriesHtml=entries.map(en=>{
+      const entriesHtml=entries.length?entries.map(en=>{
         const canEdit=userIsAuthor(en.auteur);
         const editBtn=canEdit?`<button type="button" class="synth-r5-entry-edit" data-synth-act="entry-edit" data-entry-type="${escapeHtml(en.type)}" data-entry-id="${escapeHtml(String(en.id||""))}">(modifier)</button>`:"";
         return `<div class="synth-r5-entry"><div class="synth-r5-entry-head ${en.dark?"dark":""}"><span>[${escapeHtml(fmtDate(en.ts))}] ${escapeHtml(safe(en.auteur))} (${escapeHtml(roleTxt(en.role))})</span>${editBtn}</div><div class="synth-r5-entry-body">${en.body}</div></div>`;
-      }).join("");
-
-      const footerIoa=(String(pt.motifIAO||"").trim()!=="" || Object.values(pt.ioa?.motif||{}).some(v=>String(v||"").trim()!==""))?`
-        <div class="synth-r5-entry">
-          <div class="synth-r5-entry-head">${escapeHtml(nowHm(pt.arrive)||"—")} ${escapeHtml(safe(pt.ide))} (Paramédical)</div>
-          <div class="synth-r5-entry-body">
-            <div class="synth-r5-line"><span class="synth-r5-k">Motif :</span> ${escapeHtml(safe(pt.motifIAO))}</div>
-            <div class="synth-r5-line"><span class="synth-r5-k">Priorisation :</span> ${escapeHtml(safe(pt.triLabel))}</div>
-            <div class="synth-r5-line"><span class="synth-r5-k">Type de circuit :</span> ${escapeHtml(typeCircuit)}</div>
-            <div class="synth-r5-line"><span class="synth-r5-k">Circonstances :</span> ${escapeHtml(circonstances)}</div>
-            <div class="synth-r5-line"><span class="synth-r5-k">Famille :</span> ${escapeHtml(famille)}</div>
-          </div>
-        </div>`:"";
+      }).join(""):'<div class="synth-r5-empty">Aucune donnée enregistrée pour ce dossier</div>';
 
       synthHost.innerHTML=
         `<div class="synth-r5-band">Dossier ${escapeHtml(String(pt.dossier||"—"))} du ${escapeHtml(arrDay)} service : ACCUEIL DES URGENCES (7719)</div>`+
         dossierBlock+
         equipeBlock+
-        (entries.length?entriesHtml:'<div class="synth-r5-empty">Aucune donnée enregistrée pour ce dossier</div>')+
-        footerIoa;
+        situationBlock+
+        cliniqueBlock+
+        therapiesBlock+
+        examensBlock+
+        paramBlock+
+        orientationBlock+
+        `<div class="synth-r5-block"><div class="synth-r5-title">HISTORIQUE RÉCENT</div><div class="synth-r5-content">${entriesHtml}</div></div>`;
 
       const histBlocks=[];
       histBlocks.push(
@@ -7106,7 +7236,10 @@ Pas de foyer auscultatoire :
 
       const spLabelForProto=speLabelFromCode(pt.speIAO);
       const spProtoKey=protocolSpeFromCode(pt.speIAO)||spLabelForProto;
-      const protoList=[...COMMON_PROTOCOLS,...(PROTOCOLS_BY_SPE[spProtoKey]||[])];
+      const allSpecializedProtocols=Object.values(PROTOCOLS_BY_SPE).flat();
+      const protoSource=spProtoKey?[...COMMON_PROTOCOLS,...(PROTOCOLS_BY_SPE[spProtoKey]||[])]:[...COMMON_PROTOCOLS,...allSpecializedProtocols];
+      const seenProtoNames=new Set();
+      const protoList=protoSource.filter(p0=>{if(seenProtoNames.has(p0.name)) return false;seenProtoNames.add(p0.name);return true;});
       const qProto=(document.getElementById("bl5-prot-search").value||"").toLowerCase();
       const filteredProto=protoList.filter(p0=>p0.name.toLowerCase().includes(qProto));
       document.getElementById("bl5-prot-grid").innerHTML=filteredProto.map(p0=>`<button class="bl5-prot-card" type="button" data-proto="${escapeHtml(p0.name)}"><div class="bl5-prot-top">${protIcon}<span class="bl5-prot-name">${escapeHtml(p0.name)}</span></div><span class="bl5-prot-badge" style="background:${SPE_BADGE_COLOR[p0.specialite]||"#777"};">${escapeHtml(p0.specialite)}</span></button>`).join("") || '<div class="bl5-muted">Aucun protocole trouvé</div>';
